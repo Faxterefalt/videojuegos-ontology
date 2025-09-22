@@ -1,0 +1,142 @@
+# Consultas SPARQL de Ejemplo para la Ontología de Videojuegos
+# Example SPARQL Queries for the Video Games Ontology
+
+PREFIX vg: <http://www.semanticweb.org/videojuegos#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# 1. Listar todos los videojuegos con sus títulos
+# List all video games with their titles
+SELECT ?juego ?titulo WHERE {
+    ?juego rdf:type vg:Videojuego ;
+           vg:titulo ?titulo .
+}
+
+# 2. Encontrar videojuegos por género
+# Find video games by genre
+SELECT ?titulo ?genero WHERE {
+    ?juego vg:titulo ?titulo ;
+           vg:tieneGenero ?generoObj .
+    ?generoObj vg:nombre ?genero .
+    FILTER (CONTAINS(LCASE(?genero), "accion"))
+}
+
+# 3. Videojuegos disponibles en PlayStation 5
+# Video games available on PlayStation 5
+SELECT ?titulo ?precio WHERE {
+    ?juego vg:titulo ?titulo ;
+           vg:precio ?precio ;
+           vg:disponibleEn ?plataforma .
+    ?plataforma vg:nombre "PlayStation 5" .
+}
+
+# 4. Juegos con puntuación superior a 9.0
+# Games with score above 9.0
+SELECT ?titulo ?puntuacion ?desarrollador WHERE {
+    ?juego vg:titulo ?titulo ;
+           vg:puntuacion ?puntuacion ;
+           vg:desarrolladoPor ?dev .
+    ?dev vg:nombre ?desarrollador .
+    FILTER (?puntuacion > 9.0)
+}
+ORDER BY DESC(?puntuacion)
+
+# 5. Contar juegos por plataforma
+# Count games by platform
+SELECT ?plataforma (COUNT(?juego) as ?numJuegos) WHERE {
+    ?juego vg:disponibleEn ?plataformaObj .
+    ?plataformaObj vg:nombre ?plataforma .
+}
+GROUP BY ?plataforma
+ORDER BY DESC(?numJuegos)
+
+# 6. Juegos multijugador lanzados después de 2020
+# Multiplayer games released after 2020
+SELECT ?titulo ?fecha ?modo WHERE {
+    ?juego vg:titulo ?titulo ;
+           vg:fechaLanzamiento ?fecha ;
+           vg:tieneModoJuego ?modoObj .
+    ?modoObj vg:nombre ?modo .
+    FILTER (?fecha > "2020-01-01"^^xsd:date)
+    FILTER (CONTAINS(LCASE(?modo), "multijugador"))
+}
+
+# 7. Desarrolladores con más de un juego
+# Developers with more than one game
+SELECT ?desarrollador (COUNT(?juego) as ?numJuegos) WHERE {
+    ?juego vg:desarrolladoPor ?dev .
+    ?dev vg:nombre ?desarrollador .
+}
+GROUP BY ?desarrollador
+HAVING (?numJuegos > 1)
+
+# 8. Juegos disponibles en múltiples plataformas
+# Games available on multiple platforms
+SELECT ?titulo (COUNT(?plataforma) as ?numPlataformas) WHERE {
+    ?juego vg:titulo ?titulo ;
+           vg:disponibleEn ?plataforma .
+}
+GROUP BY ?titulo
+HAVING (?numPlataformas > 2)
+ORDER BY DESC(?numPlataformas)
+
+# 9. Información completa de un juego específico
+# Complete information for a specific game
+SELECT ?propiedad ?valor WHERE {
+    vg:Elden_Ring ?propiedad ?valor .
+}
+
+# 10. Juegos del mismo desarrollador que "The Last of Us Part II"
+# Games from the same developer as "The Last of Us Part II"
+SELECT ?titulo ?desarrollador WHERE {
+    vg:The_Last_of_Us_Part_II vg:desarrolladoPor ?dev .
+    ?otroJuego vg:desarrolladoPor ?dev ;
+               vg:titulo ?titulo .
+    ?dev vg:nombre ?desarrollador .
+    FILTER (?otroJuego != vg:The_Last_of_Us_Part_II)
+}
+
+# 11. Juegos por rango de precios
+# Games by price range
+SELECT ?titulo ?precio WHERE {
+    ?juego vg:titulo ?titulo ;
+           vg:precio ?precio .
+    FILTER (?precio >= 30.00 && ?precio <= 60.00)
+}
+ORDER BY ?precio
+
+# 12. Juegos que juega un jugador específico
+# Games played by a specific player
+SELECT ?titulo ?genero WHERE {
+    vg:Jugador1 vg:juega ?juego .
+    ?juego vg:titulo ?titulo ;
+           vg:tieneGenero ?generoObj .
+    ?generoObj vg:nombre ?genero .
+}
+
+# 13. Análisis por clasificación de edad
+# Analysis by age rating
+SELECT ?clasificacion (COUNT(?juego) as ?numJuegos) (AVG(?puntuacion) as ?promedioPuntuacion) WHERE {
+    ?juego vg:tieneClasificacion ?clasObj ;
+           vg:puntuacion ?puntuacion .
+    ?clasObj vg:nombre ?clasificacion .
+}
+GROUP BY ?clasificacion
+ORDER BY DESC(?numJuegos)
+
+# 14. Juegos lanzados en el mismo año
+# Games released in the same year
+SELECT ?año (COUNT(?juego) as ?numJuegos) WHERE {
+    ?juego vg:fechaLanzamiento ?fecha .
+    BIND (YEAR(?fecha) as ?año)
+}
+GROUP BY ?año
+ORDER BY ?año
+
+# 15. Buscar juegos por palabras clave en la descripción
+# Search games by keywords in description
+SELECT ?titulo ?descripcion WHERE {
+    ?juego vg:titulo ?titulo ;
+           vg:descripcion ?descripcion .
+    FILTER (CONTAINS(LCASE(?descripcion), "mundo abierto"))
+}

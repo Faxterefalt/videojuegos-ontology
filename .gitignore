@@ -1,0 +1,58 @@
+# Archivos temporales / Temporary files
+*.tmp
+*.temp
+*~
+.DS_Store
+Thumbs.db
+
+# Archivos de Python / Python files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Entornos virtuales / Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de log / Log files
+*.log
+
+# Archivos de sistema / System files
+.directory
+
+# Archivos de backup de ontologías / Ontology backup files
+*.owl.bak
+*.ttl.bak
+*.backup
+
+# Archivos generados por herramientas / Tool-generated files
+catalog-*.xml
+.catalog

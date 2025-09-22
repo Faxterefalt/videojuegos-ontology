@@ -1,0 +1,233 @@
+@prefix : <http://www.semanticweb.org/videojuegos#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/videojuegos> .
+
+# Ejemplos de instancias de la ontología de videojuegos
+
+#################################################################
+#    Géneros
+#################################################################
+
+:Accion rdf:type :Genero ;
+        :nombre "Acción"@es ,
+                "Action"@en .
+
+:RPG rdf:type :Genero ;
+     :nombre "Juego de Rol"@es ,
+             "Role-Playing Game"@en .
+
+:Aventura rdf:type :Genero ;
+          :nombre "Aventura"@es ,
+                  "Adventure"@en .
+
+:Estrategia rdf:type :Genero ;
+            :nombre "Estrategia"@es ,
+                    "Strategy"@en .
+
+:Deportes rdf:type :Genero ;
+          :nombre "Deportes"@es ,
+                  "Sports"@en .
+
+:Simulacion rdf:type :Genero ;
+            :nombre "Simulación"@es ,
+                    "Simulation"@en .
+
+#################################################################
+#    Plataformas
+#################################################################
+
+:PlayStation5 rdf:type :Plataforma ;
+              :nombre "PlayStation 5" .
+
+:Xbox_Series_X rdf:type :Plataforma ;
+               :nombre "Xbox Series X" .
+
+:Nintendo_Switch rdf:type :Plataforma ;
+                 :nombre "Nintendo Switch" .
+
+:PC rdf:type :Plataforma ;
+    :nombre "PC" .
+
+:PlayStation4 rdf:type :Plataforma ;
+              :nombre "PlayStation 4" .
+
+:Xbox_One rdf:type :Plataforma ;
+          :nombre "Xbox One" .
+
+#################################################################
+#    Modos de Juego
+#################################################################
+
+:UnJugador rdf:type :ModoJuego ;
+           :nombre "Un Jugador"@es ,
+                   "Single Player"@en .
+
+:Multijugador rdf:type :ModoJuego ;
+              :nombre "Multijugador"@es ,
+                      "Multiplayer"@en .
+
+:Cooperativo rdf:type :ModoJuego ;
+             :nombre "Cooperativo"@es ,
+                     "Cooperative"@en .
+
+:OnlineMultiplayer rdf:type :ModoJuego ;
+                   :nombre "Multijugador en Línea"@es ,
+                           "Online Multiplayer"@en .
+
+#################################################################
+#    Clasificaciones por Edad
+#################################################################
+
+:ESRB_E rdf:type :ClasificacionEdad ;
+        :nombre "ESRB E (Everyone)" .
+
+:ESRB_T rdf:type :ClasificacionEdad ;
+        :nombre "ESRB T (Teen)" .
+
+:ESRB_M rdf:type :ClasificacionEdad ;
+        :nombre "ESRB M (Mature 17+)" .
+
+:PEGI_3 rdf:type :ClasificacionEdad ;
+        :nombre "PEGI 3" .
+
+:PEGI_12 rdf:type :ClasificacionEdad ;
+         :nombre "PEGI 12" .
+
+:PEGI_18 rdf:type :ClasificacionEdad ;
+         :nombre "PEGI 18" .
+
+#################################################################
+#    Desarrolladores
+#################################################################
+
+:Nintendo_EPD rdf:type :Desarrollador ;
+              :nombre "Nintendo EPD" .
+
+:CD_Projekt_RED rdf:type :Desarrollador ;
+                :nombre "CD Projekt RED" .
+
+:Naughty_Dog rdf:type :Desarrollador ;
+             :nombre "Naughty Dog" .
+
+:FromSoftware rdf:type :Desarrollador ;
+              :nombre "FromSoftware" .
+
+:Rockstar_Games rdf:type :Desarrollador ;
+                :nombre "Rockstar Games" .
+
+#################################################################
+#    Editores/Publishers
+#################################################################
+
+:Nintendo rdf:type :Editor ;
+          :nombre "Nintendo" .
+
+:CD_Projekt rdf:type :Editor ;
+            :nombre "CD Projekt" .
+
+:Sony_Interactive rdf:type :Editor ;
+                  :nombre "Sony Interactive Entertainment" .
+
+:Bandai_Namco rdf:type :Editor ;
+              :nombre "Bandai Namco Entertainment" .
+
+:Take_Two rdf:type :Editor ;
+          :nombre "Take-Two Interactive" .
+
+#################################################################
+#    Videojuegos
+#################################################################
+
+:The_Legend_of_Zelda_Breath_of_the_Wild rdf:type :Videojuego ;
+                                        :titulo "The Legend of Zelda: Breath of the Wild" ;
+                                        :descripcion "Un juego de aventura y exploración en mundo abierto ambientado en Hyrule."@es ,
+                                                     "An open-world adventure and exploration game set in Hyrule."@en ;
+                                        :fechaLanzamiento "2017-03-03"^^xsd:date ;
+                                        :precio "59.99"^^xsd:decimal ;
+                                        :puntuacion "9.7"^^xsd:decimal ;
+                                        :tieneGenero :Aventura ;
+                                        :disponibleEn :Nintendo_Switch ;
+                                        :desarrolladoPor :Nintendo_EPD ;
+                                        :publicadoPor :Nintendo ;
+                                        :tieneModoJuego :UnJugador ;
+                                        :tieneClasificacion :ESRB_E .
+
+:Cyberpunk_2077 rdf:type :Videojuego ;
+                :titulo "Cyberpunk 2077" ;
+                :descripcion "Un RPG de mundo abierto ambientado en Night City, una megalópolis obsesionada con el poder, el glamour y la modificación corporal."@es ,
+                             "An open-world RPG set in Night City, a megalopolis obsessed with power, glamor and body modification."@en ;
+                :fechaLanzamiento "2020-12-10"^^xsd:date ;
+                :precio "49.99"^^xsd:decimal ;
+                :puntuacion "7.8"^^xsd:decimal ;
+                :tieneGenero :RPG ;
+                :disponibleEn :PC , :PlayStation5 , :Xbox_Series_X ;
+                :desarrolladoPor :CD_Projekt_RED ;
+                :publicadoPor :CD_Projekt ;
+                :tieneModoJuego :UnJugador ;
+                :tieneClasificacion :ESRB_M .
+
+:The_Last_of_Us_Part_II rdf:type :Videojuego ;
+                        :titulo "The Last of Us Part II" ;
+                        :descripcion "Una aventura de supervivencia post-apocalíptica que sigue a Ellie en una búsqueda de venganza."@es ,
+                                     "A post-apocalyptic survival adventure following Ellie on a quest for revenge."@en ;
+                        :fechaLanzamiento "2020-06-19"^^xsd:date ;
+                        :precio "39.99"^^xsd:decimal ;
+                        :puntuacion "9.2"^^xsd:decimal ;
+                        :tieneGenero :Aventura , :Accion ;
+                        :disponibleEn :PlayStation4 , :PlayStation5 ;
+                        :desarrolladoPor :Naughty_Dog ;
+                        :publicadoPor :Sony_Interactive ;
+                        :tieneModoJuego :UnJugador ;
+                        :tieneClasificacion :ESRB_M .
+
+:Elden_Ring rdf:type :Videojuego ;
+            :titulo "Elden Ring" ;
+            :descripcion "Un juego de rol de acción en mundo abierto desarrollado en colaboración con George R.R. Martin."@es ,
+                         "An open-world action role-playing game developed in collaboration with George R.R. Martin."@en ;
+            :fechaLanzamiento "2022-02-25"^^xsd:date ;
+            :precio "59.99"^^xsd:decimal ;
+            :puntuacion "9.6"^^xsd:decimal ;
+            :tieneGenero :RPG , :Accion ;
+            :disponibleEn :PC , :PlayStation4 , :PlayStation5 , :Xbox_One , :Xbox_Series_X ;
+            :desarrolladoPor :FromSoftware ;
+            :publicadoPor :Bandai_Namco ;
+            :tieneModoJuego :UnJugador , :OnlineMultiplayer ;
+            :tieneClasificacion :ESRB_M .
+
+:Grand_Theft_Auto_V rdf:type :Videojuego ;
+                    :titulo "Grand Theft Auto V" ;
+                    :descripcion "Un juego de acción-aventura en mundo abierto ambientado en Los Santos."@es ,
+                                 "An open-world action-adventure game set in Los Santos."@en ;
+                    :fechaLanzamiento "2013-09-17"^^xsd:date ;
+                    :precio "29.99"^^xsd:decimal ;
+                    :puntuacion "9.0"^^xsd:decimal ;
+                    :tieneGenero :Accion , :Aventura ;
+                    :disponibleEn :PC , :PlayStation4 , :PlayStation5 , :Xbox_One , :Xbox_Series_X ;
+                    :desarrolladoPor :Rockstar_Games ;
+                    :publicadoPor :Take_Two ;
+                    :tieneModoJuego :UnJugador , :OnlineMultiplayer ;
+                    :tieneClasificacion :ESRB_M .
+
+#################################################################
+#    Jugadores
+#################################################################
+
+:Jugador1 rdf:type :Jugador ;
+          :nombre "María García" ;
+          :juega :The_Legend_of_Zelda_Breath_of_the_Wild ,
+                 :The_Last_of_Us_Part_II .
+
+:Jugador2 rdf:type :Jugador ;
+          :nombre "Carlos Rodríguez" ;
+          :juega :Cyberpunk_2077 ,
+                 :Elden_Ring ,
+                 :Grand_Theft_Auto_V .
+
+:Jugador3 rdf:type :Jugador ;
+          :nombre "Ana López" ;
+          :juega :Elden_Ring ,
+                 :The_Legend_of_Zelda_Breath_of_the_Wild .
