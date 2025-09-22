@@ -1,0 +1,231 @@
+@prefix : <http://www.semanticweb.org/videojuegos#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/videojuegos> .
+
+<http://www.semanticweb.org/videojuegos> rdf:type owl:Ontology ;
+                                        rdfs:label "Ontología de Videojuegos"@es ,
+                                                   "Video Games Ontology"@en ;
+                                        rdfs:comment "Una ontología completa para describir videojuegos, géneros, plataformas, desarrolladores y otros aspectos del dominio de los videojuegos."@es ,
+                                                     "A comprehensive ontology for describing video games, genres, platforms, developers and other aspects of the video game domain."@en ;
+                                        owl:versionInfo "1.0" .
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/videojuegos#ClasificacionEdad
+:ClasificacionEdad rdf:type owl:Class ;
+                   rdfs:label "Clasificación por Edad"@es ,
+                              "Age Rating"@en ;
+                   rdfs:comment "Sistema de clasificación que indica la edad apropiada para jugar un videojuego."@es ,
+                                "Rating system that indicates the appropriate age to play a video game."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#Desarrollador
+:Desarrollador rdf:type owl:Class ;
+               rdfs:label "Desarrollador"@es ,
+                          "Developer"@en ;
+               rdfs:comment "Persona o empresa responsable del desarrollo de un videojuego."@es ,
+                            "Person or company responsible for developing a video game."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#Editor
+:Editor rdf:type owl:Class ;
+        rdfs:label "Editor"@es ,
+                   "Publisher"@en ;
+        rdfs:comment "Empresa responsable de la publicación y distribución de un videojuego."@es ,
+                     "Company responsible for publishing and distributing a video game."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#Genero
+:Genero rdf:type owl:Class ;
+        rdfs:label "Género"@es ,
+                   "Genre"@en ;
+        rdfs:comment "Categoría de videojuegos basada en el estilo de juego, mecánicas y características comunes."@es ,
+                     "Category of video games based on gameplay style, mechanics and common characteristics."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#Jugador
+:Jugador rdf:type owl:Class ;
+         rdfs:label "Jugador"@es ,
+                    "Player"@en ;
+         rdfs:comment "Persona que juega videojuegos."@es ,
+                      "Person who plays video games."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#ModoJuego
+:ModoJuego rdf:type owl:Class ;
+           rdfs:label "Modo de Juego"@es ,
+                      "Game Mode"@en ;
+           rdfs:comment "Diferentes formas de jugar un videojuego (individual, multijugador, cooperativo, etc.)."@es ,
+                        "Different ways to play a video game (single-player, multiplayer, cooperative, etc.)."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#Plataforma
+:Plataforma rdf:type owl:Class ;
+            rdfs:label "Plataforma"@es ,
+                       "Platform"@en ;
+            rdfs:comment "Sistema hardware o software en el cual se ejecuta un videojuego."@es ,
+                         "Hardware or software system on which a video game runs."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#Videojuego
+:Videojuego rdf:type owl:Class ;
+            rdfs:label "Videojuego"@es ,
+                       "Video Game"@en ;
+            rdfs:comment "Un juego electrónico que involucra la interacción con una interfaz de usuario para generar retroalimentación visual en un dispositivo de video."@es ,
+                         "An electronic game that involves interaction with a user interface to generate visual feedback on a video device."@en .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/videojuegos#desarrolladoPor
+:desarrolladoPor rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Videojuego ;
+                 rdfs:range :Desarrollador ;
+                 rdfs:label "desarrollado por"@es ,
+                            "developed by"@en ;
+                 rdfs:comment "Relaciona un videojuego con su desarrollador."@es ,
+                              "Relates a video game to its developer."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#disponibleEn
+:disponibleEn rdf:type owl:ObjectProperty ;
+              rdfs:domain :Videojuego ;
+              rdfs:range :Plataforma ;
+              rdfs:label "disponible en"@es ,
+                         "available on"@en ;
+              rdfs:comment "Indica en qué plataformas está disponible un videojuego."@es ,
+                           "Indicates on which platforms a video game is available."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#juega
+:juega rdf:type owl:ObjectProperty ;
+       rdfs:domain :Jugador ;
+       rdfs:range :Videojuego ;
+       rdfs:label "juega"@es ,
+                  "plays"@en ;
+       rdfs:comment "Relaciona un jugador con los videojuegos que juega."@es ,
+                    "Relates a player to the video games they play."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#publicadoPor
+:publicadoPor rdf:type owl:ObjectProperty ;
+              rdfs:domain :Videojuego ;
+              rdfs:range :Editor ;
+              rdfs:label "publicado por"@es ,
+                         "published by"@en ;
+              rdfs:comment "Relaciona un videojuego con su editor."@es ,
+                           "Relates a video game to its publisher."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#tieneClasificacion
+:tieneClasificacion rdf:type owl:ObjectProperty ;
+                    rdfs:domain :Videojuego ;
+                    rdfs:range :ClasificacionEdad ;
+                    rdfs:label "tiene clasificación"@es ,
+                               "has rating"@en ;
+                    rdfs:comment "Relaciona un videojuego con su clasificación por edad."@es ,
+                                 "Relates a video game to its age rating."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#tieneGenero
+:tieneGenero rdf:type owl:ObjectProperty ;
+             rdfs:domain :Videojuego ;
+             rdfs:range :Genero ;
+             rdfs:label "tiene género"@es ,
+                        "has genre"@en ;
+             rdfs:comment "Relaciona un videojuego con su género."@es ,
+                          "Relates a video game to its genre."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#tieneModoJuego
+:tieneModoJuego rdf:type owl:ObjectProperty ;
+                rdfs:domain :Videojuego ;
+                rdfs:range :ModoJuego ;
+                rdfs:label "tiene modo de juego"@es ,
+                           "has game mode"@en ;
+                rdfs:comment "Relaciona un videojuego con sus modos de juego disponibles."@es ,
+                             "Relates a video game to its available game modes."@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/videojuegos#descripcion
+:descripcion rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Videojuego ;
+             rdfs:range xsd:string ;
+             rdfs:label "descripción"@es ,
+                        "description"@en ;
+             rdfs:comment "Una descripción del videojuego."@es ,
+                          "A description of the video game."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#fechaLanzamiento
+:fechaLanzamiento rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :Videojuego ;
+                  rdfs:range xsd:date ;
+                  rdfs:label "fecha de lanzamiento"@es ,
+                             "release date"@en ;
+                  rdfs:comment "La fecha en que fue lanzado el videojuego."@es ,
+                               "The date when the video game was released."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#nombre
+:nombre rdf:type owl:DatatypeProperty ;
+        rdfs:domain [ rdf:type owl:Class ;
+                      owl:unionOf ( :ClasificacionEdad
+                                    :Desarrollador
+                                    :Editor
+                                    :Genero
+                                    :Jugador
+                                    :ModoJuego
+                                    :Plataforma
+                                  )
+                    ] ;
+        rdfs:range xsd:string ;
+        rdfs:label "nombre"@es ,
+                   "name"@en ;
+        rdfs:comment "El nombre de la entidad."@es ,
+                     "The name of the entity."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#precio
+:precio rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Videojuego ;
+        rdfs:range xsd:decimal ;
+        rdfs:label "precio"@es ,
+                   "price"@en ;
+        rdfs:comment "El precio del videojuego."@es ,
+                     "The price of the video game."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#puntuacion
+:puntuacion rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Videojuego ;
+            rdfs:range xsd:decimal ;
+            rdfs:label "puntuación"@es ,
+                       "score"@en ;
+            rdfs:comment "La puntuación promedio del videojuego (0-10)."@es ,
+                         "The average score of the video game (0-10)."@en .
+
+
+###  http://www.semanticweb.org/videojuegos#titulo
+:titulo rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Videojuego ;
+        rdfs:range xsd:string ;
+        rdfs:label "título"@es ,
+                   "title"@en ;
+        rdfs:comment "El título o nombre del videojuego."@es ,
+                     "The title or name of the video game."@en .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

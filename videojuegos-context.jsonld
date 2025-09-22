@@ -1,0 +1,96 @@
+{
+  "@context": {
+    "@vocab": "http://www.semanticweb.org/videojuegos#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    
+    "Videojuego": {
+      "@id": "Videojuego",
+      "@type": "@id"
+    },
+    "Genero": {
+      "@id": "Genero",
+      "@type": "@id"
+    },
+    "Plataforma": {
+      "@id": "Plataforma",
+      "@type": "@id"
+    },
+    "Desarrollador": {
+      "@id": "Desarrollador",
+      "@type": "@id"
+    },
+    "Editor": {
+      "@id": "Editor",
+      "@type": "@id"
+    },
+    "Jugador": {
+      "@id": "Jugador",
+      "@type": "@id"
+    },
+    "ModoJuego": {
+      "@id": "ModoJuego",
+      "@type": "@id"
+    },
+    "ClasificacionEdad": {
+      "@id": "ClasificacionEdad",
+      "@type": "@id"
+    },
+    
+    "titulo": {
+      "@id": "titulo",
+      "@type": "xsd:string"
+    },
+    "descripcion": {
+      "@id": "descripcion",
+      "@type": "xsd:string"
+    },
+    "fechaLanzamiento": {
+      "@id": "fechaLanzamiento",
+      "@type": "xsd:date"
+    },
+    "precio": {
+      "@id": "precio",
+      "@type": "xsd:decimal"
+    },
+    "puntuacion": {
+      "@id": "puntuacion",
+      "@type": "xsd:decimal"
+    },
+    "nombre": {
+      "@id": "nombre",
+      "@type": "xsd:string"
+    },
+    
+    "tieneGenero": {
+      "@id": "tieneGenero",
+      "@type": "@id"
+    },
+    "disponibleEn": {
+      "@id": "disponibleEn",
+      "@type": "@id"
+    },
+    "desarrolladoPor": {
+      "@id": "desarrolladoPor",
+      "@type": "@id"
+    },
+    "publicadoPor": {
+      "@id": "publicadoPor",
+      "@type": "@id"
+    },
+    "tieneModoJuego": {
+      "@id": "tieneModoJuego",
+      "@type": "@id"
+    },
+    "tieneClasificacion": {
+      "@id": "tieneClasificacion",
+      "@type": "@id"
+    },
+    "juega": {
+      "@id": "juega",
+      "@type": "@id"
+    }
+  }
+}
