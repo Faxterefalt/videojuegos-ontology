@@ -2,204 +2,165 @@
 <rdf:RDF
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
->
-  <rdf:Description rdf:about="http://example.org/game#Skin">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Consola">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:game="http://example.org/game#">
+
+  <!-- CLASES PRINCIPALES -->
+  
+  <!-- Clase raíz -->
+  <owl:Class rdf:about="http://example.org/game#Game"/>
+  
+  <!-- Subclases principales de Game -->
+  <owl:Class rdf:about="http://example.org/game#Plataforma">
+    <rdfs:subClassOf rdf:resource="http://example.org/game#Game"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="http://example.org/game#Participante">
+    <rdfs:subClassOf rdf:resource="http://example.org/game#Game"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="http://example.org/game#ElementoDelJuego">
+    <rdfs:subClassOf rdf:resource="http://example.org/game#Game"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="http://example.org/game#Desarrollo">
+    <rdfs:subClassOf rdf:resource="http://example.org/game#Game"/>
+  </owl:Class>
+  
+  <!-- Subclases de Plataforma -->
+  <owl:Class rdf:about="http://example.org/game#PC">
     <rdfs:subClassOf rdf:resource="http://example.org/game#Plataforma"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Player">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#TipoDeJuego">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Game"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#PCPlayer">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Boot">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Item"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Miscellaneous">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Item"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Personaje">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Movil">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="http://example.org/game#Movil">
     <rdfs:subClassOf rdf:resource="http://example.org/game#Plataforma"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#ContentDescription">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#EmpresaClasificacion"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Armor">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Item"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Accion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Genero"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Participante">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Game"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Sandbox">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Genero"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#EsportsPlayer">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#PvE">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#MecanicaDeJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#ConsolePlayer">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#MobilePlayer">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#ContenidoExtra">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#EmpresaClasificacion"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#MecanicaDeJuego">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Game"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#MotorGrafico">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#EmpresaClasificacion"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#ElementoDelJuego">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Game"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#PC">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="http://example.org/game#Consola">
     <rdfs:subClassOf rdf:resource="http://example.org/game#Plataforma"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#RPG">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Genero"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Company">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#EmpresaClasificacion"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Gun">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Item"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#SinglePlayer">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#MecanicaDeJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Helmet">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Item"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Loot">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </owl:Class>
+  
+  <!-- Subclases de ElementoDelJuego -->
+  <owl:Class rdf:about="http://example.org/game#Item">
     <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Potion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Item"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Estrategia">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Genero"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Streamer">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Sword">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Item"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Item">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="http://example.org/game#Personaje">
     <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#NerdGamer">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#BoardGame">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#TipoDeJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Genero">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Game"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Dagger">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Item"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#ConsoleGame">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#TipoDeJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Plataforma">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Game"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Lanzamiento">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#EmpresaClasificacion"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Pegi">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#EmpresaClasificacion"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#BoardgamePlayer">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Supervivencia">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Genero"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#PvP">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#MecanicaDeJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Interfaz">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="http://example.org/game#Interfaz">
     <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#MobileGame">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#TipoDeJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Multijugador">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#MecanicaDeJuego"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#Game">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://example.org/game#EmpresaClasificacion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Game"/>
-  </rdf:Description>
+  </owl:Class>
+
+  <!-- PROPIEDADES DE DATOS -->
+  
+  <!-- Propiedades de Game -->
+  <owl:DatatypeProperty rdf:about="http://example.org/game#genero">
+    <rdfs:domain rdf:resource="http://example.org/game#Game"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Valores: Accion, RPG, Estrategia, Sandbox, Supervivencia</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="http://example.org/game#tipoMecanica">
+    <rdfs:domain rdf:resource="http://example.org/game#Game"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Valores: SinglePlayer, Multiplayer, PvP, PvE</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="http://example.org/game#numeroJugadores">
+    <rdfs:domain rdf:resource="http://example.org/game#Game"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="http://example.org/game#modalidadInteraccion">
+    <rdfs:domain rdf:resource="http://example.org/game#Game"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  
+  <!-- Propiedades de Movil -->
+  <owl:DatatypeProperty rdf:about="http://example.org/game#sistemaOperativo">
+    <rdfs:domain rdf:resource="http://example.org/game#Movil"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Valores: iOS, Android</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <!-- Propiedades de Consola -->
+  <owl:DatatypeProperty rdf:about="http://example.org/game#tipoConsola">
+    <rdfs:domain rdf:resource="http://example.org/game#Consola"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Valores: PS5, Nintendo Switch, Xbox Series X</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <!-- Propiedades de PC -->
+  <owl:DatatypeProperty rdf:about="http://example.org/game#sistemaOperativoPC">
+    <rdfs:domain rdf:resource="http://example.org/game#PC"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Valores: Windows, macOS, Linux</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <!-- Propiedades de Desarrollo -->
+  <owl:DatatypeProperty rdf:about="http://example.org/game#desarrollador">
+    <rdfs:domain rdf:resource="http://example.org/game#Desarrollo"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="http://example.org/game#motorGrafico">
+    <rdfs:domain rdf:resource="http://example.org/game#Desarrollo"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Valores: Unity, Unreal Engine, Godot</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="http://example.org/game#distribuidor">
+    <rdfs:domain rdf:resource="http://example.org/game#Desarrollo"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  
+  <!-- Propiedades de Item -->
+  <owl:DatatypeProperty rdf:about="http://example.org/game#tipoItem">
+    <rdfs:domain rdf:resource="http://example.org/game#Item"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Valores: Armor, Weapon, Consumable, Miscellaneous</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="http://example.org/game#rareza">
+    <rdfs:domain rdf:resource="http://example.org/game#Item"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Valores: Común, Raro, Épico, Legendario</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="http://example.org/game#valor">
+    <rdfs:domain rdf:resource="http://example.org/game#Item"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </owl:DatatypeProperty>
+  
+  <!-- Propiedades de Personaje -->
+  <owl:DatatypeProperty rdf:about="http://example.org/game#nombre">
+    <rdfs:domain rdf:resource="http://example.org/game#Personaje"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="http://example.org/game#nivel">
+    <rdfs:domain rdf:resource="http://example.org/game#Personaje"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="http://example.org/game#clase">
+    <rdfs:domain rdf:resource="http://example.org/game#Personaje"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Valores: Guerrero, Mago, Arquero, Ladrón</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <!-- Propiedades generales -->
+  <owl:DatatypeProperty rdf:about="http://example.org/game#fechaLanzamiento">
+    <rdfs:domain rdf:resource="http://example.org/game#Game"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="http://example.org/game#clasificacionEdad">
+    <rdfs:domain rdf:resource="http://example.org/game#Game"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Valores PEGI: 3, 7, 12, 16, 18</rdfs:comment>
+  </owl:DatatypeProperty>
+
 </rdf:RDF>
