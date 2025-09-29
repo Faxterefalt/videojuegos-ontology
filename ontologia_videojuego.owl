@@ -335,4 +335,21 @@
     <rdfs:comment>Valores: Local, Online, Hibrida</rdfs:comment>
   </owl:DatatypeProperty>
 
+  <!-- Instancia de Juego -->
+<owl:NamedIndividual rdf:about="http://example.org/game#Juego1">
+  <rdf:type rdf:resource="http://example.org/game#Juego"/>
+  <game:titulo>Legend of Heroes</game:titulo>
+  <game:genero>RPG</game:genero>
+  <game:fechaLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-05-01</game:fechaLanzamiento>
+</owl:NamedIndividual>
+
+<!-- Instancia de Personaje -->
+<owl:NamedIndividual rdf:about="http://example.org/game#Personaje1">
+  <rdf:type rdf:resource="http://example.org/game#Personaje"/>
+  <game:nombrePersonaje>Link</game:nombrePersonaje>
+  <game:nivelPersonaje rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</game:nivelPersonaje>
+  <game:clasePersonaje>Guerrero</game:clasePersonaje>
+</owl:NamedIndividual>
+
+
 </rdf:RDF>
