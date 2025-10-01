@@ -1217,6 +1217,17 @@
     
 
 
+    <!-- http://example.org/game#BeatSaber -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#BeatSaber">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <disponibleEn rdf:resource="http://example.org/game#OculusQuest"/>
+        <tieneTipo rdf:resource="http://example.org/game#RealidadVirtual"/>
+        <nombreJuego>Beat Saber</nombreJuego>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#BestRPG2022 -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#BestRPG2022">
@@ -1833,6 +1844,13 @@
     
 
 
+ HEAD
+    <!-- http://example.org/game#OculusQuest -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#OculusQuest">
+        <rdf:type rdf:resource="http://example.org/game#Plataforma"/>
+        <nombrePlataforma>Oculus Quest</nombrePlataforma>
+
     <!-- http://example.org/game#NintendoSwitch2 -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#NintendoSwitch2">
@@ -1840,6 +1858,7 @@
         <nombrePlataforma>Nintendo Switch 2</nombrePlataforma>
         <fabricante>Nintendo</fabricante>
         <generacion rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</generacion>
+ 63e118458ec5631714bab6aba98fac53fd798edf
     </owl:NamedIndividual>
     
 
@@ -2010,6 +2029,14 @@
     
 
 
+    <!-- http://example.org/game#RealidadVirtual -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#RealidadVirtual">
+        <rdf:type rdf:resource="http://example.org/game#TipoDeJuego"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#RiotGames -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#RiotGames">
@@ -2105,7 +2132,7 @@
         <desarrolladoPor rdf:resource="http://example.org/game#Nintendo"/>
         <disponibleEn rdf:resource="http://example.org/game#NintendoSwitch2"/>
         <editadoPor rdf:resource="http://example.org/game#Ubisoft"/>
-        <ganoPremio rdf:resource="http://example.org/game#GameOfTheYear2023"/>
+        <ganoPremio rdf:resource="http://example.org/game#GameOfTheYear2020"/>
         <jugadoPor rdf:resource="http://example.org/game#ConsoleKing"/>
         <jugadoPor rdf:resource="http://example.org/game#NintendoFan"/>
         <perteneceASaga rdf:resource="http://example.org/game#MarioSaga"/>
