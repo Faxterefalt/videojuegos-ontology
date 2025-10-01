@@ -14,6 +14,203 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.org/game#anioInicio -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#anioInicio"/>
+    
+
+
+    <!-- http://example.org/game#arquitectura -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#arquitectura"/>
+    
+
+
+    <!-- http://example.org/game#categoriaLore -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#categoriaLore"/>
+    
+
+
+    <!-- http://example.org/game#clasePersonaje -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#clasePersonaje"/>
+    
+
+
+    <!-- http://example.org/game#cooldown -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#cooldown"/>
+    
+
+
+    <!-- http://example.org/game#dano -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#dano"/>
+    
+
+
+    <!-- http://example.org/game#desarrolladorMotor -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#desarrolladorMotor"/>
+    
+
+
+    <!-- http://example.org/game#edadRecomendada -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#edadRecomendada"/>
+    
+
+
+    <!-- http://example.org/game#equipoPromedio -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#equipoPromedio"/>
+    
+
+
+    <!-- http://example.org/game#fabricante -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#fabricante"/>
+    
+
+
+    <!-- http://example.org/game#generacion -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#generacion"/>
+    
+
+
+    <!-- http://example.org/game#importanciaLore -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#importanciaLore"/>
+    
+
+
+    <!-- http://example.org/game#limiteCaracteres -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#limiteCaracteres"/>
+    
+
+
+    <!-- http://example.org/game#maxJugadores -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#maxJugadores"/>
+    
+
+
+    <!-- http://example.org/game#nivelPersonaje -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#nivelPersonaje"/>
+    
+
+
+    <!-- http://example.org/game#nombreTipo -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#nombreTipo"/>
+    
+
+
+    <!-- http://example.org/game#numeroJuegos -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#numeroJuegos"/>
+    
+
+
+    <!-- http://example.org/game#organizacion -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#organizacion"/>
+    
+
+
+    <!-- http://example.org/game#posicionPantalla -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#posicionPantalla"/>
+    
+
+
+    <!-- http://example.org/game#presupuestoPromedio -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#presupuestoPromedio"/>
+    
+
+
+    <!-- http://example.org/game#probabilidadDrop -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#probabilidadDrop"/>
+    
+
+
+    <!-- http://example.org/game#rareza -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#rareza"/>
+    
+
+
+    <!-- http://example.org/game#responsive -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#responsive"/>
+    
+
+
+    <!-- http://example.org/game#sistemaOperativo -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#sistemaOperativo"/>
+    
+
+
+    <!-- http://example.org/game#tipoChat -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#tipoChat"/>
+    
+
+
+    <!-- http://example.org/game#tipoConexion -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#tipoConexion"/>
+    
+
+
+    <!-- http://example.org/game#tipoInterfaz -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#tipoInterfaz"/>
+    
+
+
+    <!-- http://example.org/game#transparencia -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#transparencia"/>
+    
+
+
+    <!-- http://example.org/game#valor -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#valor"/>
+    
+
+
+    <!-- http://example.org/game#valorMinimo -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#valorMinimo"/>
+    
+
+
+    <!-- http://example.org/game#versionMinima -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#versionMinima"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Datatypes
     //
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -352,14 +549,14 @@
         <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:onProperty rdf:resource="http://example.org/game#edadJugador"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#edadJugador"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -400,14 +597,14 @@
         <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:onProperty rdf:resource="http://example.org/game#edadJugador"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#edadJugador"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -420,8 +617,8 @@
         <rdfs:subClassOf rdf:resource="http://example.org/game#Empresa"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#nombreEmpresa"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                <owl:onProperty rdf:resource="http://example.org/game#anioFundacion"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -432,8 +629,8 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#anioFundacion"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+                <owl:onProperty rdf:resource="http://example.org/game#nombreEmpresa"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -446,8 +643,8 @@
         <rdfs:subClassOf rdf:resource="http://example.org/game#Empresa"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#nombreEmpresa"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                <owl:onProperty rdf:resource="http://example.org/game#anioFundacion"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -458,8 +655,8 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#anioFundacion"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+                <owl:onProperty rdf:resource="http://example.org/game#nombreEmpresa"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -492,13 +689,13 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#paisOrigen"/>
+                <owl:onProperty rdf:resource="http://example.org/game#anioFundacion"/>
                 <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#anioFundacion"/>
+                <owl:onProperty rdf:resource="http://example.org/game#paisOrigen"/>
                 <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -512,12 +709,6 @@
         <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://example.org/game#edadJugador"/>
                 <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
             </owl:Restriction>
@@ -526,6 +717,12 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://example.org/game#paisJugador"/>
                 <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -607,8 +804,8 @@
     <owl:Class rdf:about="http://example.org/game#Juego">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#nombreJuego"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                <owl:onProperty rdf:resource="http://example.org/game#editadoPor"/>
+                <owl:someValuesFrom rdf:resource="http://example.org/game#Editora"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -631,18 +828,6 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#fechaPublicacion"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#editadoPor"/>
-                <owl:someValuesFrom rdf:resource="http://example.org/game#Editora"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://example.org/game#perteneceASaga"/>
                 <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
             </owl:Restriction>
@@ -651,6 +836,18 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://example.org/game#usaMotorGrafico"/>
                 <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://example.org/game#fechaPublicacion"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://example.org/game#nombreJuego"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -691,14 +888,14 @@
         <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:onProperty rdf:resource="http://example.org/game#edadJugador"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#edadJugador"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -725,14 +922,14 @@
         <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#nombreMotor"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                <owl:onProperty rdf:resource="http://example.org/game#versionMotor"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#versionMotor"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:onProperty rdf:resource="http://example.org/game#nombreMotor"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -773,14 +970,14 @@
         <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:onProperty rdf:resource="http://example.org/game#edadJugador"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#edadJugador"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -844,14 +1041,14 @@
     <owl:Class rdf:about="http://example.org/game#Premio">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#nombrePremio"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                <owl:onProperty rdf:resource="http://example.org/game#anioPremio"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#anioPremio"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+                <owl:onProperty rdf:resource="http://example.org/game#nombrePremio"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -878,14 +1075,14 @@
         <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                <owl:onProperty rdf:resource="http://example.org/game#paisJugador"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://example.org/game#paisJugador"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:onProperty rdf:resource="http://example.org/game#nombreJugador"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -903,6 +1100,880 @@
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.org/game#Activision -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Activision">
+        <rdf:type rdf:resource="http://example.org/game#Desarrolladora"/>
+        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1979</anioFundacion>
+        <nombreEmpresa>Activision</nombreEmpresa>
+        <paisOrigen>Estados Unidos</paisOrigen>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#AnaMartinez -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#AnaMartinez">
+        <rdf:type rdf:resource="http://example.org/game#CasualPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">28</edadJugador>
+        <nombreJugador>Ana Martínez</nombreJugador>
+        <paisJugador>Colombia</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#AndroidPlayer -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#AndroidPlayer">
+        <rdf:type rdf:resource="http://example.org/game#MobilePlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</edadJugador>
+        <nombreJugador>AndroidPlayer</nombreJugador>
+        <paisJugador>China</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#BestRPG2022 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#BestRPG2022">
+        <rdf:type rdf:resource="http://example.org/game#Premio"/>
+        <anioPremio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2022</anioPremio>
+        <nombrePremio>Best RPG 2022</nombrePremio>
+        <organizacion>Golden Joystick Awards</organizacion>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#BolaFuego -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#BolaFuego">
+        <rdf:type rdf:resource="http://example.org/game#Habilidad"/>
+        <nombreElemento>Bola de Fuego</nombreElemento>
+        <cooldown rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8</cooldown>
+        <dano rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">120</dano>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#CDProjektRed -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#CDProjektRed">
+        <rdf:type rdf:resource="http://example.org/game#Desarrolladora"/>
+        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2002</anioFundacion>
+        <nombreEmpresa>CD Projekt Red</nombreEmpresa>
+        <paisOrigen>Polonia</paisOrigen>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#CallOfDuty -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#CallOfDuty">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
+        <disponibleEn rdf:resource="http://example.org/game#PCGamingAlto"/>
+        <disponibleEn rdf:resource="http://example.org/game#PlayStation5"/>
+        <disponibleEn rdf:resource="http://example.org/game#XboxSeriesX"/>
+        <editadoPor rdf:resource="http://example.org/game#Ubisoft"/>
+        <jugadoPor rdf:resource="http://example.org/game#ConsoleKing"/>
+        <jugadoPor rdf:resource="http://example.org/game#ElRubius"/>
+        <jugadoPor rdf:resource="http://example.org/game#PlayStationPro"/>
+        <jugadoPor rdf:resource="http://example.org/game#Pokimane"/>
+        <jugadoPor rdf:resource="http://example.org/game#XboxMaster"/>
+        <perteneceASaga rdf:resource="http://example.org/game#CallOfDutySaga"/>
+        <tieneGenero rdf:resource="http://example.org/game#FPS"/>
+        <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
+        <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
+        <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
+        <usaElemento rdf:resource="http://example.org/game#ChatEquipo"/>
+        <usaElemento rdf:resource="http://example.org/game#CronicasGuerra"/>
+        <usaElemento rdf:resource="http://example.org/game#LootComun"/>
+        <usaMotorGrafico rdf:resource="http://example.org/game#Unity2023"/>
+        <descripcionJuego>Shooter en primera persona</descripcionJuego>
+        <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-10-25</fechaPublicacion>
+        <nombreJuego>Call of Duty: Modern Warfare</nombreJuego>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">88</popularidad>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#CallOfDutySaga -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#CallOfDutySaga">
+        <rdf:type rdf:resource="http://example.org/game#Saga"/>
+        <nombreSaga>Call of Duty</nombreSaga>
+        <anioInicio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2003</anioInicio>
+        <numeroJuegos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</numeroJuegos>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#CarlosRodriguez -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#CarlosRodriguez">
+        <rdf:type rdf:resource="http://example.org/game#CasualPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">35</edadJugador>
+        <nombreJugador>Carlos Rodríguez</nombreJugador>
+        <paisJugador>Chile</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#ChatEquipo -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#ChatEquipo">
+        <rdf:type rdf:resource="http://example.org/game#Chat"/>
+        <nombreElemento>Chat de Equipo</nombreElemento>
+        <limiteCaracteres rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200</limiteCaracteres>
+        <tipoChat>Privado</tipoChat>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#ChatGlobal -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#ChatGlobal">
+        <rdf:type rdf:resource="http://example.org/game#Chat"/>
+        <nombreElemento>Chat Global</nombreElemento>
+        <limiteCaracteres rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">150</limiteCaracteres>
+        <tipoChat>Público</tipoChat>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#CofresOro -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#CofresOro">
+        <rdf:type rdf:resource="http://example.org/game#Loot"/>
+        <nombreElemento>Cofre de Oro</nombreElemento>
+        <probabilidadDrop rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.05</probabilidadDrop>
+        <valorMinimo rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</valorMinimo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#ConsoleKing -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#ConsoleKing">
+        <rdf:type rdf:resource="http://example.org/game#ConsolePlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">32</edadJugador>
+        <nombreJugador>ConsoleKing</nombreJugador>
+        <paisJugador>Canadá</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#CronicasGuerra -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#CronicasGuerra">
+        <rdf:type rdf:resource="http://example.org/game#Lore"/>
+        <nombreElemento>Crónicas de Guerra</nombreElemento>
+        <categoriaLore>Historia</categoriaLore>
+        <importanciaLore>Media</importanciaLore>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Curacion -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Curacion">
+        <rdf:type rdf:resource="http://example.org/game#Habilidad"/>
+        <nombreElemento>Curación</nombreElemento>
+        <cooldown rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15</cooldown>
+        <dano rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">-80</dano>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#CyberPunk2077 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#CyberPunk2077">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <descripcionJuego>RPG futurista de mundo abierto</descripcionJuego>
+        <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2020-12-10</fechaPublicacion>
+        <nombreJuego>Cyberpunk 2077</nombreJuego>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">78</popularidad>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#ElRubius -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#ElRubius">
+        <rdf:type rdf:resource="http://example.org/game#Streamer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">37</edadJugador>
+        <nombreJugador>ElRubius</nombreJugador>
+        <paisJugador>España</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#ElectronicArts -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#ElectronicArts">
+        <rdf:type rdf:resource="http://example.org/game#Editora"/>
+        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1982</anioFundacion>
+        <nombreEmpresa>Electronic Arts</nombreEmpresa>
+        <paisOrigen>Estados Unidos</paisOrigen>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#EspadaLegendaria -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#EspadaLegendaria">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Espada Legendaria</nombreElemento>
+        <rareza>Legendario</rareza>
+        <valor rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5000</valor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#FPS -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#FPS">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <nombreGenero>First Person Shooter</nombreGenero>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">90</popularidad>
+        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">18</edadRecomendada>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Faker -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Faker">
+        <rdf:type rdf:resource="http://example.org/game#EsportsPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">27</edadJugador>
+        <nombreJugador>Faker</nombreJugador>
+        <paisJugador>Corea del Sur</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#GameOfTheYear2023 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#GameOfTheYear2023">
+        <rdf:type rdf:resource="http://example.org/game#Premio"/>
+        <anioPremio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2023</anioPremio>
+        <nombrePremio>Game of the Year 2023</nombrePremio>
+        <organizacion>The Game Awards</organizacion>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#GamerguyPS5 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#GamerguyPS5">
+        <rdf:type rdf:resource="http://example.org/game#ConsolePlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">24</edadJugador>
+        <nombreJugador>GamerGuy_PS5</nombreJugador>
+        <paisJugador>Estados Unidos</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Geralt -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Geralt">
+        <rdf:type rdf:resource="http://example.org/game#Personaje"/>
+        <nombreElemento>Geralt de Rivia</nombreElemento>
+        <clasePersonaje>Brujo</clasePersonaje>
+        <nivelPersonaje rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</nivelPersonaje>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#HUDCompleto -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#HUDCompleto">
+        <rdf:type rdf:resource="http://example.org/game#HUD"/>
+        <nombreElemento>HUD Completo</nombreElemento>
+        <posicionPantalla>Bordes completos</posicionPantalla>
+        <transparencia rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</transparencia>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#HUDMinimalista -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#HUDMinimalista">
+        <rdf:type rdf:resource="http://example.org/game#HUD"/>
+        <nombreElemento>HUD Minimalista</nombreElemento>
+        <posicionPantalla>Esquinas</posicionPantalla>
+        <transparencia rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">80</transparencia>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#HighFPSGamer -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#HighFPSGamer">
+        <rdf:type rdf:resource="http://example.org/game#PCPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">25</edadJugador>
+        <nombreJugador>HighFPSGamer</nombreJugador>
+        <paisJugador>Suecia</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#HistoriaAncestral -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#HistoriaAncestral">
+        <rdf:type rdf:resource="http://example.org/game#Lore"/>
+        <nombreElemento>Historia Ancestral</nombreElemento>
+        <categoriaLore>Mitología</categoriaLore>
+        <importanciaLore>Alta</importanciaLore>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Inventario -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Inventario">
+        <rdf:type rdf:resource="http://example.org/game#Interfaz"/>
+        <nombreElemento>Inventario</nombreElemento>
+        <responsive rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</responsive>
+        <tipoInterfaz>Gestión</tipoInterfaz>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#JuanPerez -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#JuanPerez">
+        <rdf:type rdf:resource="http://example.org/game#CasualPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">25</edadJugador>
+        <nombreJugador>Juan Pérez</nombreJugador>
+        <paisJugador>España</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#JuegoAAA -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#JuegoAAA">
+        <rdf:type rdf:resource="http://example.org/game#TipoDeJuego"/>
+        <equipoPromedio rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200</equipoPromedio>
+        <nombreTipo>Juego AAA</nombreTipo>
+        <presupuestoPromedio rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50000000</presupuestoPromedio>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#JuegoIndie -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#JuegoIndie">
+        <rdf:type rdf:resource="http://example.org/game#TipoDeJuego"/>
+        <equipoPromedio rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</equipoPromedio>
+        <nombreTipo>Juego Indie</nombreTipo>
+        <presupuestoPromedio rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100000</presupuestoPromedio>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#KeyboardWarrior -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#KeyboardWarrior">
+        <rdf:type rdf:resource="http://example.org/game#PCPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">31</edadJugador>
+        <nombreJugador>KeyboardWarrior</nombreJugador>
+        <paisJugador>Corea del Sur</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#LeagueOfLegends -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#LeagueOfLegends">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <descripcionJuego>MOBA multijugador</descripcionJuego>
+        <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-10-27</fechaPublicacion>
+        <nombreJuego>League of Legends</nombreJuego>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">90</popularidad>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#LootComun -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#LootComun">
+        <rdf:type rdf:resource="http://example.org/game#Loot"/>
+        <nombreElemento>Loot Común</nombreElemento>
+        <probabilidadDrop rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.75</probabilidadDrop>
+        <valorMinimo rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</valorMinimo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#MariaGomez -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#MariaGomez">
+        <rdf:type rdf:resource="http://example.org/game#CasualPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</edadJugador>
+        <nombreJugador>María Gómez</nombreJugador>
+        <paisJugador>México</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#MasterChief -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#MasterChief">
+        <rdf:type rdf:resource="http://example.org/game#Personaje"/>
+        <nombreElemento>Master Chief</nombreElemento>
+        <clasePersonaje>Soldado</clasePersonaje>
+        <nivelPersonaje rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</nivelPersonaje>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#MenuPrincipal -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#MenuPrincipal">
+        <rdf:type rdf:resource="http://example.org/game#Interfaz"/>
+        <nombreElemento>Menú Principal</nombreElemento>
+        <responsive rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</responsive>
+        <tipoInterfaz>Navegación</tipoInterfaz>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#MineCraft -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#MineCraft">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <descripcionJuego>Juego de construcción y supervivencia</descripcionJuego>
+        <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-11-18</fechaPublicacion>
+        <nombreJuego>Minecraft</nombreJuego>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">92</popularidad>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#MobileGamer1 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#MobileGamer1">
+        <rdf:type rdf:resource="http://example.org/game#MobilePlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">22</edadJugador>
+        <nombreJugador>MobileGamer_iOS</nombreJugador>
+        <paisJugador>India</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Mojang -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Mojang">
+        <rdf:type rdf:resource="http://example.org/game#Desarrolladora"/>
+        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2009</anioFundacion>
+        <nombreEmpresa>Mojang Studios</nombreEmpresa>
+        <paisOrigen>Suecia</paisOrigen>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#MultijugadorOnline -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#MultijugadorOnline">
+        <rdf:type rdf:resource="http://example.org/game#Modalidad"/>
+        <nombreModalidad>Multijugador Online</nombreModalidad>
+        <maxJugadores rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</maxJugadores>
+        <tipoConexion>Internet</tipoConexion>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Ninja -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Ninja">
+        <rdf:type rdf:resource="http://example.org/game#EsportsPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">32</edadJugador>
+        <nombreJugador>Ninja</nombreJugador>
+        <paisJugador>Estados Unidos</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Nintendo -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Nintendo">
+        <rdf:type rdf:resource="http://example.org/game#Desarrolladora"/>
+        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1889</anioFundacion>
+        <nombreEmpresa>Nintendo</nombreEmpresa>
+        <paisOrigen>Japón</paisOrigen>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#NintendoFan -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#NintendoFan">
+        <rdf:type rdf:resource="http://example.org/game#ConsolePlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">19</edadJugador>
+        <nombreJugador>NintendoFan</nombreJugador>
+        <paisJugador>Japón</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#PCBasico -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#PCBasico">
+        <rdf:type rdf:resource="http://example.org/game#PC"/>
+        <nombrePlataforma>PC Básico</nombrePlataforma>
+        <arquitectura>x64</arquitectura>
+        <sistemaOperativo>Windows 10</sistemaOperativo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#PCGamingAlto -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#PCGamingAlto">
+        <rdf:type rdf:resource="http://example.org/game#PC"/>
+        <nombrePlataforma>PC Gaming Alto Rendimiento</nombrePlataforma>
+        <arquitectura>x64</arquitectura>
+        <sistemaOperativo>Windows 11</sistemaOperativo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#PCMasterRace -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#PCMasterRace">
+        <rdf:type rdf:resource="http://example.org/game#PCPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">29</edadJugador>
+        <nombreJugador>PCMasterRace</nombreJugador>
+        <paisJugador>Alemania</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#PedroSanchez -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#PedroSanchez">
+        <rdf:type rdf:resource="http://example.org/game#CasualPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">22</edadJugador>
+        <nombreJugador>Pedro Sánchez</nombreJugador>
+        <paisJugador>Argentina</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#PewDiePie -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#PewDiePie">
+        <rdf:type rdf:resource="http://example.org/game#Streamer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40</edadJugador>
+        <nombreJugador>PewDiePie</nombreJugador>
+        <paisJugador>Suecia</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#PlayStation5 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#PlayStation5">
+        <rdf:type rdf:resource="http://example.org/game#Consola"/>
+        <nombrePlataforma>PlayStation 5</nombrePlataforma>
+        <fabricante>Sony</fabricante>
+        <generacion rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">9</generacion>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#PlayStationPro -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#PlayStationPro">
+        <rdf:type rdf:resource="http://example.org/game#ConsolePlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">26</edadJugador>
+        <nombreJugador>PlayStationPro</nombreJugador>
+        <paisJugador>Brasil</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#PocionVida -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#PocionVida">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Poción de Vida</nombreElemento>
+        <rareza>Común</rareza>
+        <valor rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</valor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Pokimane -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Pokimane">
+        <rdf:type rdf:resource="http://example.org/game#Streamer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">23</edadJugador>
+        <nombreJugador>Pokimane</nombreJugador>
+        <paisJugador>Canadá</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#RPGFantasia -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#RPGFantasia">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <nombreGenero>RPG de Fantasía</nombreGenero>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">85</popularidad>
+        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</edadRecomendada>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#RTXGamer -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#RTXGamer">
+        <rdf:type rdf:resource="http://example.org/game#PCPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">28</edadJugador>
+        <nombreJugador>RTXGamer</nombreJugador>
+        <paisJugador>Australia</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#RiotGames -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#RiotGames">
+        <rdf:type rdf:resource="http://example.org/game#Desarrolladora"/>
+        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2006</anioFundacion>
+        <nombreEmpresa>Riot Games</nombreEmpresa>
+        <paisOrigen>Estados Unidos</paisOrigen>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#SamsungGalaxy -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#SamsungGalaxy">
+        <rdf:type rdf:resource="http://example.org/game#Movil"/>
+        <nombrePlataforma>Samsung Galaxy S23</nombrePlataforma>
+        <sistemaOperativo>Android</sistemaOperativo>
+        <versionMinima>13.0</versionMinima>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Shroud -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Shroud">
+        <rdf:type rdf:resource="http://example.org/game#EsportsPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">29</edadJugador>
+        <nombreJugador>Shroud</nombreJugador>
+        <paisJugador>Canadá</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#SmartphoneGamer -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#SmartphoneGamer">
+        <rdf:type rdf:resource="http://example.org/game#MobilePlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">24</edadJugador>
+        <nombreJugador>SmartphoneGamer</nombreJugador>
+        <paisJugador>Filipinas</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#SteamGamer -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#SteamGamer">
+        <rdf:type rdf:resource="http://example.org/game#PCPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">23</edadJugador>
+        <nombreJugador>SteamGamer</nombreJugador>
+        <paisJugador>Francia</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#TabletGamer -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#TabletGamer">
+        <rdf:type rdf:resource="http://example.org/game#MobilePlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">33</edadJugador>
+        <nombreJugador>TabletGamer</nombreJugador>
+        <paisJugador>Singapur</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#TenZ -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#TenZ">
+        <rdf:type rdf:resource="http://example.org/game#EsportsPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">23</edadJugador>
+        <nombreJugador>TenZ</nombreJugador>
+        <paisJugador>Canadá</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#TheGrefg -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#TheGrefg">
+        <rdf:type rdf:resource="http://example.org/game#Streamer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">34</edadJugador>
+        <nombreJugador>TheGrefg</nombreJugador>
+        <paisJugador>España</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#TheWitcher3 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#TheWitcher3">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <descripcionJuego>RPG de mundo abierto</descripcionJuego>
+        <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2015-05-19</fechaPublicacion>
+        <nombreJuego>The Witcher 3: Wild Hunt</nombreJuego>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">95</popularidad>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#TheWitcherSaga -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#TheWitcherSaga">
+        <rdf:type rdf:resource="http://example.org/game#Saga"/>
+        <nombreSaga>The Witcher</nombreSaga>
+        <anioInicio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2007</anioInicio>
+        <numeroJuegos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</numeroJuegos>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#TouchScreenPro -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#TouchScreenPro">
+        <rdf:type rdf:resource="http://example.org/game#MobilePlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">26</edadJugador>
+        <nombreJugador>TouchScreenPro</nombreJugador>
+        <paisJugador>Tailandia</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Ubisoft -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Ubisoft">
+        <rdf:type rdf:resource="http://example.org/game#Editora"/>
+        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1986</anioFundacion>
+        <nombreEmpresa>Ubisoft</nombreEmpresa>
+        <paisOrigen>Francia</paisOrigen>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#UnJugador -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#UnJugador">
+        <rdf:type rdf:resource="http://example.org/game#Modalidad"/>
+        <nombreModalidad>Un Jugador</nombreModalidad>
+        <maxJugadores rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</maxJugadores>
+        <tipoConexion>Local</tipoConexion>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Unity2023 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Unity2023">
+        <rdf:type rdf:resource="http://example.org/game#MotorGrafico"/>
+        <nombreMotor>Unity</nombreMotor>
+        <versionMotor>2023.2</versionMotor>
+        <desarrolladorMotor>Unity Technologies</desarrolladorMotor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#UnrealEngine5 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#UnrealEngine5">
+        <rdf:type rdf:resource="http://example.org/game#MotorGrafico"/>
+        <nombreMotor>Unreal Engine 5</nombreMotor>
+        <versionMotor>5.3</versionMotor>
+        <desarrolladorMotor>Epic Games</desarrolladorMotor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#XboxMaster -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#XboxMaster">
+        <rdf:type rdf:resource="http://example.org/game#ConsolePlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">27</edadJugador>
+        <nombreJugador>XboxMaster</nombreJugador>
+        <paisJugador>Reino Unido</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#XboxSeriesX -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#XboxSeriesX">
+        <rdf:type rdf:resource="http://example.org/game#Consola"/>
+        <nombrePlataforma>Xbox Series X</nombrePlataforma>
+        <fabricante>Microsoft</fabricante>
+        <generacion rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">9</generacion>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#iPhone14 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#iPhone14">
+        <rdf:type rdf:resource="http://example.org/game#Movil"/>
+        <nombrePlataforma>iPhone 14</nombrePlataforma>
+        <sistemaOperativo>iOS</sistemaOperativo>
+        <versionMinima>16.0</versionMinima>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#s1mple -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#s1mple">
+        <rdf:type rdf:resource="http://example.org/game#EsportsPlayer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">25</edadJugador>
+        <nombreJugador>s1mple</nombreJugador>
+        <paisJugador>Ucrania</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#xQc -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#xQc">
+        <rdf:type rdf:resource="http://example.org/game#Streamer"/>
+        <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">27</edadJugador>
+        <nombreJugador>xQc</nombreJugador>
+        <paisJugador>Canadá</paisJugador>
+    </owl:NamedIndividual>
 </rdf:RDF>
 
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
 
