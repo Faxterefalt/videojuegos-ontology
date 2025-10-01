@@ -1114,6 +1114,17 @@
     
 
 
+    <!-- http://example.org/game#Accion -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Accion">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <nombreGenero>Disparos y poderes</nombreGenero>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">47</popularidad>
+        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">16</edadRecomendada>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#Activision -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#Activision">
@@ -1217,6 +1228,7 @@
         <jugadoPor rdf:resource="http://example.org/game#Pokimane"/>
         <jugadoPor rdf:resource="http://example.org/game#XboxMaster"/>
         <perteneceASaga rdf:resource="http://example.org/game#CallOfDutySaga"/>
+        <tieneGenero rdf:resource="http://example.org/game#Accion"/>
         <tieneGenero rdf:resource="http://example.org/game#FPS"/>
         <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
@@ -1325,6 +1337,21 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#CyberPunk2077">
         <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#CDProjektRed"/>
+        <disponibleEn rdf:resource="http://example.org/game#PCGamingAlto"/>
+        <disponibleEn rdf:resource="http://example.org/game#PlayStation5"/>
+        <disponibleEn rdf:resource="http://example.org/game#XboxSeriesX"/>
+        <editadoPor rdf:resource="http://example.org/game#ElectronicArts"/>
+        <ganoPremio rdf:resource="http://example.org/game#GameOfTheYear2023"/>
+        <jugadoPor rdf:resource="http://example.org/game#GamerguyPS5"/>
+        <jugadoPor rdf:resource="http://example.org/game#MariaGomez"/>
+        <jugadoPor rdf:resource="http://example.org/game#PCMasterRace"/>
+        <tieneGenero rdf:resource="http://example.org/game#Accion"/>
+        <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
+        <tieneModalidad rdf:resource="http://example.org/game#PvE"/>
+        <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
+        <usaElemento rdf:resource="http://example.org/game#EscopetaRecortada"/>
+        <usaMotorGrafico rdf:resource="http://example.org/game#Unity2023"/>
         <descripcionJuego>RPG futurista de mundo abierto</descripcionJuego>
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2020-12-10</fechaPublicacion>
         <nombreJuego>Cyberpunk 2077</nombreJuego>
@@ -1535,6 +1562,24 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#LeagueOfLegends">
         <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#RiotGames"/>
+        <disponibleEn rdf:resource="http://example.org/game#PCBasico"/>
+        <disponibleEn rdf:resource="http://example.org/game#PlayStation5"/>
+        <disponibleEn rdf:resource="http://example.org/game#XboxSeriesX"/>
+        <editadoPor rdf:resource="http://example.org/game#Ubisoft"/>
+        <jugadoPor rdf:resource="http://example.org/game#ElRubius"/>
+        <jugadoPor rdf:resource="http://example.org/game#Pokimane"/>
+        <jugadoPor rdf:resource="http://example.org/game#TheGrefg"/>
+        <jugadoPor rdf:resource="http://example.org/game#xQc"/>
+        <tieneGenero rdf:resource="http://example.org/game#MOBA"/>
+        <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
+        <tieneModalidad rdf:resource="http://example.org/game#PvP"/>
+        <tieneTipo rdf:resource="http://example.org/game#JuegoIndie"/>
+        <usaElemento rdf:resource="http://example.org/game#BolaFuego"/>
+        <usaElemento rdf:resource="http://example.org/game#ChatGlobal"/>
+        <usaElemento rdf:resource="http://example.org/game#HUDMinimalista"/>
+        <usaElemento rdf:resource="http://example.org/game#PocionVida"/>
+        <usaMotorGrafico rdf:resource="http://example.org/game#Unity2023"/>
         <descripcionJuego>MOBA multijugador</descripcionJuego>
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-10-27</fechaPublicacion>
         <nombreJuego>League of Legends</nombreJuego>
@@ -1602,6 +1647,27 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#MineCraft">
         <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Mojang"/>
+        <disponibleEn rdf:resource="http://example.org/game#PCGamingAlto"/>
+        <disponibleEn rdf:resource="http://example.org/game#SamsungGalaxy"/>
+        <disponibleEn rdf:resource="http://example.org/game#XboxSeriesX"/>
+        <disponibleEn rdf:resource="http://example.org/game#iPhone14"/>
+        <editadoPor rdf:resource="http://example.org/game#ElectronicArts"/>
+        <ganoPremio rdf:resource="http://example.org/game#BestSoundtrack2024"/>
+        <jugadoPor rdf:resource="http://example.org/game#AndroidPlayer"/>
+        <jugadoPor rdf:resource="http://example.org/game#ElRubius"/>
+        <jugadoPor rdf:resource="http://example.org/game#JuanPerez"/>
+        <jugadoPor rdf:resource="http://example.org/game#Pokimane"/>
+        <jugadoPor rdf:resource="http://example.org/game#TheGrefg"/>
+        <tieneGenero rdf:resource="http://example.org/game#Sandbox"/>
+        <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
+        <tieneModalidad rdf:resource="http://example.org/game#PvP"/>
+        <tieneTipo rdf:resource="http://example.org/game#JuegoIndie"/>
+        <usaElemento rdf:resource="http://example.org/game#HUDCompleto"/>
+        <usaElemento rdf:resource="http://example.org/game#Inventario"/>
+        <usaElemento rdf:resource="http://example.org/game#MundoMagico"/>
+        <usaElemento rdf:resource="http://example.org/game#PicoDiamante"/>
+        <usaMotorGrafico rdf:resource="http://example.org/game#UnrealEngine5"/>
         <descripcionJuego>Juego de construcción y supervivencia</descripcionJuego>
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-11-18</fechaPublicacion>
         <nombreJuego>Minecraft</nombreJuego>
@@ -1796,6 +1862,28 @@
     
 
 
+    <!-- http://example.org/game#PvE -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#PvE">
+        <rdf:type rdf:resource="http://example.org/game#Modalidad"/>
+        <nombreModalidad>Jugador contra Máquina</nombreModalidad>
+        <maxJugadores rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</maxJugadores>
+        <tipoConexion>Local</tipoConexion>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#PvP -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#PvP">
+        <rdf:type rdf:resource="http://example.org/game#Modalidad"/>
+        <nombreModalidad>Jugador contra Jugador</nombreModalidad>
+        <maxJugadores rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</maxJugadores>
+        <tipoConexion>Internet</tipoConexion>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#RPGFantasia -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#RPGFantasia">
@@ -1932,6 +2020,26 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#TheWitcher3">
         <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
+        <disponibleEn rdf:resource="http://example.org/game#PCGamingAlto"/>
+        <disponibleEn rdf:resource="http://example.org/game#PlayStation5"/>
+        <disponibleEn rdf:resource="http://example.org/game#XboxSeriesX"/>
+        <editadoPor rdf:resource="http://example.org/game#Ubisoft"/>
+        <ganoPremio rdf:resource="http://example.org/game#BestRPG2022"/>
+        <jugadoPor rdf:resource="http://example.org/game#Faker"/>
+        <jugadoPor rdf:resource="http://example.org/game#MariaGomez"/>
+        <jugadoPor rdf:resource="http://example.org/game#PewDiePie"/>
+        <perteneceASaga rdf:resource="http://example.org/game#TheWitcherSaga"/>
+        <tieneGenero rdf:resource="http://example.org/game#RPGFantasia"/>
+        <tieneModalidad rdf:resource="http://example.org/game#PvE"/>
+        <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
+        <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
+        <usaElemento rdf:resource="http://example.org/game#BallestaEncantada"/>
+        <usaElemento rdf:resource="http://example.org/game#Curacion"/>
+        <usaElemento rdf:resource="http://example.org/game#Geralt"/>
+        <usaElemento rdf:resource="http://example.org/game#HistoriaAncestral"/>
+        <usaElemento rdf:resource="http://example.org/game#Inventario"/>
+        <usaMotorGrafico rdf:resource="http://example.org/game#Unity2023"/>
         <descripcionJuego>RPG de mundo abierto</descripcionJuego>
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2015-05-19</fechaPublicacion>
         <nombreJuego>The Witcher 3: Wild Hunt</nombreJuego>
