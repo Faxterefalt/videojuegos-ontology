@@ -1158,6 +1158,27 @@
     
 
 
+    <!-- http://example.org/game#BG3MejorNarrativa2023 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#BG3MejorNarrativa2023">
+        <rdf:type rdf:resource="http://example.org/game#Premio"/>
+        <anioPremio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2023</anioPremio>
+        <nombrePremio>The Game Awards: Mejor Narrativa</nombrePremio>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#BaldursGate3 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#BaldursGate3">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <ganoPremio rdf:resource="http://example.org/game#BG3MejorNarrativa2023"/>
+        <descripcionJuego>Un RPG de fantasia epica</descripcionJuego>
+        <nombreJuego>Baldurs Gate 3</nombreJuego>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#BallestaEncantada -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#BallestaEncantada">
