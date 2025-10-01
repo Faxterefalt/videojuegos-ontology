@@ -1,454 +1,105 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rdf:RDF
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-   xmlns:owl="http://www.w3.org/2002/07/owl#"
-   xmlns:game="http://example.org/game#">
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://example.org/game#"
+     xml:base="http://example.org/game"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
 
-  <!-- ==================== CLASES PRINCIPALES ==================== -->
-  
-  <!-- Clase raíz con restricciones -->
-  <owl:Class rdf:about="http://example.org/game#Juego">
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:onProperty rdf:resource="http://example.org/game#titulo"/>
-        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:onProperty rdf:resource="http://example.org/game#genero"/>
-        <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:onProperty rdf:resource="http://example.org/game#fechaLanzamiento"/>
-        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:onProperty rdf:resource="http://example.org/game#desarrolladoPor"/>
-        <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-  </owl:Class>
-  
-  <!-- Subclases principales de Juego -->
-  <owl:Class rdf:about="http://example.org/game#TipoDeJuego">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Participante">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#ElementoDelJuego">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Empresa">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Modalidad">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
-  </owl:Class>
+    <owl:Ontology rdf:about="http://example.org/game"/>
 
-  <!-- ==================== SUBCLASES DE TIPODEJUEGO ==================== -->
-  
-  <owl:Class rdf:about="http://example.org/game#Clasificacion">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#TipoDeJuego"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Plataforma">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#TipoDeJuego"/>
-  </owl:Class>
+    <!-- Clases principales -->
+    <owl:Class rdf:about="http://example.org/game#Juego"/>
+    <owl:Class rdf:about="http://example.org/game#Participante"/>
+    <owl:Class rdf:about="http://example.org/game#Plataforma"/>
+    <owl:Class rdf:about="http://example.org/game#Premio"/>
 
-  <!-- Subclases de Plataforma -->
-  <owl:Class rdf:about="http://example.org/game#Consola">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Plataforma"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#PC">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Plataforma"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Movil">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Plataforma"/>
-  </owl:Class>
+    <!-- Subclases de Juego -->
+    <owl:Class rdf:about="http://example.org/game#ElementoDelJuego">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Modalidad">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Genero">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#TipoDeJuego">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#MotorGrafico">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Saga">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Empresa">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
+    </owl:Class>
 
-  <!-- ==================== SUBCLASES DE PARTICIPANTE ==================== -->
-  
-  <owl:Class rdf:about="http://example.org/game#NerdGamer">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#ConsolePlayer">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Player">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#MobilePlayer">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#PCPlayer">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
-  </owl:Class>
+    <!-- Subclases de ElementoDelJuego -->
+    <owl:Class rdf:about="http://example.org/game#Chat">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Habilidad">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#HUD">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Interfaz">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Item">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Loot">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Lore">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Personaje">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
+    </owl:Class>
 
-  <!-- ==================== SUBCLASES DE ELEMENTODELJUEGO ==================== -->
-  
-  <owl:Class rdf:about="http://example.org/game#Item">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </owl:Class>
-  
-  <!-- Personaje con restricciones -->
-  <owl:Class rdf:about="http://example.org/game#Personaje">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:onProperty rdf:resource="http://example.org/game#nombrePersonaje"/>
-        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:onProperty rdf:resource="http://example.org/game#nivelPersonaje"/>
-        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:onProperty rdf:resource="http://example.org/game#clasePersonaje"/>
-        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Interfaz">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Lore">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Loot">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Habilidad">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Chat">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#HUD">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-  </owl:Class>
+    <!-- Subclases de Empresa -->
+    <owl:Class rdf:about="http://example.org/game#Desarrolladora">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Empresa"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Editora">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Empresa"/>
+    </owl:Class>
 
-  <!-- ==================== SUBCLASES DE EMPRESA ==================== -->
-  
-  <owl:Class rdf:about="http://example.org/game#ContenidoExtra">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Empresa"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#MotorGrafico">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Empresa"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Compania">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Empresa"/>
-  </owl:Class>
-  
-  <owl:Class rdf:about="http://example.org/game#Lanzamiento">
-    <rdfs:subClassOf rdf:resource="http://example.org/game#Empresa"/>
-  </owl:Class>
+    <!-- Subclases de Participante (tipos de jugadores) -->
+    <owl:Class rdf:about="http://example.org/game#PCPlayer">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#ConsolePlayer">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#MobilePlayer">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#EsportsPlayer">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#CasualPlayer">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Streamer">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Participante"/>
+    </owl:Class>
 
-  <!-- ==================== PROPIEDADES DE OBJETOS ==================== -->
-  
-  <!-- Nueva Object Property para relacionar Juego con Compania -->
-  <owl:ObjectProperty rdf:about="http://example.org/game#desarrolladoPor">
-    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-    <rdfs:range rdf:resource="http://example.org/game#Compania"/>
-    <rdfs:comment>Relaciona un juego con la compañía que lo desarrolló</rdfs:comment>
-  </owl:ObjectProperty>
-
-  <!-- ==================== PROPIEDADES DE DATOS ==================== -->
-  
-  <!-- Propiedades de Juego con restricciones de valores -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#genero">
-    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-    <rdfs:range>
-      <owl:DataRange>
-        <owl:oneOf rdf:parseType="Resource">
-          <rdf:first>Accion</rdf:first>
-          <rdf:rest rdf:parseType="Resource">
-            <rdf:first>RPG</rdf:first>
-            <rdf:rest rdf:parseType="Resource">
-              <rdf:first>Estrategia</rdf:first>
-              <rdf:rest rdf:parseType="Resource">
-                <rdf:first>Sandbox</rdf:first>
-                <rdf:rest rdf:parseType="Resource">
-                  <rdf:first>Supervivencia</rdf:first>
-                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                </rdf:rest>
-              </rdf:rest>
-            </rdf:rest>
-          </rdf:rest>
-        </owl:oneOf>
-      </owl:DataRange>
-    </rdfs:range>
-    <rdfs:comment>Valores permitidos: Accion, RPG, Estrategia, Sandbox, Supervivencia</rdfs:comment>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#titulo">
-    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#fechaLanzamiento">
-    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-  </owl:DatatypeProperty>
-
-  <!-- Propiedades de Clasificacion -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#sistemaClasificacion">
-    <rdfs:domain rdf:resource="http://example.org/game#Clasificacion"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:comment>Valores: PEGI, ESRB, CERO</rdfs:comment>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#edadMinima">
-    <rdfs:domain rdf:resource="http://example.org/game#Clasificacion"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#descripcionContenido">
-    <rdfs:domain rdf:resource="http://example.org/game#Clasificacion"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-
-  <!-- Propiedades de Consola -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#tipoConsola">
-    <rdfs:domain rdf:resource="http://example.org/game#Consola"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:comment>Valores: PS5, Nintendo Switch, Xbox Series X</rdfs:comment>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#generacionConsola">
-    <rdfs:domain rdf:resource="http://example.org/game#Consola"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#fabricanteConsola">
-    <rdfs:domain rdf:resource="http://example.org/game#Consola"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-
-  <!-- Propiedades de PC -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#sistemaOperativoPC">
-    <rdfs:domain rdf:resource="http://example.org/game#PC"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:comment>Valores: Windows, macOS, Linux</rdfs:comment>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#requisitosMinimos">
-    <rdfs:domain rdf:resource="http://example.org/game#PC"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#arquitectura">
-    <rdfs:domain rdf:resource="http://example.org/game#PC"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:comment>Valores: x86, x64, ARM</rdfs:comment>
-  </owl:DatatypeProperty>
-
-  <!-- Propiedades de Movil -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#sistemaOperativoMovil">
-    <rdfs:domain rdf:resource="http://example.org/game#Movil"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:comment>Valores: iOS, Android</rdfs:comment>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#versionMinima">
-    <rdfs:domain rdf:resource="http://example.org/game#Movil"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#tamanoDescarga">
-    <rdfs:domain rdf:resource="http://example.org/game#Movil"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </owl:DatatypeProperty>
-
-  <!-- Propiedades de Participante -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#nombreUsuario">
-    <rdfs:domain rdf:resource="http://example.org/game#Participante"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#nivelExperiencia">
-    <rdfs:domain rdf:resource="http://example.org/game#Participante"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#horasJugadas">
-    <rdfs:domain rdf:resource="http://example.org/game#Participante"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </owl:DatatypeProperty>
-
-  <!-- Propiedades de Item -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#tipoItem">
-    <rdfs:domain rdf:resource="http://example.org/game#Item"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:comment>Valores: Armor, Weapon, Consumable, Miscellaneous</rdfs:comment>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#rareza">
-    <rdfs:domain rdf:resource="http://example.org/game#Item"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:comment>Valores: Común, Raro, Épico, Legendario</rdfs:comment>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#valor">
-    <rdfs:domain rdf:resource="http://example.org/game#Item"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </owl:DatatypeProperty>
-
-  <!-- Propiedades de Personaje -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#nombrePersonaje">
-    <rdfs:domain rdf:resource="http://example.org/game#Personaje"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#nivelPersonaje">
-    <rdfs:domain rdf:resource="http://example.org/game#Personaje"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </owl:DatatypeProperty>
-  
-  <!-- Propiedad clasePersonaje con restricción de valores -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#clasePersonaje">
-    <rdfs:domain rdf:resource="http://example.org/game#Personaje"/>
-    <rdfs:range>
-      <owl:DataRange>
-        <owl:oneOf rdf:parseType="Resource">
-          <rdf:first>Guerrero</rdf:first>
-          <rdf:rest rdf:parseType="Resource">
-            <rdf:first>Mago</rdf:first>
-            <rdf:rest rdf:parseType="Resource">
-              <rdf:first>Arquero</rdf:first>
-              <rdf:rest rdf:parseType="Resource">
-                <rdf:first>Ladrón</rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-              </rdf:rest>
-            </rdf:rest>
-          </rdf:rest>
-        </owl:oneOf>
-      </owl:DataRange>
-    </rdfs:range>
-    <rdfs:comment>Valores permitidos: Guerrero, Mago, Arquero, Ladrón</rdfs:comment>
-  </owl:DatatypeProperty>
-
-  <!-- Propiedades de Habilidad -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#nombreHabilidad">
-    <rdfs:domain rdf:resource="http://example.org/game#Habilidad"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#tiempoCooldown">
-    <rdfs:domain rdf:resource="http://example.org/game#Habilidad"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#dano">
-    <rdfs:domain rdf:resource="http://example.org/game#Habilidad"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </owl:DatatypeProperty>
-
-  <!-- Propiedades de Compania -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#nombreCompania">
-    <rdfs:domain rdf:resource="http://example.org/game#Compania"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#tipoCompania">
-    <rdfs:domain rdf:resource="http://example.org/game#Compania"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:comment>Valores: Desarrolladora, Distribuidora, Editora</rdfs:comment>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#pais">
-    <rdfs:domain rdf:resource="http://example.org/game#Compania"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-
-  <!-- Propiedades de MotorGrafico -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#nombreMotor">
-    <rdfs:domain rdf:resource="http://example.org/game#MotorGrafico"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:comment>Valores: Unity, Unreal Engine, Godot</rdfs:comment>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#versionMotor">
-    <rdfs:domain rdf:resource="http://example.org/game#MotorGrafico"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#licencia">
-    <rdfs:domain rdf:resource="http://example.org/game#MotorGrafico"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </owl:DatatypeProperty>
-
-  <!-- Propiedades de Modalidad -->
-  <owl:DatatypeProperty rdf:about="http://example.org/game#tipoModalidad">
-    <rdfs:domain rdf:resource="http://example.org/game#Modalidad"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:comment>Valores: SinglePlayer, Multiplayer, PvP, PvE, Cooperativo</rdfs:comment>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#numeroJugadores">
-    <rdfs:domain rdf:resource="http://example.org/game#Modalidad"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </owl:DatatypeProperty>
-  
-  <owl:DatatypeProperty rdf:about="http://example.org/game#tipoConexion">
-    <rdfs:domain rdf:resource="http://example.org/game#Modalidad"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:comment>Valores: Local, Online, Hibrida</rdfs:comment>
-  </owl:DatatypeProperty>
-
-  <!-- ==================== INSTANCIAS DE EJEMPLO ==================== -->
-  
-  <!-- Instancia de Compania para usar en la relación -->
-  <owl:NamedIndividual rdf:about="http://example.org/game#Nintendo">
-    <rdf:type rdf:resource="http://example.org/game#Compania"/>
-    <game:nombreCompania>Nintendo</game:nombreCompania>
-    <game:tipoCompania>Desarrolladora</game:tipoCompania>
-    <game:pais>Japón</game:pais>
-  </owl:NamedIndividual>
-
-  <!-- Instancia de Juego con la nueva relación -->
-  <owl:NamedIndividual rdf:about="http://example.org/game#Juego1">
-    <rdf:type rdf:resource="http://example.org/game#Juego"/>
-    <game:titulo>Legend of Heroes</game:titulo>
-    <game:genero>RPG</game:genero>
-    <game:fechaLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-05-01</game:fechaLanzamiento>
-    <game:desarrolladoPor rdf:resource="http://example.org/game#Nintendo"/>
-  </owl:NamedIndividual>
-
-  <!-- Instancia de Personaje -->
-  <owl:NamedIndividual rdf:about="http://example.org/game#Personaje1">
-    <rdf:type rdf:resource="http://example.org/game#Personaje"/>
-    <game:nombrePersonaje>Link</game:nombrePersonaje>
-    <game:nivelPersonaje rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</game:nivelPersonaje>
-    <game:clasePersonaje>Guerrero</game:clasePersonaje>
-  </owl:NamedIndividual>
+    <!-- Subclases de Plataforma -->
+    <owl:Class rdf:about="http://example.org/game#PC">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Plataforma"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Consola">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Plataforma"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#Movil">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Plataforma"/>
+    </owl:Class>
 
 </rdf:RDF>
