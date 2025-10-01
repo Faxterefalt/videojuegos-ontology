@@ -1169,6 +1169,17 @@
     
 
 
+    <!-- http://example.org/game#BestSoundtrack2024 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#BestSoundtrack2024">
+        <rdf:type rdf:resource="http://example.org/game#Premio"/>
+        <anioPremio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2024</anioPremio>
+        <nombrePremio>Best Soundtrack 2024</nombrePremio>
+        <organizacion>The Game Awards</organizacion>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#BolaFuego -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#BolaFuego">
@@ -1877,6 +1888,7 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#Steve">
         <rdf:type rdf:resource="http://example.org/game#Personaje"/>
+        <nombreElemento>Steve de Minecraft</nombreElemento>
         <clasePersonaje>Constructor</clasePersonaje>
         <nivelPersonaje rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</nivelPersonaje>
     </owl:NamedIndividual>
