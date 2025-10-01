@@ -14,6 +14,29 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#date -->
+
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#date"/>
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#gYear -->
+
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#gYear"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Object Properties
     //
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -118,6 +141,197 @@
         <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
         <rdfs:range rdf:resource="http://example.org/game#MotorGrafico"/>
     </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.org/game#TipoDeJuego -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#TipoDeJuego">
+        <rdfs:domain rdf:resource="http://example.org/game#TipoDeJuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#anioFundacion -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#anioFundacion">
+        <rdfs:domain rdf:resource="http://example.org/game#Empresa"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#anioPremio -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#anioPremio">
+        <rdfs:domain rdf:resource="http://example.org/game#Premio"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#descripcionJuego -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#descripcionJuego">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#edadJugador -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#edadJugador">
+        <rdfs:domain rdf:resource="http://example.org/game#Participante"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#fechaPublicacion -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#fechaPublicacion">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#nombreElemento -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#nombreElemento">
+        <rdfs:domain rdf:resource="http://example.org/game#ElementoDelJuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#nombreEmpresa -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#nombreEmpresa">
+        <rdfs:domain rdf:resource="http://example.org/game#Empresa"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#nombreGenero -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#nombreGenero">
+        <rdfs:domain rdf:resource="http://example.org/game#Genero"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#nombreJuego -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#nombreJuego">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#nombreJugador -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#nombreJugador">
+        <rdfs:domain rdf:resource="http://example.org/game#Participante"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#nombreModalidad -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#nombreModalidad">
+        <rdfs:domain rdf:resource="http://example.org/game#Modalidad"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#nombreMotor -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#nombreMotor">
+        <rdfs:domain rdf:resource="http://example.org/game#MotorGrafico"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#nombrePlataforma -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#nombrePlataforma">
+        <rdfs:domain rdf:resource="http://example.org/game#Plataforma"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#nombrePremio -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#nombrePremio">
+        <rdfs:domain rdf:resource="http://example.org/game#Premio"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#nombreSaga -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#nombreSaga">
+        <rdfs:domain rdf:resource="http://example.org/game#Saga"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#paisJugador -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#paisJugador">
+        <rdfs:domain rdf:resource="http://example.org/game#Participante"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#paisOrigen -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#paisOrigen">
+        <rdfs:domain rdf:resource="http://example.org/game#Empresa"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#popularidad -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#popularidad">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#versionMotor -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#versionMotor">
+        <rdfs:domain rdf:resource="http://example.org/game#MotorGrafico"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
     
 
 
