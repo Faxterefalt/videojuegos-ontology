@@ -2046,7 +2046,7 @@
         <desarrolladoPor rdf:resource="http://example.org/game#Nintendo"/>
         <disponibleEn rdf:resource="http://example.org/game#NintendoSwitch2"/>
         <editadoPor rdf:resource="http://example.org/game#Ubisoft"/>
-        <ganoPremio rdf:resource="http://example.org/game#GameOfTheYear2023"/>
+        <ganoPremio rdf:resource="http://example.org/game#GameOfTheYear2020"/>
         <jugadoPor rdf:resource="http://example.org/game#ConsoleKing"/>
         <jugadoPor rdf:resource="http://example.org/game#NintendoFan"/>
         <perteneceASaga rdf:resource="http://example.org/game#MarioSaga"/>
