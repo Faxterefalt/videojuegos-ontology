@@ -1169,6 +1169,17 @@
     
 
 
+    <!-- http://example.org/game#BeatSaber -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#BeatSaber">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <disponibleEn rdf:resource="http://example.org/game#OculusQuest"/>
+        <tieneTipo rdf:resource="http://example.org/game#RealidadVirtual"/>
+        <nombreJuego>Beat Saber</nombreJuego>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#BestRPG2022 -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#BestRPG2022">
@@ -1752,6 +1763,15 @@
     
 
 
+    <!-- http://example.org/game#OculusQuest -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#OculusQuest">
+        <rdf:type rdf:resource="http://example.org/game#Plataforma"/>
+        <nombrePlataforma>Oculus Quest</nombrePlataforma>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#PCBasico -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#PCBasico">
@@ -1902,6 +1922,14 @@
         <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">28</edadJugador>
         <nombreJugador>RTXGamer</nombreJugador>
         <paisJugador>Australia</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#RealidadVirtual -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#RealidadVirtual">
+        <rdf:type rdf:resource="http://example.org/game#TipoDeJuego"/>
     </owl:NamedIndividual>
     
 
