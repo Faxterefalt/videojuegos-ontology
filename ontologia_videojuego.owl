@@ -406,6 +406,15 @@
     
 
 
+    <!-- http://example.org/game#generoPersonaje -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#generoPersonaje">
+        <rdfs:domain rdf:resource="http://example.org/game#Personaje"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://example.org/game#nombreElemento -->
 
     <owl:DatatypeProperty rdf:about="http://example.org/game#nombreElemento">
@@ -1426,6 +1435,17 @@
     
 
 
+    <!-- http://example.org/game#GameOfTheYear2020 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#GameOfTheYear2020">
+        <rdf:type rdf:resource="http://example.org/game#Premio"/>
+        <anioPremio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2020</anioPremio>
+        <nombrePremio>Game Of The Year 2020</nombrePremio>
+        <organizacion>The Game Awards</organizacion>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#GameOfTheYear2023 -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#GameOfTheYear2023">
@@ -1452,6 +1472,7 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#Geralt">
         <rdf:type rdf:resource="http://example.org/game#Personaje"/>
+        <generoPersonaje>Masculino</generoPersonaje>
         <nombreElemento>Geralt de Rivia</nombreElemento>
         <clasePersonaje>Brujo</clasePersonaje>
         <nivelPersonaje rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</nivelPersonaje>
@@ -1621,10 +1642,21 @@
     
 
 
+    <!-- http://example.org/game#MarioSaga -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#MarioSaga">
+        <rdf:type rdf:resource="http://example.org/game#Saga"/>
+        <anioInicio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1982</anioInicio>
+        <numeroJuegos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">43</numeroJuegos>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#MasterChief -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#MasterChief">
         <rdf:type rdf:resource="http://example.org/game#Personaje"/>
+        <generoPersonaje>Masculino</generoPersonaje>
         <nombreElemento>Master Chief</nombreElemento>
         <clasePersonaje>Soldado</clasePersonaje>
         <nivelPersonaje rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</nivelPersonaje>
@@ -1752,6 +1784,17 @@
     
 
 
+    <!-- http://example.org/game#NintendoSwitch2 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#NintendoSwitch2">
+        <rdf:type rdf:resource="http://example.org/game#Consola"/>
+        <nombrePlataforma>Nintendo Switch 2</nombrePlataforma>
+        <fabricante>Nintendo</fabricante>
+        <generacion rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</generacion>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#PCBasico -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#PCBasico">
@@ -1781,6 +1824,18 @@
         <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">29</edadJugador>
         <nombreJugador>PCMasterRace</nombreJugador>
         <paisJugador>Alemania</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Pauline -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Pauline">
+        <rdf:type rdf:resource="http://example.org/game#Personaje"/>
+        <generoPersonaje>Femenino</generoPersonaje>
+        <nombreElemento>Pauline Princess</nombreElemento>
+        <clasePersonaje>Princesa</clasePersonaje>
+        <nivelPersonaje rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</nivelPersonaje>
     </owl:NamedIndividual>
     
 
@@ -1976,9 +2031,38 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#Steve">
         <rdf:type rdf:resource="http://example.org/game#Personaje"/>
+        <generoPersonaje>Masculino</generoPersonaje>
         <nombreElemento>Steve de Minecraft</nombreElemento>
         <clasePersonaje>Constructor</clasePersonaje>
         <nivelPersonaje rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</nivelPersonaje>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#SuperMarioOdyssey -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#SuperMarioOdyssey">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Nintendo"/>
+        <disponibleEn rdf:resource="http://example.org/game#NintendoSwitch2"/>
+        <editadoPor rdf:resource="http://example.org/game#Ubisoft"/>
+        <ganoPremio rdf:resource="http://example.org/game#GameOfTheYear2023"/>
+        <jugadoPor rdf:resource="http://example.org/game#ConsoleKing"/>
+        <jugadoPor rdf:resource="http://example.org/game#NintendoFan"/>
+        <perteneceASaga rdf:resource="http://example.org/game#MarioSaga"/>
+        <tieneGenero rdf:resource="http://example.org/game#RPGFantasia"/>
+        <tieneGenero rdf:resource="http://example.org/game#Sandbox"/>
+        <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
+        <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
+        <usaElemento rdf:resource="http://example.org/game#BolaFuego"/>
+        <usaElemento rdf:resource="http://example.org/game#MenuPrincipal"/>
+        <usaElemento rdf:resource="http://example.org/game#MundoMagico"/>
+        <usaElemento rdf:resource="http://example.org/game#Pauline"/>
+        <usaMotorGrafico rdf:resource="http://example.org/game#UnrealEngine5"/>
+        <descripcionJuego>Juego de Mario y sus amigos</descripcionJuego>
+        <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-11-18</fechaPublicacion>
+        <nombreJuego>Super Mario Odyssey</nombreJuego>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">275</popularidad>
     </owl:NamedIndividual>
     
 
