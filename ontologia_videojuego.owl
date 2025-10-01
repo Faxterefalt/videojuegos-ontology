@@ -1147,6 +1147,17 @@
     
 
 
+    <!-- http://example.org/game#BallestaEncantada -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#BallestaEncantada">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Ballesta bendecida</nombreElemento>
+        <rareza>Épica</rareza>
+        <valor rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2500</valor>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#BestRPG2022 -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#BestRPG2022">
@@ -1329,6 +1340,17 @@
         <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1982</anioFundacion>
         <nombreEmpresa>Electronic Arts</nombreEmpresa>
         <paisOrigen>Estados Unidos</paisOrigen>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#EscopetaRecortada -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#EscopetaRecortada">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Escopeta de corto alcance</nombreElemento>
+        <rareza>Rara</rareza>
+        <valor rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1200</valor>
     </owl:NamedIndividual>
     
 
@@ -1521,6 +1543,17 @@
     
 
 
+    <!-- http://example.org/game#MOBA -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#MOBA">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <nombreGenero>Multiplayer Online Battle Arena</nombreGenero>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">33</popularidad>
+        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">14</edadRecomendada>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#MariaGomez -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#MariaGomez">
@@ -1595,6 +1628,16 @@
         <nombreModalidad>Multijugador Online</nombreModalidad>
         <maxJugadores rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</maxJugadores>
         <tipoConexion>Internet</tipoConexion>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#MundoMagico -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#MundoMagico">
+        <rdf:type rdf:resource="http://example.org/game#Lore"/>
+        <categoriaLore>Mitología</categoriaLore>
+        <importanciaLore>Baja</importanciaLore>
     </owl:NamedIndividual>
     
 
@@ -1687,6 +1730,17 @@
     
 
 
+    <!-- http://example.org/game#PicoDiamante -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#PicoDiamante">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Pico de Diamantes</nombreElemento>
+        <rareza>Muy Rara</rareza>
+        <valor rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">300</valor>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#PlayStation5 -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#PlayStation5">
@@ -1775,6 +1829,17 @@
     
 
 
+    <!-- http://example.org/game#Sandbox -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Sandbox">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <nombreGenero>Caja De Arena</nombreGenero>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">23</popularidad>
+        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10</edadRecomendada>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#Shroud -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#Shroud">
@@ -1804,6 +1869,16 @@
         <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">23</edadJugador>
         <nombreJugador>SteamGamer</nombreJugador>
         <paisJugador>Francia</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Steve -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Steve">
+        <rdf:type rdf:resource="http://example.org/game#Personaje"/>
+        <clasePersonaje>Constructor</clasePersonaje>
+        <nivelPersonaje rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</nivelPersonaje>
     </owl:NamedIndividual>
     
 
