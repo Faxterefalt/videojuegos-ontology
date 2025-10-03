@@ -671,6 +671,46 @@
     
 
 
+    <!-- http://example.org/game#tieneModoCarrera -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#tieneModoCarrera">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment>Indica si el juego tiene modo carrera</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#tieneNarrativa -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#tieneNarrativa">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment>Indica si tiene elementos narrativos/storytelling</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#tienePersonalizacion -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#tienePersonalizacion">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment>Indica si tiene personalización de personaje/equipo</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#tipoDeporte -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#tipoDeporte">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Tipo de deporte del juego (fútbol, baloncesto, etc.)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://example.org/game#tipoFormato -->
 
     <owl:DatatypeProperty rdf:about="http://example.org/game#tipoFormato">
@@ -687,7 +727,49 @@
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
+<!-- http://example.org/game#tieneMicrotransacciones -->
 
+<owl:DatatypeProperty rdf:about="http://example.org/game#tieneMicrotransacciones">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:comment>Indica si el juego incluye microtransacciones</rdfs:comment>
+</owl:DatatypeProperty>
+
+
+<!-- http://example.org/game#tieneDLC -->
+
+<owl:DatatypeProperty rdf:about="http://example.org/game#tieneDLC">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:comment>Indica si el juego tiene contenido descargable (DLC)</rdfs:comment>
+</owl:DatatypeProperty>
+
+
+<!-- http://example.org/game#modeloMonetizacion -->
+
+<owl:DatatypeProperty rdf:about="http://example.org/game#modeloMonetizacion">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Modelo de monetización del juego: Free-to-Play, Premium, Freemium, etc.</rdfs:comment>
+</owl:DatatypeProperty>
+
+
+<!-- http://example.org/game#precioBase -->
+
+<owl:DatatypeProperty rdf:about="http://example.org/game#precioBase">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:comment>Precio base del juego en USD</rdfs:comment>
+</owl:DatatypeProperty>
+
+
+<!-- http://example.org/game#tipoMicrotransaccion -->
+
+<owl:DatatypeProperty rdf:about="http://example.org/game#tipoMicrotransaccion">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Tipo de microtransacciones: Cosméticas, Pay-to-Win, Loot Boxes, Battle Pass, etc.</rdfs:comment>
+</owl:DatatypeProperty>
 
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -1495,6 +1577,11 @@
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
+         <tieneMicrotransacciones rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneMicrotransacciones>
+         <tieneDLC rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneDLC>
+         <modeloMonetizacion>Premium + Microtransacciones</modeloMonetizacion>
+    <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">69.99</precioBase>
+    <tipoMicrotransaccion>Battle Pass, Skins cosméticos, Bundles de armas</tipoMicrotransaccion>
     </owl:NamedIndividual>
     
 
@@ -1657,6 +1744,22 @@
         <personalizacionPersonaje>Físico, Cibernética, Habilidades, Ropa, Historia</personalizacionPersonaje>
         <progresionNoLineal rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</progresionNoLineal>
         <tipoProgresion>NoLineal</tipoProgresion>
+            <tieneMicrotransacciones rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneMicrotransacciones>
+    <tieneDLC rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneDLC>
+    <modeloMonetizacion>Premium</modeloMonetizacion>
+    <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">59.99</precioBase>
+    <tipoMicrotransaccion>Sin microtransacciones</tipoMicrotransaccion>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Deportes -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Deportes">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <nombreGenero>Deportes</nombreGenero>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">65</popularidad>
+        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</edadRecomendada>
     </owl:NamedIndividual>
     
 
@@ -2015,6 +2118,11 @@
         <personalizacionPersonaje>Solo selección de campeón predefinido</personalizacionPersonaje>
         <progresionNoLineal rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</progresionNoLineal>
         <tipoProgresion>Lineal</tipoProgresion>
+  <tieneMicrotransacciones rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneMicrotransacciones>
+    <tieneDLC rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneDLC>
+    <modeloMonetizacion>Free-to-Play</modeloMonetizacion>
+    <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.00</precioBase>
+    <tipoMicrotransaccion>Skins cosméticos, Campeones, Pases de temporada</tipoMicrotransaccion>
     </owl:NamedIndividual>
     
 
@@ -2760,6 +2868,8 @@
         <personalizacionPersonaje>Habilidades, Equipo, Apariencia, Estilo de combate</personalizacionPersonaje>
         <progresionNoLineal rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</progresionNoLineal>
         <tipoProgresion>NoLineal</tipoProgresion>
+            <tieneExpansion rdf:resource="http://example.org/game#CorazonesDePiedra"/>
+    <tieneExpansion rdf:resource="http://example.org/game#SangreYVino"/>
     </owl:NamedIndividual>
     
 
@@ -2936,6 +3046,59 @@
         <disponibleEn rdf:resource="http://example.org/game#iPhone14"/>
         <nombreJuego>Monster GO!</nombreJuego>
     </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://example.org/game#FIFA24">
+    <rdf:type rdf:resource="http://example.org/game#Juego"/>
+    <desarrolladoPor rdf:resource="http://example.org/game#ElectronicArts"/>
+    <disponibleEn rdf:resource="http://example.org/game#PlayStation5"/>
+    <disponibleEn rdf:resource="http://example.org/game#XboxSeriesX"/>
+    <disponibleEn rdf:resource="http://example.org/game#PCGamingAlto"/>
+    <editadoPor rdf:resource="http://example.org/game#ElectronicArts"/>
+    <tieneGenero rdf:resource="http://example.org/game#Deportes"/>
+    <tieneGenero rdf:resource="http://example.org/game#Simulacion"/>
+    <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
+    <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
+    
+    <!-- Propiedades deportivas -->
+    <nombreJuego>FIFA 24</nombreJuego>
+    <tipoDeporte>Fútbol</tipoDeporte>
+    <tieneModoCarrera rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneModoCarrera>
+    <tienePersonalizacion rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tienePersonalizacion>
+    <tieneNarrativa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneNarrativa>
+    
+    <descripcionJuego>Simulador de fútbol con modo carrera narrativo donde gestionas un equipo o jugador con personalización completa</descripcionJuego>
+    <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-29</fechaPublicacion>
+    <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">85</popularidad>
+    <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
+</owl:NamedIndividual>
+
+
+<!-- http://example.org/game#NBA2K24 -->
+
+<owl:NamedIndividual rdf:about="http://example.org/game#NBA2K24">
+    <rdf:type rdf:resource="http://example.org/game#Juego"/>
+    <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
+    <disponibleEn rdf:resource="http://example.org/game#PlayStation5"/>
+    <disponibleEn rdf:resource="http://example.org/game#XboxSeriesX"/>
+    <disponibleEn rdf:resource="http://example.org/game#PCGamingAlto"/>
+    <editadoPor rdf:resource="http://example.org/game#ElectronicArts"/>
+    <tieneGenero rdf:resource="http://example.org/game#Deportes"/>
+    <tieneGenero rdf:resource="http://example.org/game#Simulacion"/>
+    <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
+    <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
+    
+    <!-- Propiedades deportivas -->
+    <nombreJuego>NBA 2K24</nombreJuego>
+    <tipoDeporte>Baloncesto</tipoDeporte>
+    <tieneModoCarrera rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneModoCarrera>
+    <tienePersonalizacion rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tienePersonalizacion>
+    <tieneNarrativa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneNarrativa>
+    
+    <descripcionJuego>Simulador de baloncesto con MyCareer, un modo historia RPG donde creas y evolucionas tu jugador</descripcionJuego>
+    <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-08</fechaPublicacion>
+    <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">82</popularidad>
+    <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneCrossPlay>
+</owl:NamedIndividual>
+
 </rdf:RDF>
 
 
