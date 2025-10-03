@@ -106,6 +106,12 @@
     
 
 
+    <!-- http://example.org/game#modificaHistoria -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#modificaHistoria"/>
+    
+
+
     <!-- http://example.org/game#nivelPersonaje -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#nivelPersonaje"/>
@@ -163,6 +169,12 @@
     <!-- http://example.org/game#sistemaOperativo -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#sistemaOperativo"/>
+    
+
+
+    <!-- http://example.org/game#tieneMecanica -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#tieneMecanica"/>
     
 
 
@@ -1483,12 +1495,21 @@
     
 
 
+    <!-- http://example.org/game#CooperativoLocal -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#CooperativoLocal">
+        <rdf:type rdf:resource="http://example.org/game#Modalidad"/>
+        <nombreModalidad>Cooperativo Local</nombreModalidad>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#CorazonesDePiedra -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#CorazonesDePiedra">
         <rdf:type rdf:resource="http://example.org/game#Expansion"/>
-        <modificaHistoria>Significativamente</modificaHistoria>
         <nombreExpansion>Corazones de Pieda</nombreExpansion>
+        <modificaHistoria>Significativamente</modificaHistoria>
     </owl:NamedIndividual>
     
 
@@ -1679,6 +1700,17 @@
         <nombreElemento>Geralt de Rivia</nombreElemento>
         <clasePersonaje>Brujo</clasePersonaje>
         <nivelPersonaje rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</nivelPersonaje>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Ghost_Town_Games -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Ghost_Town_Games">
+        <rdf:type rdf:resource="http://example.org/game#Desarrolladora"/>
+        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2015</anioFundacion>
+        <nombreEmpresa>Ghost Town Games</nombreEmpresa>
+        <paisOrigen>Reino Unido</paisOrigen>
     </owl:NamedIndividual>
     
 
@@ -2041,6 +2073,17 @@
     
 
 
+    <!-- http://example.org/game#Overcooked -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Overcooked">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Ghost_Town_Games"/>
+        <tieneModalidad rdf:resource="http://example.org/game#CooperativoLocal"/>
+        <nombreJuego>Overcooked</nombreJuego>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#PCBasico -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#PCBasico">
@@ -2203,13 +2246,19 @@
     
 
 
+    <!-- http://example.org/game#RPGFantasia -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#RPGFantasia"/>
+    
+
+
     <!-- http://example.org/game#RPG_Tactico -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#RPG_Tactico">
         <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <nombreGenero>RPG Tactico</nombreGenero>
         <tieneMecanica rdf:resource="http://example.org/game#Accion"/>
         <tieneMecanica rdf:resource="http://example.org/game#Estrategia"/>
-        <nombreGenero>RPG Tactico</nombreGenero>
     </owl:NamedIndividual>
     
 
