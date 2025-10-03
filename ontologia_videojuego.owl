@@ -1725,6 +1725,17 @@
     
 
 
+    <!-- http://example.org/game#Guitar_Hero -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Guitar_Hero">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
+        <tieneGenero rdf:resource="http://example.org/game#Musica"/>
+        <nombreJuego>Guitar Hero</nombreJuego>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#HUDCompleto -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#HUDCompleto">
@@ -2016,6 +2027,16 @@
         <rdf:type rdf:resource="http://example.org/game#Lore"/>
         <categoriaLore>Mitología</categoriaLore>
         <importanciaLore>Baja</importanciaLore>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Musica -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Musica">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <nombreGenero>Musica ritmo</nombreGenero>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</popularidad>
     </owl:NamedIndividual>
     
 
@@ -2381,6 +2402,7 @@
         <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
         <disponibleEn rdf:resource="http://example.org/game#Play2"/>
         <incorporaTecnologia rdf:resource="http://example.org/game#Realidad_virtual"/>
+        <tieneGenero rdf:resource="http://example.org/game#Accion"/>
         <nombreJuego>Space Fighter VR</nombreJuego>
     </owl:NamedIndividual>
     
@@ -2635,6 +2657,17 @@
         <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">27</edadJugador>
         <nombreJugador>xQc</nombreJugador>
         <paisJugador>Canadá</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#King&apos;sQuest -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#King&apos;sQuest">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
+        <tieneGenero rdf:resource="http://example.org/game#Sandbox"/>
+        <nombreJuego>King&apos;s Quest</nombreJuego>
     </owl:NamedIndividual>
     
 
