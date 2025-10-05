@@ -532,6 +532,15 @@
     
 
 
+    <!-- http://example.org/game#tieneCrossPlay -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#tieneCrossPlay">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://example.org/game#versionMotor -->
 
     <owl:DatatypeProperty rdf:about="http://example.org/game#versionMotor">
@@ -1185,6 +1194,7 @@
         <ganoPremio rdf:resource="http://example.org/game#BG3MejorNarrativa2023"/>
         <descripcionJuego>Un RPG de fantasia epica</descripcionJuego>
         <nombreJuego>Baldurs Gate 3</nombreJuego>
+        <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneCrossPlay>
     </owl:NamedIndividual>
     
 
@@ -1272,6 +1282,7 @@
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-10-25</fechaPublicacion>
         <nombreJuego>Call of Duty: Modern Warfare</nombreJuego>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">88</popularidad>
+        <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
     </owl:NamedIndividual>
     
 
@@ -1387,6 +1398,7 @@
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2020-12-10</fechaPublicacion>
         <nombreJuego>Cyberpunk 2077</nombreJuego>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">78</popularidad>
+        <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
     </owl:NamedIndividual>
     
 
@@ -1627,6 +1639,7 @@
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-10-27</fechaPublicacion>
         <nombreJuego>League of Legends</nombreJuego>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">90</popularidad>
+        <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneCrossPlay>
     </owl:NamedIndividual>
     
 
@@ -1726,6 +1739,7 @@
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-11-18</fechaPublicacion>
         <nombreJuego>Minecraft</nombreJuego>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">92</popularidad>
+        <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
     </owl:NamedIndividual>
     
 
@@ -2085,6 +2099,7 @@
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-11-18</fechaPublicacion>
         <nombreJuego>Super Mario Odyssey</nombreJuego>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">275</popularidad>
+        <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
     </owl:NamedIndividual>
     
 
@@ -2150,6 +2165,7 @@
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2015-05-19</fechaPublicacion>
         <nombreJuego>The Witcher 3: Wild Hunt</nombreJuego>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">95</popularidad>
+        <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
     </owl:NamedIndividual>
     
 
