@@ -66,7 +66,9 @@
 
     <!-- http://example.org/game#edadRecomendada -->
 
-    <owl:AnnotationProperty rdf:about="http://example.org/game#edadRecomendada"/>
+    <owl:AnnotationProperty rdf:about="http://example.org/game#edadRecomendada">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:AnnotationProperty>
     
 
 
@@ -420,7 +422,6 @@
     <owl:DatatypeProperty rdf:about="http://example.org/game#edadRecomendada">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
     </owl:DatatypeProperty>
     
 
@@ -594,6 +595,43 @@
     <owl:DatatypeProperty rdf:about="http://example.org/game#tieneCrossPlay">
         <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#tieneModoCarrera -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#tieneModoCarrera">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#tieneNarrativa -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#tieneNarrativa">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#tienePersonalizacion -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#tienePersonalizacion">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#tipoDeporte -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#tipoDeporte">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
 
@@ -1490,6 +1528,17 @@
     
 
 
+    <!-- http://example.org/game#Deportes -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Deportes">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <nombreGenero>Deportes</nombreGenero>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">70</popularidad>
+        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</edadRecomendada>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#Duolingo -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#Duolingo">
@@ -1497,9 +1546,20 @@
         <disponibleEn rdf:resource="http://example.org/game#SamsungGalaxy"/>
         <disponibleEn rdf:resource="http://example.org/game#iPhone14"/>
         <descripcionJuego>App para aprender idiomas</descripcionJuego>
-        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5</edadRecomendada>
         <esEducativo rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</esEducativo>
         <nombreJuego>Duolingo</nombreJuego>
+        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5</edadRecomendada>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#EASports -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#EASports">
+        <rdf:type rdf:resource="http://example.org/game#Desarrolladora"/>
+        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1991</anioFundacion>
+        <nombreEmpresa>EA Sports</nombreEmpresa>
+        <paisOrigen>Estados Unidos</paisOrigen>
     </owl:NamedIndividual>
     
 
@@ -1577,6 +1637,28 @@
         <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">27</edadJugador>
         <nombreJugador>Faker</nombreJugador>
         <paisJugador>Corea del Sur</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Fifa24 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Fifa24">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#EASports"/>
+        <disponibleEn rdf:resource="http://example.org/game#PCGamingAlto"/>
+        <disponibleEn rdf:resource="http://example.org/game#PlayStation5"/>
+        <disponibleEn rdf:resource="http://example.org/game#XboxSeriesX"/>
+        <editadoPor rdf:resource="http://example.org/game#ElectronicArts"/>
+        <tieneGenero rdf:resource="http://example.org/game#Deportes"/>
+        <descripcionJuego>Simulador de fútbol con modo carrera narrativo</descripcionJuego>
+        <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-29</fechaPublicacion>
+        <nombreJuego>FIFA 24</nombreJuego>
+        <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
+        <tieneModoCarrera rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneModoCarrera>
+        <tieneNarrativa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneNarrativa>
+        <tienePersonalizacion rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tienePersonalizacion>
+        <tipoDeporte>Fútbol</tipoDeporte>
     </owl:NamedIndividual>
     
 
@@ -1880,7 +1962,6 @@
         <usaMotorGrafico rdf:resource="http://example.org/game#UnrealEngine5"/>
         <IAadaptativa>Adaptativa de entorno</IAadaptativa>
         <descripcionJuego>Juego de construcción y supervivencia</descripcionJuego>
-        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">9</edadRecomendada>
         <esEducativo rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</esEducativo>
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-11-18</fechaPublicacion>
         <nombreJuego>Minecraft</nombreJuego>
@@ -1888,6 +1969,7 @@
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
+        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">9</edadRecomendada>
     </owl:NamedIndividual>
     
 
@@ -1931,6 +2013,28 @@
         <rdf:type rdf:resource="http://example.org/game#Lore"/>
         <categoriaLore>Mitología</categoriaLore>
         <importanciaLore>Baja</importanciaLore>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Nba2k24 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Nba2k24">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#VisualConcepts"/>
+        <disponibleEn rdf:resource="http://example.org/game#PCGamingAlto"/>
+        <disponibleEn rdf:resource="http://example.org/game#PlayStation5"/>
+        <disponibleEn rdf:resource="http://example.org/game#XboxSeriesX"/>
+        <editadoPor rdf:resource="http://example.org/game#ElectronicArts"/>
+        <tieneGenero rdf:resource="http://example.org/game#Deportes"/>
+        <descripcionJuego>Simulador de baloncesto con MyCareer RPG</descripcionJuego>
+        <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-08</fechaPublicacion>
+        <nombreJuego>NBA 2K24</nombreJuego>
+        <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneCrossPlay>
+        <tieneModoCarrera rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneModoCarrera>
+        <tieneNarrativa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneNarrativa>
+        <tienePersonalizacion rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tienePersonalizacion>
+        <tipoDeporte>Baloncesto</tipoDeporte>
     </owl:NamedIndividual>
     
 
@@ -2206,9 +2310,9 @@
         <desarrolladoPor rdf:resource="http://example.org/game#Mojang"/>
         <disponibleEn rdf:resource="http://example.org/game#PCBasico"/>
         <descripcionJuego>Introducción a la programación para niños</descripcionJuego>
-        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</edadRecomendada>
         <esEducativo rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</esEducativo>
         <nombreJuego>ScratchJr</nombreJuego>
+        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</edadRecomendada>
     </owl:NamedIndividual>
     
 
@@ -2424,6 +2528,17 @@
         <nombreMotor>Unreal Engine 5</nombreMotor>
         <versionMotor>5.3</versionMotor>
         <desarrolladorMotor>Epic Games</desarrolladorMotor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#VisualConcepts -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#VisualConcepts">
+        <rdf:type rdf:resource="http://example.org/game#Desarrolladora"/>
+        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1987</anioFundacion>
+        <nombreEmpresa>Visual Concepts</nombreEmpresa>
+        <paisOrigen>Estados Unidos</paisOrigen>
     </owl:NamedIndividual>
     
 
