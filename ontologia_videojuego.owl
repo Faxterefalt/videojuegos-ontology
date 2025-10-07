@@ -46,6 +46,14 @@
     
 
 
+    <!-- http://example.org/game#comunidadModding -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#comunidadModding">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:AnnotationProperty>
+    
+
+
     <!-- http://example.org/game#cooldown -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#cooldown"/>
@@ -84,9 +92,25 @@
     
 
 
+    <!-- http://example.org/game#facilidadModding -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#facilidadModding">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:AnnotationProperty>
+    
+
+
     <!-- http://example.org/game#generacion -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#generacion"/>
+    
+
+
+    <!-- http://example.org/game#herramientasModding -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#herramientasModding">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:AnnotationProperty>
     
 
 
@@ -168,6 +192,14 @@
     
 
 
+    <!-- http://example.org/game#soportaMods -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#soportaMods">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:AnnotationProperty>
+    
+
+
     <!-- http://example.org/game#tipoChat -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#tipoChat"/>
@@ -183,6 +215,14 @@
     <!-- http://example.org/game#tipoInterfaz -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#tipoInterfaz"/>
+    
+
+
+    <!-- http://example.org/game#tipoModsPermitidos -->
+
+    <owl:AnnotationProperty rdf:about="http://example.org/game#tipoModsPermitidos">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:AnnotationProperty>
     
 
 
@@ -1606,6 +1646,11 @@
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
+        <comunidadModding>Nexus Mods, ModDB</comunidadModding>
+        <facilidadModding>Difícil</facilidadModding>
+        <herramientasModding>REDmod, Cyber Engine Tweaks</herramientasModding>
+        <soportaMods rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</soportaMods>
+        <tipoModsPermitidos>Gráficos, Texturas, Tweaks de Gameplay</tipoModsPermitidos>
     </owl:NamedIndividual>
     
 
@@ -2095,7 +2140,12 @@
         <tieneTemporada rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneTemporada>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
+        <comunidadModding>CurseForge, Modrinth, Planet Minecraft</comunidadModding>
         <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">9</edadRecomendada>
+        <facilidadModding>Muy Fácil</facilidadModding>
+        <herramientasModding>Forge, Fabric, Bukkit, Spigot</herramientasModding>
+        <soportaMods rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</soportaMods>
+        <tipoModsPermitidos>Gameplay, Gráficos, Nuevos bloques, Mocs</tipoModsPermitidos>
     </owl:NamedIndividual>
     
 
@@ -2594,6 +2644,11 @@
         <tieneTemporada rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneTemporada>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
+        <comunidadModding>Nexus Mods, ModDB</comunidadModding>
+        <facilidadModding>Intermedio</facilidadModding>
+        <herramientasModding>REDkit, Script Manager, Mod Manager</herramientasModding>
+        <soportaMods rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</soportaMods>
+        <tipoModsPermitidos>Gráficos, Gameplay, Texturas, Misiones</tipoModsPermitidos>
     </owl:NamedIndividual>
     
 
