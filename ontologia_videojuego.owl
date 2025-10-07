@@ -1195,6 +1195,15 @@
     
 
 
+    <!-- http://example.org/game#Auto -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Auto">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Auto</nombreElemento>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#BG3MejorNarrativa2023 -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#BG3MejorNarrativa2023">
@@ -1210,7 +1219,10 @@
     <owl:NamedIndividual rdf:about="http://example.org/game#BaldursGate3">
         <rdf:type rdf:resource="http://example.org/game#Juego"/>
         <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
+        <disponibleEn rdf:resource="http://example.org/game#PCBasico"/>
         <ganoPremio rdf:resource="http://example.org/game#BG3MejorNarrativa2023"/>
+        <tieneGenero rdf:resource="http://example.org/game#Simulacion"/>
+        <tieneModalidad rdf:resource="http://example.org/game#MultijugadorCooperativoOnline"/>
         <IAadaptativa>Basado en rendimiento</IAadaptativa>
         <descripcionJuego>Un RPG de fantasia epica</descripcionJuego>
         <nombreJuego>Baldurs Gate 3</nombreJuego>
@@ -1293,11 +1305,16 @@
         <perteneceASaga rdf:resource="http://example.org/game#CallOfDutySaga"/>
         <tieneGenero rdf:resource="http://example.org/game#Accion"/>
         <tieneGenero rdf:resource="http://example.org/game#FPS"/>
+        <tieneGenero rdf:resource="http://example.org/game#Simulacion"/>
+        <tieneModalidad rdf:resource="http://example.org/game#MultijugadorCooperativoOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
         <usaElemento rdf:resource="http://example.org/game#ChatEquipo"/>
+        <usaElemento rdf:resource="http://example.org/game#CofreLegendario"/>
         <usaElemento rdf:resource="http://example.org/game#CronicasGuerra"/>
+        <usaElemento rdf:resource="http://example.org/game#Espada"/>
+        <usaElemento rdf:resource="http://example.org/game#EspadaLegendaria"/>
         <usaElemento rdf:resource="http://example.org/game#LootComun"/>
         <usaMotorGrafico rdf:resource="http://example.org/game#Unity2023"/>
         <IAadaptativa>Basado en rendimiento</IAadaptativa>
@@ -1356,10 +1373,26 @@
     
 
 
+    <!-- http://example.org/game#CofreLegendario -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#CofreLegendario">
+        <rdf:type rdf:resource="http://example.org/game#Loot"/>
+        <usaElemento rdf:resource="http://example.org/game#BallestaEncantada"/>
+        <usaElemento rdf:resource="http://example.org/game#EspadaLegendaria"/>
+        <usaElemento rdf:resource="http://example.org/game#PicoDiamante"/>
+        <nombreElemento>Cofre Legendario</nombreElemento>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#CofresOro -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#CofresOro">
         <rdf:type rdf:resource="http://example.org/game#Loot"/>
+        <usaElemento rdf:resource="http://example.org/game#Escudo"/>
+        <usaElemento rdf:resource="http://example.org/game#Espada"/>
+        <usaElemento rdf:resource="http://example.org/game#Oro"/>
+        <usaElemento rdf:resource="http://example.org/game#Pico"/>
         <nombreElemento>Cofre de Oro</nombreElemento>
         <probabilidadDrop rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.05</probabilidadDrop>
         <valorMinimo rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</valorMinimo>
@@ -1460,6 +1493,24 @@
         <nombreElemento>Escopeta de corto alcance</nombreElemento>
         <rareza>Rara</rareza>
         <valor rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1200</valor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Escudo -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Escudo">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Escudo</nombreElemento>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Espada -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Espada">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Espada</nombreElemento>
     </owl:NamedIndividual>
     
 
@@ -1655,11 +1706,16 @@
         <jugadoPor rdf:resource="http://example.org/game#TheGrefg"/>
         <jugadoPor rdf:resource="http://example.org/game#xQc"/>
         <tieneGenero rdf:resource="http://example.org/game#MOBA"/>
+        <tieneGenero rdf:resource="http://example.org/game#Simulacion"/>
+        <tieneModalidad rdf:resource="http://example.org/game#MultijugadorCooperativoOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#PvP"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoIndie"/>
         <usaElemento rdf:resource="http://example.org/game#BolaFuego"/>
         <usaElemento rdf:resource="http://example.org/game#ChatGlobal"/>
+        <usaElemento rdf:resource="http://example.org/game#CofreLegendario"/>
+        <usaElemento rdf:resource="http://example.org/game#Espada"/>
+        <usaElemento rdf:resource="http://example.org/game#EspadaLegendaria"/>
         <usaElemento rdf:resource="http://example.org/game#HUDMinimalista"/>
         <usaElemento rdf:resource="http://example.org/game#PocionVida"/>
         <usaMotorGrafico rdf:resource="http://example.org/game#Unity2023"/>
@@ -1680,6 +1736,8 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#LootComun">
         <rdf:type rdf:resource="http://example.org/game#Loot"/>
+        <usaElemento rdf:resource="http://example.org/game#Oro"/>
+        <usaElemento rdf:resource="http://example.org/game#RopaComun"/>
         <nombreElemento>Loot Común</nombreElemento>
         <probabilidadDrop rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.75</probabilidadDrop>
         <valorMinimo rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</valorMinimo>
@@ -1801,6 +1859,14 @@
     
 
 
+    <!-- http://example.org/game#MultijugadorCooperativoOnline -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#MultijugadorCooperativoOnline">
+        <rdf:type rdf:resource="http://example.org/game#Modalidad"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#MultijugadorOnline -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#MultijugadorOnline">
@@ -1862,6 +1928,15 @@
         <nombrePlataforma>Nintendo Switch 2</nombrePlataforma>
         <fabricante>Nintendo</fabricante>
         <generacion rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</generacion>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Oro -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Oro">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Oro</nombreElemento>
     </owl:NamedIndividual>
     
 
@@ -1933,6 +2008,15 @@
     
 
 
+    <!-- http://example.org/game#Pico -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Pico">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Pico</nombreElemento>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#PicoDiamante -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#PicoDiamante">
@@ -1970,7 +2054,7 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#PocionVida">
         <rdf:type rdf:resource="http://example.org/game#Item"/>
-        <nombreElemento>Poción de Vida</nombreElemento>
+        <nombreElemento>Pocion de Vida</nombreElemento>
         <rareza>Común</rareza>
         <valor rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</valor>
     </owl:NamedIndividual>
@@ -2043,6 +2127,15 @@
     
 
 
+    <!-- http://example.org/game#RopaComun -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#RopaComun">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Ropa Comun</nombreElemento>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#SamsungGalaxy -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#SamsungGalaxy">
@@ -2072,6 +2165,14 @@
         <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">29</edadJugador>
         <nombreJugador>Shroud</nombreJugador>
         <paisJugador>Canadá</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Simulacion -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Simulacion">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
     </owl:NamedIndividual>
     
 
