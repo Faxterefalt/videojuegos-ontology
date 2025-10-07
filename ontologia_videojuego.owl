@@ -2376,6 +2376,15 @@
     
 
 
+    <!-- http://example.org/game#Veneno -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Veneno">
+        <rdf:type rdf:resource="http://example.org/game#Item"/>
+        <nombreElemento>Veneno</nombreElemento>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#XboxMaster -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#XboxMaster">
