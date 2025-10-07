@@ -46,14 +46,6 @@
     
 
 
-    <!-- http://example.org/game#comunidadModding -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#comunidadModding">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:AnnotationProperty>
-    
-
-
     <!-- http://example.org/game#cooldown -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#cooldown"/>
@@ -74,9 +66,7 @@
 
     <!-- http://example.org/game#edadRecomendada -->
 
-    <owl:AnnotationProperty rdf:about="http://example.org/game#edadRecomendada">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="http://example.org/game#edadRecomendada"/>
     
 
 
@@ -92,41 +82,9 @@
     
 
 
-    <!-- http://example.org/game#facilidadModding -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#facilidadModding">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:AnnotationProperty>
-    
-
-
-    <!-- http://example.org/game#fechaRemake -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#fechaRemake">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
-    </owl:AnnotationProperty>
-    
-
-
-    <!-- http://example.org/game#fechaRemaster -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#fechaRemaster">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
-    </owl:AnnotationProperty>
-    
-
-
     <!-- http://example.org/game#generacion -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#generacion"/>
-    
-
-
-    <!-- http://example.org/game#herramientasModding -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#herramientasModding">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:AnnotationProperty>
     
 
 
@@ -154,22 +112,6 @@
     
 
 
-    <!-- http://example.org/game#nombreRemake -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#nombreRemake">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:AnnotationProperty>
-    
-
-
-    <!-- http://example.org/game#nombreRemaster -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#nombreRemaster">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:AnnotationProperty>
-    
-
-
     <!-- http://example.org/game#nombreTipo -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#nombreTipo"/>
@@ -185,14 +127,6 @@
     <!-- http://example.org/game#organizacion -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#organizacion"/>
-    
-
-
-    <!-- http://example.org/game#plataformaRemake -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#plataformaRemake">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:AnnotationProperty>
     
 
 
@@ -232,30 +166,6 @@
     
 
 
-    <!-- http://example.org/game#soportaMods -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#soportaMods">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:AnnotationProperty>
-    
-
-
-    <!-- http://example.org/game#tieneRemake -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#tieneRemake">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:AnnotationProperty>
-    
-
-
-    <!-- http://example.org/game#tieneRemaster -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#tieneRemaster">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:AnnotationProperty>
-    
-
-
     <!-- http://example.org/game#tipoChat -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#tipoChat"/>
@@ -271,14 +181,6 @@
     <!-- http://example.org/game#tipoInterfaz -->
 
     <owl:AnnotationProperty rdf:about="http://example.org/game#tipoInterfaz"/>
-    
-
-
-    <!-- http://example.org/game#tipoModsPermitidos -->
-
-    <owl:AnnotationProperty rdf:about="http://example.org/game#tipoModsPermitidos">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:AnnotationProperty>
     
 
 
@@ -376,6 +278,15 @@
     
 
 
+    <!-- http://example.org/game#incorporaTecnologia -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/game#incorporaTecnologia">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://example.org/game#Tecnologia"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://example.org/game#jugadoPor -->
 
     <owl:ObjectProperty rdf:about="http://example.org/game#jugadoPor">
@@ -394,6 +305,15 @@
     
 
 
+    <!-- http://example.org/game#tieneExpansion -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/game#tieneExpansion">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://example.org/game#Expansion"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://example.org/game#tieneGenero -->
 
     <owl:ObjectProperty rdf:about="http://example.org/game#tieneGenero">
@@ -406,8 +326,8 @@
     <!-- http://example.org/game#tieneMecanica -->
 
     <owl:ObjectProperty rdf:about="http://example.org/game#tieneMecanica">
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://example.org/game#Mecanica"/>
+        <rdfs:domain rdf:resource="http://example.org/game#Genero"/>
+        <rdfs:range rdf:resource="http://example.org/game#MecanicaDeJuego"/>
     </owl:ObjectProperty>
     
 
@@ -435,15 +355,6 @@
     <owl:ObjectProperty rdf:about="http://example.org/game#usaElemento">
         <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
         <rdfs:range rdf:resource="http://example.org/game#ElementoDelJuego"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://example.org/game#usaMonetizacion -->
-
-    <owl:ObjectProperty rdf:about="http://example.org/game#usaMonetizacion">
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://example.org/game#TipoMonetizacion"/>
     </owl:ObjectProperty>
     
 
@@ -495,11 +406,29 @@
     
 
 
+    <!-- http://example.org/game#anioLanzamiento -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#anioLanzamiento">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://example.org/game#anioPremio -->
 
     <owl:DatatypeProperty rdf:about="http://example.org/game#anioPremio">
         <rdfs:domain rdf:resource="http://example.org/game#Premio"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#continuidadNarrativa -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#continuidadNarrativa">
+        <rdfs:domain rdf:resource="http://example.org/game#Saga"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
 
@@ -522,34 +451,6 @@
     
 
 
-    <!-- http://example.org/game#edadRecomendada -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#edadRecomendada">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://example.org/game#esEducativo -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#esEducativo">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://example.org/game#esJuegoVR -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#esJuegoVR">
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:DatatypeProperty>
-    
-
-
     <!-- http://example.org/game#fechaPublicacion -->
 
     <owl:DatatypeProperty rdf:about="http://example.org/game#fechaPublicacion">
@@ -568,10 +469,10 @@
     
 
 
-    <!-- http://example.org/game#modeloMonetizacion -->
+    <!-- http://example.org/game#modificaHistoria -->
 
-    <owl:DatatypeProperty rdf:about="http://example.org/game#modeloMonetizacion">
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <owl:DatatypeProperty rdf:about="http://example.org/game#modificaHistoria">
+        <rdfs:domain rdf:resource="http://example.org/game#Expansion"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -590,6 +491,14 @@
 
     <owl:DatatypeProperty rdf:about="http://example.org/game#nombreEmpresa">
         <rdfs:domain rdf:resource="http://example.org/game#Empresa"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/game#nombreExpansion -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#nombreExpansion">
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -695,96 +604,11 @@
     
 
 
-    <!-- http://example.org/game#precioBase -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#precioBase">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://example.org/game#soportaVR -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#soportaVR">
-        <rdfs:domain rdf:resource="http://example.org/game#Plataforma"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:DatatypeProperty>
-    
-
-
     <!-- http://example.org/game#tieneCrossPlay -->
 
     <owl:DatatypeProperty rdf:about="http://example.org/game#tieneCrossPlay">
         <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://example.org/game#tieneDLC -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#tieneDLC">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://example.org/game#tieneMicrotransacciones -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#tieneMicrotransacciones">
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://example.org/game#tieneModoCarrera -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#tieneModoCarrera">
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://example.org/game#tieneNarrativa -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#tieneNarrativa">
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://example.org/game#tienePersonalizacion -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#tienePersonalizacion">
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://example.org/game#tieneTemporada -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#tieneTemporada">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://example.org/game#tipoDeporte -->
-
-    <owl:DatatypeProperty rdf:about="http://example.org/game#tipoDeporte">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
 
@@ -1004,6 +828,12 @@
     
 
 
+    <!-- http://example.org/game#Expansion -->
+
+    <owl:Class rdf:about="http://example.org/game#Expansion"/>
+    
+
+
     <!-- http://example.org/game#Genero -->
 
     <owl:Class rdf:about="http://example.org/game#Genero">
@@ -1146,7 +976,7 @@
     <!-- http://example.org/game#Lore -->
 
     <owl:Class rdf:about="http://example.org/game#Lore">
-        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Item"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://example.org/game#nombreElemento"/>
@@ -1157,11 +987,9 @@
     
 
 
-    <!-- http://example.org/game#Mecanica -->
+    <!-- http://example.org/game#MecanicaDeJuego -->
 
-    <owl:Class rdf:about="http://example.org/game#Mecanica">
-        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
-    </owl:Class>
+    <owl:Class rdf:about="http://example.org/game#MecanicaDeJuego"/>
     
 
 
@@ -1338,6 +1166,22 @@
     
 
 
+    <!-- http://example.org/game#Remake -->
+
+    <owl:Class rdf:about="http://example.org/game#Remake">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
+    </owl:Class>
+    
+
+
+    <!-- http://example.org/game#Remasterizacion -->
+
+    <owl:Class rdf:about="http://example.org/game#Remasterizacion">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#Juego"/>
+    </owl:Class>
+    
+
+
     <!-- http://example.org/game#Saga -->
 
     <owl:Class rdf:about="http://example.org/game#Saga">
@@ -1372,6 +1216,12 @@
     
 
 
+    <!-- http://example.org/game#Tecnologia -->
+
+    <owl:Class rdf:about="http://example.org/game#Tecnologia"/>
+    
+
+
     <!-- http://example.org/game#TipoDeJuego -->
 
     <owl:Class rdf:about="http://example.org/game#TipoDeJuego">
@@ -1382,14 +1232,6 @@
                 <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- http://example.org/game#TipoMonetizacion -->
-
-    <owl:Class rdf:about="http://example.org/game#TipoMonetizacion">
-        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
     </owl:Class>
     
 
@@ -1449,6 +1291,27 @@
     
 
 
+    <!-- http://example.org/game#AntiguaRemake -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#AntiguaRemake">
+        <rdf:type rdf:resource="http://example.org/game#Remake"/>
+        <perteneceASaga rdf:resource="http://example.org/game#CallOfDutySaga"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2018</anioLanzamiento>
+        <nombreJuego>call of duty C2</nombreJuego>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#ArmaduraTemeraria -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#ArmaduraTemeraria">
+        <rdf:type rdf:resource="http://example.org/game#Expansion"/>
+        <modificaHistoria>Menor</modificaHistoria>
+        <nombreExpansion>Set de Armadura Temeraria</nombreExpansion>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#BG3MejorNarrativa2023 -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#BG3MejorNarrativa2023">
@@ -1465,7 +1328,6 @@
         <rdf:type rdf:resource="http://example.org/game#Juego"/>
         <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
         <ganoPremio rdf:resource="http://example.org/game#BG3MejorNarrativa2023"/>
-        <tieneMecanica rdf:resource="http://example.org/game#mundoabierto"/>
         <IAadaptativa>Basado en rendimiento</IAadaptativa>
         <descripcionJuego>Un RPG de fantasia epica</descripcionJuego>
         <nombreJuego>Baldurs Gate 3</nombreJuego>
@@ -1483,15 +1345,6 @@
         <nombreElemento>Ballesta bendecida</nombreElemento>
         <rareza>Épica</rareza>
         <valor rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2500</valor>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#BattlePass -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#BattlePass">
-        <rdf:type rdf:resource="http://example.org/game#TipoMonetizacion"/>
-        <nombreElemento>Battle Pass</nombreElemento>
     </owl:NamedIndividual>
     
 
@@ -1557,28 +1410,19 @@
         <perteneceASaga rdf:resource="http://example.org/game#CallOfDutySaga"/>
         <tieneGenero rdf:resource="http://example.org/game#Accion"/>
         <tieneGenero rdf:resource="http://example.org/game#FPS"/>
-        <tieneMecanica rdf:resource="http://example.org/game#progresion"/>
         <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
         <usaElemento rdf:resource="http://example.org/game#ChatEquipo"/>
         <usaElemento rdf:resource="http://example.org/game#CronicasGuerra"/>
         <usaElemento rdf:resource="http://example.org/game#LootComun"/>
-        <usaMonetizacion rdf:resource="http://example.org/game#BattlePass"/>
-        <usaMonetizacion rdf:resource="http://example.org/game#DLCMapas"/>
-        <usaMonetizacion rdf:resource="http://example.org/game#Microtransacciones"/>
         <usaMotorGrafico rdf:resource="http://example.org/game#Unity2023"/>
         <IAadaptativa>Basado en rendimiento</IAadaptativa>
         <descripcionJuego>Shooter en primera persona</descripcionJuego>
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-10-25</fechaPublicacion>
-        <modeloMonetizacion>Freemium</modeloMonetizacion>
         <nombreJuego>Call of Duty: Modern Warfare</nombreJuego>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">88</popularidad>
-        <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.00</precioBase>
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
-        <tieneDLC rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneDLC>
-        <tieneMicrotransacciones rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneMicrotransacciones>
-        <tieneTemporada rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneTemporada>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
     </owl:NamedIndividual>
@@ -1591,11 +1435,7 @@
         <rdf:type rdf:resource="http://example.org/game#Saga"/>
         <nombreSaga>Call of Duty</nombreSaga>
         <anioInicio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2003</anioInicio>
-        <fechaRemaster rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2016</fechaRemaster>
-        <nombreRemaster>Modern Warfare Remastered</nombreRemaster>
         <numeroJuegos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</numeroJuegos>
-        <plataformaRemake>PC, PlayStation 4, Xbox One</plataformaRemake>
-        <tieneRemaster rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneRemaster>
     </owl:NamedIndividual>
     
 
@@ -1655,6 +1495,16 @@
     
 
 
+    <!-- http://example.org/game#CorazonesDePiedra -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#CorazonesDePiedra">
+        <rdf:type rdf:resource="http://example.org/game#Expansion"/>
+        <modificaHistoria>Significativamente</modificaHistoria>
+        <nombreExpansion>Corazones de Pieda</nombreExpansion>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#CronicasGuerra -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#CronicasGuerra">
@@ -1691,8 +1541,6 @@
         <jugadoPor rdf:resource="http://example.org/game#MariaGomez"/>
         <jugadoPor rdf:resource="http://example.org/game#PCMasterRace"/>
         <tieneGenero rdf:resource="http://example.org/game#Accion"/>
-        <tieneMecanica rdf:resource="http://example.org/game#mundoabierto"/>
-        <tieneMecanica rdf:resource="http://example.org/game#progresion"/>
         <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#PvE"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
@@ -1706,76 +1554,15 @@
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
-        <comunidadModding>Nexus Mods, ModDB</comunidadModding>
-        <facilidadModding>Difícil</facilidadModding>
-        <herramientasModding>REDmod, Cyber Engine Tweaks</herramientasModding>
-        <soportaMods rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</soportaMods>
-        <tipoModsPermitidos>Gráficos, Texturas, Tweaks de Gameplay</tipoModsPermitidos>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://example.org/game#DLCHistoria -->
+    <!-- http://example.org/game#DesarrolladoraMulti -->
 
-    <owl:NamedIndividual rdf:about="http://example.org/game#DLCHistoria">
-        <rdf:type rdf:resource="http://example.org/game#TipoMonetizacion"/>
-        <nombreElemento>DLC de historia</nombreElemento>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#DLCMapas -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#DLCMapas">
-        <rdf:type rdf:resource="http://example.org/game#TipoMonetizacion"/>
-        <nombreElemento>DLC que expande el mapa</nombreElemento>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#Deportes -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#Deportes">
-        <rdf:type rdf:resource="http://example.org/game#Genero"/>
-        <nombreGenero>Deportes</nombreGenero>
-        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">70</popularidad>
-        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</edadRecomendada>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#Duolingo -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#Duolingo">
-        <rdf:type rdf:resource="http://example.org/game#Juego"/>
-        <disponibleEn rdf:resource="http://example.org/game#SamsungGalaxy"/>
-        <disponibleEn rdf:resource="http://example.org/game#iPhone14"/>
-        <descripcionJuego>App para aprender idiomas</descripcionJuego>
-        <esEducativo rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</esEducativo>
-        <nombreJuego>Duolingo</nombreJuego>
-        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5</edadRecomendada>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#EASports -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#EASports">
+    <owl:NamedIndividual rdf:about="http://example.org/game#DesarrolladoraMulti">
         <rdf:type rdf:resource="http://example.org/game#Desarrolladora"/>
-        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1991</anioFundacion>
-        <nombreEmpresa>EA Sports</nombreEmpresa>
-        <paisOrigen>Estados Unidos</paisOrigen>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#Educacional -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#Educacional">
-        <rdf:type rdf:resource="http://example.org/game#Genero"/>
-        <nombreGenero>Educativo</nombreGenero>
-        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</popularidad>
-        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</edadRecomendada>
+        <nombreEmpresa>Multiplatform Studios</nombreEmpresa>
     </owl:NamedIndividual>
     
 
@@ -1824,6 +1611,14 @@
     
 
 
+    <!-- http://example.org/game#Estrategia -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Estrategia">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#FPS -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#FPS">
@@ -1846,30 +1641,13 @@
     
 
 
-    <!-- http://example.org/game#Fifa24 -->
+    <!-- http://example.org/game#GTAIV -->
 
-    <owl:NamedIndividual rdf:about="http://example.org/game#Fifa24">
+    <owl:NamedIndividual rdf:about="http://example.org/game#GTAIV">
         <rdf:type rdf:resource="http://example.org/game#Juego"/>
-        <desarrolladoPor rdf:resource="http://example.org/game#EASports"/>
-        <disponibleEn rdf:resource="http://example.org/game#PCGamingAlto"/>
-        <disponibleEn rdf:resource="http://example.org/game#PlayStation5"/>
-        <disponibleEn rdf:resource="http://example.org/game#XboxSeriesX"/>
-        <editadoPor rdf:resource="http://example.org/game#ElectronicArts"/>
-        <tieneGenero rdf:resource="http://example.org/game#Deportes"/>
-        <usaMonetizacion rdf:resource="http://example.org/game#MicrotransaccionesP2W"/>
-        <descripcionJuego>Simulador de fútbol con modo carrera narrativo</descripcionJuego>
-        <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-29</fechaPublicacion>
-        <modeloMonetizacion>Premium</modeloMonetizacion>
-        <nombreJuego>FIFA 24</nombreJuego>
-        <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">69.99</precioBase>
-        <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
-        <tieneDLC rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneDLC>
-        <tieneMicrotransacciones rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneMicrotransacciones>
-        <tieneModoCarrera rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneModoCarrera>
-        <tieneNarrativa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneNarrativa>
-        <tienePersonalizacion rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tienePersonalizacion>
-        <tieneTemporada rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneTemporada>
-        <tipoDeporte>Fútbol</tipoDeporte>
+        <tieneExpansion rdf:resource="http://example.org/game#CorazonesDePiedra"/>
+        <tieneExpansion rdf:resource="http://example.org/game#SAngreYVino"/>
+        <nombreJuego>GTA IV</nombreJuego>
     </owl:NamedIndividual>
     
 
@@ -1919,6 +1697,16 @@
     
 
 
+    <!-- http://example.org/game#GoodOfWarSaga -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#GoodOfWarSaga">
+        <rdf:type rdf:resource="http://example.org/game#Saga"/>
+        <continuidadNarrativa>Secuencial</continuidadNarrativa>
+        <nombreSaga>Good Of War</nombreSaga>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#HUDCompleto -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#HUDCompleto">
@@ -1937,19 +1725,6 @@
         <nombreElemento>HUD Minimalista</nombreElemento>
         <posicionPantalla>Esquinas</posicionPantalla>
         <transparencia rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">80</transparencia>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#HalfLifeAlyx -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#HalfLifeAlyx">
-        <rdf:type rdf:resource="http://example.org/game#Juego"/>
-        <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
-        <disponibleEn rdf:resource="http://example.org/game#MetaQuest"/>
-        <disponibleEn rdf:resource="http://example.org/game#PlayStationVR"/>
-        <esJuegoVR rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</esJuegoVR>
-        <nombreJuego>Half-Life: Alyx</nombreJuego>
     </owl:NamedIndividual>
     
 
@@ -2045,7 +1820,6 @@
         <jugadoPor rdf:resource="http://example.org/game#TheGrefg"/>
         <jugadoPor rdf:resource="http://example.org/game#xQc"/>
         <tieneGenero rdf:resource="http://example.org/game#MOBA"/>
-        <tieneMecanica rdf:resource="http://example.org/game#mundoabierto"/>
         <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#PvP"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoIndie"/>
@@ -2106,14 +1880,7 @@
         <rdf:type rdf:resource="http://example.org/game#Saga"/>
         <nombreSaga>Mario</nombreSaga>
         <anioInicio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1982</anioInicio>
-        <fechaRemake rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2017</fechaRemake>
-        <fechaRemaster rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2020</fechaRemaster>
-        <nombreRemake>Super Mario Odissey</nombreRemake>
-        <nombreRemaster>Super Mario 3D All-Stars</nombreRemaster>
         <numeroJuegos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">43</numeroJuegos>
-        <plataformaRemake>Nintendo Switch</plataformaRemake>
-        <tieneRemake rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneRemake>
-        <tieneRemaster rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneRemaster>
     </owl:NamedIndividual>
     
 
@@ -2132,36 +1899,11 @@
 
     <!-- http://example.org/game#MenuPrincipal -->
 
-    <owl:NamedIndividual rdf:about="http://example.org/game#MenuPrincipal"/>
-    
-
-
-    <!-- http://example.org/game#MetaQuest -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#MetaQuest">
-        <rdf:type rdf:resource="http://example.org/game#Consola"/>
-        <nombrePlataforma>Meta Quest 3</nombrePlataforma>
-        <soportaVR rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</soportaVR>
-        <fabricante>Meta</fabricante>
-        <generacion rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</generacion>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#Microtransacciones -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#Microtransacciones">
-        <rdf:type rdf:resource="http://example.org/game#TipoMonetizacion"/>
-        <nombreElemento>Microtransacciones Cosméticas</nombreElemento>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#MicrotransaccionesP2W -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#MicrotransaccionesP2W">
-        <rdf:type rdf:resource="http://example.org/game#TipoMonetizacion"/>
-        <nombreElemento>Microtransacciones Pay to Win</nombreElemento>
+    <owl:NamedIndividual rdf:about="http://example.org/game#MenuPrincipal">
+        <rdf:type rdf:resource="http://example.org/game#Interfaz"/>
+        <nombreElemento>Menú Principal</nombreElemento>
+        <responsive rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</responsive>
+        <tipoInterfaz>Navegación</tipoInterfaz>
     </owl:NamedIndividual>
     
 
@@ -2183,7 +1925,6 @@
         <jugadoPor rdf:resource="http://example.org/game#Pokimane"/>
         <jugadoPor rdf:resource="http://example.org/game#TheGrefg"/>
         <tieneGenero rdf:resource="http://example.org/game#Sandbox"/>
-        <tieneMecanica rdf:resource="http://example.org/game#mundoabierto"/>
         <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#PvP"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoIndie"/>
@@ -2191,29 +1932,15 @@
         <usaElemento rdf:resource="http://example.org/game#Inventario"/>
         <usaElemento rdf:resource="http://example.org/game#MundoMagico"/>
         <usaElemento rdf:resource="http://example.org/game#PicoDiamante"/>
-        <usaMonetizacion rdf:resource="http://example.org/game#DLCMapas"/>
-        <usaMonetizacion rdf:resource="http://example.org/game#Microtransacciones"/>
         <usaMotorGrafico rdf:resource="http://example.org/game#UnrealEngine5"/>
         <IAadaptativa>Adaptativa de entorno</IAadaptativa>
         <descripcionJuego>Juego de construcción y supervivencia</descripcionJuego>
-        <esEducativo rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</esEducativo>
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-11-18</fechaPublicacion>
-        <modeloMonetizacion>Premium</modeloMonetizacion>
         <nombreJuego>Minecraft</nombreJuego>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">92</popularidad>
-        <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">26.95</precioBase>
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
-        <tieneDLC rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneDLC>
-        <tieneMicrotransacciones rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneMicrotransacciones>
-        <tieneTemporada rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneTemporada>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
-        <comunidadModding>CurseForge, Modrinth, Planet Minecraft</comunidadModding>
-        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">9</edadRecomendada>
-        <facilidadModding>Muy Fácil</facilidadModding>
-        <herramientasModding>Forge, Fabric, Bukkit, Spigot</herramientasModding>
-        <soportaMods rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</soportaMods>
-        <tipoModsPermitidos>Gameplay, Gráficos, Nuevos bloques, Mocs</tipoModsPermitidos>
     </owl:NamedIndividual>
     
 
@@ -2257,28 +1984,6 @@
         <rdf:type rdf:resource="http://example.org/game#Lore"/>
         <categoriaLore>Mitología</categoriaLore>
         <importanciaLore>Baja</importanciaLore>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#Nba2k24 -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#Nba2k24">
-        <rdf:type rdf:resource="http://example.org/game#Juego"/>
-        <desarrolladoPor rdf:resource="http://example.org/game#VisualConcepts"/>
-        <disponibleEn rdf:resource="http://example.org/game#PCGamingAlto"/>
-        <disponibleEn rdf:resource="http://example.org/game#PlayStation5"/>
-        <disponibleEn rdf:resource="http://example.org/game#XboxSeriesX"/>
-        <editadoPor rdf:resource="http://example.org/game#ElectronicArts"/>
-        <tieneGenero rdf:resource="http://example.org/game#Deportes"/>
-        <descripcionJuego>Simulador de baloncesto con MyCareer RPG</descripcionJuego>
-        <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-08</fechaPublicacion>
-        <nombreJuego>NBA 2K24</nombreJuego>
-        <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneCrossPlay>
-        <tieneModoCarrera rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneModoCarrera>
-        <tieneNarrativa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneNarrativa>
-        <tienePersonalizacion rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tienePersonalizacion>
-        <tipoDeporte>Baloncesto</tipoDeporte>
     </owl:NamedIndividual>
     
 
@@ -2405,6 +2110,15 @@
     
 
 
+    <!-- http://example.org/game#Play2 -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Play2">
+        <rdf:type rdf:resource="http://example.org/game#Consola"/>
+        <nombrePlataforma>Play 2</nombrePlataforma>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#PlayStation5 -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#PlayStation5">
@@ -2423,18 +2137,6 @@
         <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">26</edadJugador>
         <nombreJugador>PlayStationPro</nombreJugador>
         <paisJugador>Brasil</paisJugador>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#PlayStationVR -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#PlayStationVR">
-        <rdf:type rdf:resource="http://example.org/game#Consola"/>
-        <nombrePlataforma>PlayStation VR</nombrePlataforma>
-        <soportaVR rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</soportaVR>
-        <fabricante>Sony</fabricante>
-        <generacion rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</generacion>
     </owl:NamedIndividual>
     
 
@@ -2483,15 +2185,6 @@
     
 
 
-    <!-- http://example.org/game#RPG -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#RPG">
-        <rdf:type rdf:resource="http://example.org/game#Genero"/>
-        <nombreGenero>progresion por niveles</nombreGenero>
-    </owl:NamedIndividual>
-    
-
-
     <!-- http://example.org/game#RPGFantasia -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#RPGFantasia">
@@ -2499,6 +2192,17 @@
         <nombreGenero>RPG de Fantasía</nombreGenero>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">85</popularidad>
         <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</edadRecomendada>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#RPG_Tactico -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#RPG_Tactico">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <tieneMecanica rdf:resource="http://example.org/game#Accion"/>
+        <tieneMecanica rdf:resource="http://example.org/game#Estrategia"/>
+        <nombreGenero>RPG Tactico</nombreGenero>
     </owl:NamedIndividual>
     
 
@@ -2514,6 +2218,34 @@
     
 
 
+    <!-- http://example.org/game#Realidad_Aumentada -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Realidad_Aumentada">
+        <rdf:type rdf:resource="http://example.org/game#Modalidad"/>
+        <nombreModalidad>Realidad Aumentada</nombreModalidad>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Realidad_virtual -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Realidad_virtual">
+        <rdf:type rdf:resource="http://example.org/game#Modalidad"/>
+        <nombreModalidad>Realidad Virtual</nombreModalidad>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Remasterizacion -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Remasterizacion">
+        <rdf:type rdf:resource="http://example.org/game#Remasterizacion"/>
+        <perteneceASaga rdf:resource="http://example.org/game#MarioSaga"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</anioLanzamiento>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#RiotGames -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#RiotGames">
@@ -2521,6 +2253,16 @@
         <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2006</anioFundacion>
         <nombreEmpresa>Riot Games</nombreEmpresa>
         <paisOrigen>Estados Unidos</paisOrigen>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#SAngreYVino -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#SAngreYVino">
+        <rdf:type rdf:resource="http://example.org/game#Expansion"/>
+        <modificaHistoria>Significativamente</modificaHistoria>
+        <nombreExpansion>Sangre y Vino</nombreExpansion>
     </owl:NamedIndividual>
     
 
@@ -2547,20 +2289,6 @@
     
 
 
-    <!-- http://example.org/game#Scratch -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#Scratch">
-        <rdf:type rdf:resource="http://example.org/game#Juego"/>
-        <desarrolladoPor rdf:resource="http://example.org/game#Mojang"/>
-        <disponibleEn rdf:resource="http://example.org/game#PCBasico"/>
-        <descripcionJuego>Introducción a la programación para niños</descripcionJuego>
-        <esEducativo rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</esEducativo>
-        <nombreJuego>ScratchJr</nombreJuego>
-        <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</edadRecomendada>
-    </owl:NamedIndividual>
-    
-
-
     <!-- http://example.org/game#Shroud -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#Shroud">
@@ -2579,6 +2307,18 @@
         <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">24</edadJugador>
         <nombreJugador>SmartphoneGamer</nombreJugador>
         <paisJugador>Filipinas</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#SpaceFighterVR -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#SpaceFighterVR">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
+        <disponibleEn rdf:resource="http://example.org/game#Play2"/>
+        <incorporaTecnologia rdf:resource="http://example.org/game#Realidad_virtual"/>
+        <nombreJuego>Space Fighter VR</nombreJuego>
     </owl:NamedIndividual>
     
 
@@ -2619,7 +2359,6 @@
         <perteneceASaga rdf:resource="http://example.org/game#MarioSaga"/>
         <tieneGenero rdf:resource="http://example.org/game#RPGFantasia"/>
         <tieneGenero rdf:resource="http://example.org/game#Sandbox"/>
-        <tieneMecanica rdf:resource="http://example.org/game#progresion"/>
         <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
         <usaElemento rdf:resource="http://example.org/game#BolaFuego"/>
@@ -2685,11 +2424,10 @@
         <jugadoPor rdf:resource="http://example.org/game#MariaGomez"/>
         <jugadoPor rdf:resource="http://example.org/game#PewDiePie"/>
         <perteneceASaga rdf:resource="http://example.org/game#TheWitcherSaga"/>
-        <tieneGenero rdf:resource="http://example.org/game#RPG"/>
+        <tieneExpansion rdf:resource="http://example.org/game#ArmaduraTemeraria"/>
+        <tieneExpansion rdf:resource="http://example.org/game#CorazonesDePiedra"/>
+        <tieneExpansion rdf:resource="http://example.org/game#SAngreYVino"/>
         <tieneGenero rdf:resource="http://example.org/game#RPGFantasia"/>
-        <tieneGenero rdf:resource="http://example.org/game#Sandbox"/>
-        <tieneMecanica rdf:resource="http://example.org/game#mundoabierto"/>
-        <tieneMecanica rdf:resource="http://example.org/game#progresion"/>
         <tieneModalidad rdf:resource="http://example.org/game#PvE"/>
         <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
@@ -2698,25 +2436,14 @@
         <usaElemento rdf:resource="http://example.org/game#Geralt"/>
         <usaElemento rdf:resource="http://example.org/game#HistoriaAncestral"/>
         <usaElemento rdf:resource="http://example.org/game#Inventario"/>
-        <usaMonetizacion rdf:resource="http://example.org/game#DLCHistoria"/>
         <usaMotorGrafico rdf:resource="http://example.org/game#Unity2023"/>
         <descripcionJuego>RPG de mundo abierto</descripcionJuego>
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2015-05-19</fechaPublicacion>
-        <modeloMonetizacion>Premium</modeloMonetizacion>
         <nombreJuego>The Witcher 3: Wild Hunt</nombreJuego>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">95</popularidad>
-        <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">39.99</precioBase>
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
-        <tieneDLC rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneDLC>
-        <tieneMicrotransacciones rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneMicrotransacciones>
-        <tieneTemporada rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneTemporada>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
-        <comunidadModding>Nexus Mods, ModDB</comunidadModding>
-        <facilidadModding>Intermedio</facilidadModding>
-        <herramientasModding>REDkit, Script Manager, Mod Manager</herramientasModding>
-        <soportaMods rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</soportaMods>
-        <tipoModsPermitidos>Gráficos, Gameplay, Texturas, Misiones</tipoModsPermitidos>
     </owl:NamedIndividual>
     
 
@@ -2725,13 +2452,21 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#TheWitcherSaga">
         <rdf:type rdf:resource="http://example.org/game#Saga"/>
+        <continuidadNarrativa>Secuencial</continuidadNarrativa>
         <nombreSaga>The Witcher</nombreSaga>
         <anioInicio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2007</anioInicio>
-        <fechaRemaster rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2022</fechaRemaster>
-        <nombreRemaster>Wild Hunt - Complete Edition</nombreRemaster>
         <numeroJuegos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</numeroJuegos>
-        <plataformaRemake>PlayStation 5, Xbox Series X, PC</plataformaRemake>
-        <tieneRemaster rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneRemaster>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Tiempo_Real -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Tiempo_Real">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <tieneMecanica rdf:resource="http://example.org/game#Accion"/>
+        <tieneMecanica rdf:resource="http://example.org/game#Estrategia"/>
+        <nombreGenero>Estartegia y Accion en tiempo real</nombreGenero>
     </owl:NamedIndividual>
     
 
@@ -2791,17 +2526,6 @@
     
 
 
-    <!-- http://example.org/game#VisualConcepts -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#VisualConcepts">
-        <rdf:type rdf:resource="http://example.org/game#Desarrolladora"/>
-        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1987</anioFundacion>
-        <nombreEmpresa>Visual Concepts</nombreEmpresa>
-        <paisOrigen>Estados Unidos</paisOrigen>
-    </owl:NamedIndividual>
-    
-
-
     <!-- http://example.org/game#XboxMaster -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#XboxMaster">
@@ -2835,24 +2559,6 @@
     
 
 
-    <!-- http://example.org/game#mundoabierto -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#mundoabierto">
-        <rdf:type rdf:resource="http://example.org/game#Mecanica"/>
-        <nombreElemento>Mundo Abierto</nombreElemento>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://example.org/game#progresion -->
-
-    <owl:NamedIndividual rdf:about="http://example.org/game#progresion">
-        <rdf:type rdf:resource="http://example.org/game#Mecanica"/>
-        <nombreElemento>Progresión por Misiones</nombreElemento>
-    </owl:NamedIndividual>
-    
-
-
     <!-- http://example.org/game#s1mple -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#s1mple">
@@ -2871,6 +2577,18 @@
         <edadJugador rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">27</edadJugador>
         <nombreJugador>xQc</nombreJugador>
         <paisJugador>Canadá</paisJugador>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Monster_GO! -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Monster_GO!">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Nintendo"/>
+        <disponibleEn rdf:resource="http://example.org/game#Play2"/>
+        <incorporaTecnologia rdf:resource="http://example.org/game#Realidad_Aumentada"/>
+        <nombreJuego>Moster GO!</nombreJuego>
     </owl:NamedIndividual>
 </rdf:RDF>
 
