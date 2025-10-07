@@ -305,6 +305,15 @@
     
 
 
+    <!-- http://example.org/game#tieneMecanica -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/game#tieneMecanica">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://example.org/game#Mecanica"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://example.org/game#tieneModalidad -->
 
     <owl:ObjectProperty rdf:about="http://example.org/game#tieneModalidad">
@@ -919,6 +928,14 @@
     
 
 
+    <!-- http://example.org/game#Mecanica -->
+
+    <owl:Class rdf:about="http://example.org/game#Mecanica">
+        <rdfs:subClassOf rdf:resource="http://example.org/game#ElementoDelJuego"/>
+    </owl:Class>
+    
+
+
     <!-- http://example.org/game#MobilePlayer -->
 
     <owl:Class rdf:about="http://example.org/game#MobilePlayer">
@@ -1211,6 +1228,7 @@
         <rdf:type rdf:resource="http://example.org/game#Juego"/>
         <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
         <ganoPremio rdf:resource="http://example.org/game#BG3MejorNarrativa2023"/>
+        <tieneMecanica rdf:resource="http://example.org/game#mundoabierto"/>
         <IAadaptativa>Basado en rendimiento</IAadaptativa>
         <descripcionJuego>Un RPG de fantasia epica</descripcionJuego>
         <nombreJuego>Baldurs Gate 3</nombreJuego>
@@ -1293,6 +1311,7 @@
         <perteneceASaga rdf:resource="http://example.org/game#CallOfDutySaga"/>
         <tieneGenero rdf:resource="http://example.org/game#Accion"/>
         <tieneGenero rdf:resource="http://example.org/game#FPS"/>
+        <tieneMecanica rdf:resource="http://example.org/game#progresion"/>
         <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
@@ -1414,6 +1433,8 @@
         <jugadoPor rdf:resource="http://example.org/game#MariaGomez"/>
         <jugadoPor rdf:resource="http://example.org/game#PCMasterRace"/>
         <tieneGenero rdf:resource="http://example.org/game#Accion"/>
+        <tieneMecanica rdf:resource="http://example.org/game#mundoabierto"/>
+        <tieneMecanica rdf:resource="http://example.org/game#progresion"/>
         <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#PvE"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
@@ -1655,6 +1676,7 @@
         <jugadoPor rdf:resource="http://example.org/game#TheGrefg"/>
         <jugadoPor rdf:resource="http://example.org/game#xQc"/>
         <tieneGenero rdf:resource="http://example.org/game#MOBA"/>
+        <tieneMecanica rdf:resource="http://example.org/game#mundoabierto"/>
         <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#PvP"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoIndie"/>
@@ -1759,6 +1781,7 @@
         <jugadoPor rdf:resource="http://example.org/game#Pokimane"/>
         <jugadoPor rdf:resource="http://example.org/game#TheGrefg"/>
         <tieneGenero rdf:resource="http://example.org/game#Sandbox"/>
+        <tieneMecanica rdf:resource="http://example.org/game#mundoabierto"/>
         <tieneModalidad rdf:resource="http://example.org/game#MultijugadorOnline"/>
         <tieneModalidad rdf:resource="http://example.org/game#PvP"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoIndie"/>
@@ -2132,6 +2155,7 @@
         <perteneceASaga rdf:resource="http://example.org/game#MarioSaga"/>
         <tieneGenero rdf:resource="http://example.org/game#RPGFantasia"/>
         <tieneGenero rdf:resource="http://example.org/game#Sandbox"/>
+        <tieneMecanica rdf:resource="http://example.org/game#progresion"/>
         <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
         <usaElemento rdf:resource="http://example.org/game#BolaFuego"/>
@@ -2200,6 +2224,8 @@
         <tieneGenero rdf:resource="http://example.org/game#RPG"/>
         <tieneGenero rdf:resource="http://example.org/game#RPGFantasia"/>
         <tieneGenero rdf:resource="http://example.org/game#Sandbox"/>
+        <tieneMecanica rdf:resource="http://example.org/game#mundoabierto"/>
+        <tieneMecanica rdf:resource="http://example.org/game#progresion"/>
         <tieneModalidad rdf:resource="http://example.org/game#PvE"/>
         <tieneModalidad rdf:resource="http://example.org/game#UnJugador"/>
         <tieneTipo rdf:resource="http://example.org/game#JuegoAAA"/>
@@ -2315,6 +2341,24 @@
         <nombrePlataforma>iPhone 14</nombrePlataforma>
         <sistemaOperativo>iOS</sistemaOperativo>
         <versionMinima>16.0</versionMinima>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#mundoabierto -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#mundoabierto">
+        <rdf:type rdf:resource="http://example.org/game#Mecanica"/>
+        <nombreElemento>Mundo Abierto</nombreElemento>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#progresion -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#progresion">
+        <rdf:type rdf:resource="http://example.org/game#Mecanica"/>
+        <nombreElemento>Progresión por Misiones</nombreElemento>
     </owl:NamedIndividual>
     
 
