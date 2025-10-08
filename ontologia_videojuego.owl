@@ -718,7 +718,49 @@
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
+<!-- http://example.org/game#tieneMicrotransacciones -->
 
+<owl:DatatypeProperty rdf:about="http://example.org/game#tieneMicrotransacciones">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:comment>Indica si el juego incluye microtransacciones</rdfs:comment>
+</owl:DatatypeProperty>
+
+
+<!-- http://example.org/game#tieneDLC -->
+
+<owl:DatatypeProperty rdf:about="http://example.org/game#tieneDLC">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:comment>Indica si el juego tiene contenido descargable (DLC)</rdfs:comment>
+</owl:DatatypeProperty>
+
+
+<!-- http://example.org/game#modeloMonetizacion -->
+
+<owl:DatatypeProperty rdf:about="http://example.org/game#modeloMonetizacion">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Modelo de monetización del juego: Free-to-Play, Premium, Freemium, etc.</rdfs:comment>
+</owl:DatatypeProperty>
+
+
+<!-- http://example.org/game#precioBase -->
+
+<owl:DatatypeProperty rdf:about="http://example.org/game#precioBase">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:comment>Precio base del juego en USD</rdfs:comment>
+</owl:DatatypeProperty>
+
+
+<!-- http://example.org/game#tipoMicrotransaccion -->
+
+<owl:DatatypeProperty rdf:about="http://example.org/game#tipoMicrotransaccion">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:comment>Tipo de microtransacciones: Cosméticas, Pay-to-Win, Loot Boxes, Battle Pass, etc.</rdfs:comment>
+</owl:DatatypeProperty>
 
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -1516,6 +1558,11 @@
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
+         <tieneMicrotransacciones rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneMicrotransacciones>
+         <tieneDLC rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneDLC>
+         <modeloMonetizacion>Premium + Microtransacciones</modeloMonetizacion>
+    <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">69.99</precioBase>
+    <tipoMicrotransaccion>Battle Pass, Skins cosméticos, Bundles de armas</tipoMicrotransaccion>
     </owl:NamedIndividual>
     
 
@@ -1678,6 +1725,11 @@
         <personalizacionPersonaje>Físico, Cibernética, Habilidades, Ropa, Historia</personalizacionPersonaje>
         <progresionNoLineal rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</progresionNoLineal>
         <tipoProgresion>NoLineal</tipoProgresion>
+            <tieneMicrotransacciones rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneMicrotransacciones>
+    <tieneDLC rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneDLC>
+    <modeloMonetizacion>Premium</modeloMonetizacion>
+    <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">59.99</precioBase>
+    <tipoMicrotransaccion>Sin microtransacciones</tipoMicrotransaccion>
     </owl:NamedIndividual>
     
 
@@ -2047,6 +2099,11 @@
         <personalizacionPersonaje>Solo selección de campeón predefinido</personalizacionPersonaje>
         <progresionNoLineal rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</progresionNoLineal>
         <tipoProgresion>Lineal</tipoProgresion>
+  <tieneMicrotransacciones rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneMicrotransacciones>
+    <tieneDLC rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneDLC>
+    <modeloMonetizacion>Free-to-Play</modeloMonetizacion>
+    <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.00</precioBase>
+    <tipoMicrotransaccion>Skins cosméticos, Campeones, Pases de temporada</tipoMicrotransaccion>
     </owl:NamedIndividual>
     
 
