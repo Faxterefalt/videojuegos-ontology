@@ -1533,6 +1533,15 @@
     
 
 
+    <!-- http://example.org/game#CooperativoLocal -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#CooperativoLocal">
+        <rdf:type rdf:resource="http://example.org/game#Modalidad"/>
+        <nombreModalidad>Cooperativo Local</nombreModalidad>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#CorazonesDePiedra -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#CorazonesDePiedra">
@@ -1737,12 +1746,34 @@
     
 
 
+    <!-- http://example.org/game#Ghost_Town_Games -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Ghost_Town_Games">
+        <rdf:type rdf:resource="http://example.org/game#Desarrolladora"/>
+        <anioFundacion rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2015</anioFundacion>
+        <nombreEmpresa>Ghost Town Games</nombreEmpresa>
+        <paisOrigen>Reino Unido</paisOrigen>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#GoodOfWarSaga -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#GoodOfWarSaga">
         <rdf:type rdf:resource="http://example.org/game#Saga"/>
         <continuidadNarrativa>Secuencial</continuidadNarrativa>
         <nombreSaga>Good Of War</nombreSaga>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Guitar_Hero -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Guitar_Hero">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
+        <tieneGenero rdf:resource="http://example.org/game#Musica"/>
+        <nombreJuego>Guitar Hero</nombreJuego>
     </owl:NamedIndividual>
     
 
@@ -2042,6 +2073,16 @@
     
 
 
+    <!-- http://example.org/game#Musica -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Musica">
+        <rdf:type rdf:resource="http://example.org/game#Genero"/>
+        <nombreGenero>Musica ritmo</nombreGenero>
+        <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</popularidad>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://example.org/game#Ninja -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#Ninja">
@@ -2091,6 +2132,17 @@
     <owl:NamedIndividual rdf:about="http://example.org/game#Oro">
         <rdf:type rdf:resource="http://example.org/game#Item"/>
         <nombreElemento>Oro</nombreElemento>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Overcooked -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Overcooked">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Ghost_Town_Games"/>
+        <tieneModalidad rdf:resource="http://example.org/game#CooperativoLocal"/>
+        <nombreJuego>Overcooked</nombreJuego>
     </owl:NamedIndividual>
     
 
@@ -2402,6 +2454,7 @@
         <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
         <disponibleEn rdf:resource="http://example.org/game#Play2"/>
         <incorporaTecnologia rdf:resource="http://example.org/game#Realidad_virtual"/>
+        <tieneGenero rdf:resource="http://example.org/game#Accion"/>
         <nombreJuego>Space Fighter VR</nombreJuego>
     </owl:NamedIndividual>
     
@@ -2660,6 +2713,7 @@
     
 
 
+<<<<<<< HEAD
     <!-- http://example.org/game#Divinity:OriginalSin2 -->
 
     <owl:NamedIndividual rdf:about="http://example.org/game#Divinity:OriginalSin2">
@@ -2670,6 +2724,15 @@
         <nombreJuego>Divinity: Original Sin 2</nombreJuego>
         <puntuacion rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">95</puntuacion>
         <tipoProgresion>No Lineal</tipoProgresion>
+=======
+    <!-- http://example.org/game#King&apos;sQuest -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#King&apos;sQuest">
+        <rdf:type rdf:resource="http://example.org/game#Juego"/>
+        <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
+        <tieneGenero rdf:resource="http://example.org/game#Sandbox"/>
+        <nombreJuego>King&apos;s Quest</nombreJuego>
+>>>>>>> c4f0c0a0b6cedd68d85c9942ac780be5c76bb64c
     </owl:NamedIndividual>
     
 
