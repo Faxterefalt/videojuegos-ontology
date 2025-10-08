@@ -1484,6 +1484,7 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#CallOfDutySaga">
         <rdf:type rdf:resource="http://example.org/game#Saga"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2016</anioLanzamiento>
         <nombreSaga>Call of Duty</nombreSaga>
         <anioInicio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2003</anioInicio>
         <numeroJuegos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</numeroJuegos>
@@ -2038,6 +2039,8 @@
 
     <owl:NamedIndividual rdf:about="http://example.org/game#MarioSaga">
         <rdf:type rdf:resource="http://example.org/game#Saga"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2018</anioLanzamiento>
+        <nombreSaga>Mario</nombreSaga>
         <anioInicio rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1982</anioInicio>
         <numeroJuegos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">43</numeroJuegos>
     </owl:NamedIndividual>
@@ -2460,6 +2463,16 @@
     <owl:NamedIndividual rdf:about="http://example.org/game#Realidad_aumentada">
         <rdf:type rdf:resource="http://example.org/game#Tecnologia"/>
         <nombreElemento>Realidad Aumentada</nombreElemento>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/game#Remake -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/game#Remake">
+        <rdf:type rdf:resource="http://example.org/game#Remake"/>
+        <perteneceASaga rdf:resource="http://example.org/game#CallOfDutySaga"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2016</anioLanzamiento>
     </owl:NamedIndividual>
     
 
