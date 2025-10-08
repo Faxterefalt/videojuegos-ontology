@@ -809,7 +809,35 @@
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
     </owl:DatatypeProperty>
     
+    <!-- Añadir después de la propiedad ventasTotales -->
 
+<!-- http://example.org/game#ventasMensuales -->
+<owl:DatatypeProperty rdf:about="http://example.org/game#ventasMensuales">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:comment>Ventas del último mes</rdfs:comment>
+</owl:DatatypeProperty>
+
+<!-- http://example.org/game#ventasAnuales -->
+<owl:DatatypeProperty rdf:about="http://example.org/game#ventasAnuales">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:comment>Ventas del último año</rdfs:comment>
+</owl:DatatypeProperty>
+
+<!-- http://example.org/game#mesVentas -->
+<owl:DatatypeProperty rdf:about="http://example.org/game#mesVentas">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYearMonth"/>
+    <rdfs:comment>Mes de referencia para ventas mensuales (formato: YYYY-MM)</rdfs:comment>
+</owl:DatatypeProperty>
+
+<!-- http://example.org/game#anioVentas -->
+<owl:DatatypeProperty rdf:about="http://example.org/game#anioVentas">
+    <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+    <rdfs:comment>Año de referencia para ventas anuales</rdfs:comment>
+</owl:DatatypeProperty>
 
     <!-- http://example.org/game#versionMotor -->
 
@@ -1634,6 +1662,11 @@
         <tipoFormato>Fisico</tipoFormato>
         <tipoMicrotransaccion>Battle Pass, Skins cosméticos, Bundles de armas</tipoMicrotransaccion>
         <ventasTotales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">35000</ventasTotales>
+            <ventasTotales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">35000</ventasTotales>
+    <ventasMensuales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">52000</ventasMensuales>
+    <mesVentas rdf:datatype="http://www.w3.org/2001/XMLSchema#gYearMonth">2025-09</mesVentas>
+    <ventasAnuales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">620000</ventasAnuales>
+    <anioVentas rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2025</anioVentas>
     </owl:NamedIndividual>
     
 
@@ -1806,6 +1839,11 @@
         <progresionNoLineal rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</progresionNoLineal>
         <soportaMods rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</soportaMods>
         <tipoProgresion>NoLineal</tipoProgresion>
+            <ventasTotales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">457483</ventasTotales>
+    <ventasMensuales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">62000</ventasMensuales>
+    <mesVentas rdf:datatype="http://www.w3.org/2001/XMLSchema#gYearMonth">2025-09</mesVentas>
+    <ventasAnuales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">785000</ventasAnuales>
+    <anioVentas rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2025</anioVentas>
     </owl:NamedIndividual>
     
 
@@ -2339,6 +2377,11 @@
         <facilidadModding>Fácil</facilidadModding>
         <herramientasModding>Forge, Fabric, Modrinth</herramientasModding>
         <soportaMods rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</soportaMods>
+            <ventasTotales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1985231</ventasTotales>
+    <ventasMensuales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">45000</ventasMensuales>
+    <mesVentas rdf:datatype="http://www.w3.org/2001/XMLSchema#gYearMonth">2025-09</mesVentas>
+    <ventasAnuales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">520000</ventasAnuales>
+    <anioVentas rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2025</anioVentas>
     </owl:NamedIndividual>
     
 
