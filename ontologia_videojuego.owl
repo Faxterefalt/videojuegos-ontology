@@ -802,6 +802,15 @@
     
 
 
+    <!-- http://example.org/game#ventasTotales -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/game#ventasTotales">
+        <rdfs:domain rdf:resource="http://example.org/game#Juego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://example.org/game#versionMotor -->
 
     <owl:DatatypeProperty rdf:about="http://example.org/game#versionMotor">
@@ -1517,9 +1526,11 @@
         <IAadaptativa>Basado en rendimiento</IAadaptativa>
         <descripcionJuego>Un RPG de fantasia epica</descripcionJuego>
         <nombreJuego>Baldurs Gate 3</nombreJuego>
+        <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">23.99</precioBase>
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</tieneCrossPlay>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
+        <ventasTotales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1500</ventasTotales>
     </owl:NamedIndividual>
     
 
@@ -1622,6 +1633,7 @@
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
         <tipoMicrotransaccion>Battle Pass, Skins cosméticos, Bundles de armas</tipoMicrotransaccion>
+        <ventasTotales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">35000</ventasTotales>
     </owl:NamedIndividual>
     
 
@@ -1785,6 +1797,7 @@
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
         <tipoMicrotransaccion>Sin microtransacciones</tipoMicrotransaccion>
+        <ventasTotales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">457483</ventasTotales>
         <comunidadModding>ActivePunks, Killergrands</comunidadModding>
         <facilidadModding>Moderada</facilidadModding>
         <herramientasModding>REDmod, Cyber Engine Tweaks</herramientasModding>
@@ -1925,6 +1938,7 @@
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-29</fechaPublicacion>
         <nombreJuego>FIFA 24</nombreJuego>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">85</popularidad>
+        <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">69.99</precioBase>
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
         <tieneModoCarrera rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneModoCarrera>
         <tieneNarrativa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneNarrativa>
@@ -2029,6 +2043,7 @@
         <desarrolladoPor rdf:resource="http://example.org/game#Activision"/>
         <tieneGenero rdf:resource="http://example.org/game#Musica"/>
         <nombreJuego>Guitar Hero</nombreJuego>
+        <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">23.99</precioBase>
     </owl:NamedIndividual>
     
 
@@ -2066,6 +2081,7 @@
         <tieneGenero rdf:resource="http://example.org/game#FPS"/>
         <descripcionJuego>Shooter de realidad virtual en el universo Half-Life</descripcionJuego>
         <nombreJuego>Half-Life: Alyx</nombreJuego>
+        <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">43.99</precioBase>
     </owl:NamedIndividual>
     
 
@@ -2313,9 +2329,11 @@
         <fechaPublicacion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-11-18</fechaPublicacion>
         <nombreJuego>Minecraft</nombreJuego>
         <popularidad rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">92</popularidad>
+        <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25.99</precioBase>
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
+        <ventasTotales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1985231</ventasTotales>
         <comunidadModding>BlockManiacs, MocsGuardians</comunidadModding>
         <edadRecomendada rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">9</edadRecomendada>
         <facilidadModding>Fácil</facilidadModding>
@@ -2472,6 +2490,7 @@
         <desarrolladoPor rdf:resource="http://example.org/game#Ghost_Town_Games"/>
         <tieneModalidad rdf:resource="http://example.org/game#CooperativoLocal"/>
         <nombreJuego>Overcooked</nombreJuego>
+        <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.99</precioBase>
     </owl:NamedIndividual>
     
 
@@ -2706,6 +2725,7 @@
         <descripcionJuego>historia profunda sobre la lealtad, la libertad y el final de una era.</descripcionJuego>
         <fisicaRealista rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</fisicaRealista>
         <nombreJuego>Red Dead Redemption 2</nombreJuego>
+        <precioBase rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">33.50</precioBase>
     </owl:NamedIndividual>
     
 
@@ -2972,6 +2992,7 @@
         <tieneCrossPlay rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</tieneCrossPlay>
         <tipoFormato>Digital</tipoFormato>
         <tipoFormato>Fisico</tipoFormato>
+        <ventasTotales rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">432489</ventasTotales>
         <nivelPersonalizacion>Avanzada</nivelPersonalizacion>
         <personalizacionPersonaje>Habilidades, Equipo, Apariencia, Estilo de combate</personalizacionPersonaje>
         <progresionNoLineal rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</progresionNoLineal>
