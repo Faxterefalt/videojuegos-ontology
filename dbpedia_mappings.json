@@ -1,0 +1,172 @@
+{
+  "version": "1.0",
+  "description": "Mapping between custom video game ontology and DBpedia",
+  "lastUpdated": "2025-10-25",
+  "classMappings": [
+    {
+      "local": "game:Juego",
+      "dbpedia": "dbo:VideoGame",
+      "equivalence": "owl:equivalentClass",
+      "description": "Un videojuego corresponds exactly to DBpedia's VideoGame class"
+    },
+    {
+      "local": "game:Desarrolladora",
+      "dbpedia": "dbo:Company",
+      "equivalence": "owl:equivalentClass",
+      "description": "A game developer company"
+    },
+    {
+      "local": "game:Editora",
+      "dbpedia": "dbo:Company",
+      "equivalence": "owl:equivalentClass",
+      "description": "A game publisher company"
+    },
+    {
+      "local": "game:Plataforma",
+      "dbpedia": "dbo:Platform",
+      "equivalence": "owl:equivalentClass",
+      "description": "Gaming platform (console, PC, mobile)"
+    },
+    {
+      "local": "game:Genero",
+      "dbpedia": "dbo:Genre",
+      "equivalence": "owl:equivalentClass",
+      "description": "Video game genre"
+    },
+    {
+      "local": "game:Premio",
+      "dbpedia": "dbo:Award",
+      "equivalence": "owl:equivalentClass",
+      "description": "Video game award"
+    }
+  ],
+  "propertyMappings": [
+    {
+      "local": "game:desarrolladoPor",
+      "dbpedia": "dbo:developer",
+      "equivalence": "owl:equivalentProperty",
+      "domain": "game:Juego",
+      "range": "game:Desarrolladora"
+    },
+    {
+      "local": "game:editadoPor",
+      "dbpedia": "dbo:publisher",
+      "equivalence": "owl:equivalentProperty",
+      "domain": "game:Juego",
+      "range": "game:Editora"
+    },
+    {
+      "local": "game:disponibleEn",
+      "dbpedia": "dbo:platform",
+      "equivalence": "owl:equivalentProperty",
+      "domain": "game:Juego",
+      "range": "game:Plataforma"
+    },
+    {
+      "local": "game:tieneGenero",
+      "dbpedia": "dbo:genre",
+      "equivalence": "owl:equivalentProperty",
+      "domain": "game:Juego",
+      "range": "game:Genero"
+    },
+    {
+      "local": "game:ganoPremio",
+      "dbpedia": "dbo:award",
+      "equivalence": "owl:equivalentProperty",
+      "domain": "game:Juego",
+      "range": "game:Premio"
+    },
+    {
+      "local": "game:fechaPublicacion",
+      "dbpedia": "dbo:releaseDate",
+      "equivalence": "owl:equivalentProperty",
+      "domain": "game:Juego",
+      "range": "xsd:date"
+    },
+    {
+      "local": "game:nombreJuego",
+      "dbpedia": "rdfs:label",
+      "equivalence": "owl:equivalentProperty",
+      "domain": "game:Juego",
+      "range": "xsd:string"
+    },
+    {
+      "local": "game:descripcionJuego",
+      "dbpedia": "rdfs:comment",
+      "equivalence": "owl:equivalentProperty",
+      "domain": "game:Juego",
+      "range": "xsd:string"
+    },
+    {
+      "local": "game:anioFundacion",
+      "dbpedia": "dbo:foundingYear",
+      "equivalence": "owl:equivalentProperty",
+      "domain": "game:Empresa",
+      "range": "xsd:gYear"
+    },
+    {
+      "local": "game:nombreEmpresa",
+      "dbpedia": "rdfs:label",
+      "equivalence": "owl:equivalentProperty",
+      "domain": "game:Empresa",
+      "range": "xsd:string"
+    }
+  ],
+  "resourceLinks": [
+    {
+      "local": "game:Minecraft",
+      "dbpedia": "http://dbpedia.org/resource/Minecraft",
+      "relation": "owl:sameAs"
+    },
+    {
+      "local": "game:CallOfDuty",
+      "dbpedia": "http://dbpedia.org/resource/Call_of_Duty:_Modern_Warfare",
+      "relation": "owl:sameAs"
+    },
+    {
+      "local": "game:CyberPunk2077",
+      "dbpedia": "http://dbpedia.org/resource/Cyberpunk_2077",
+      "relation": "owl:sameAs"
+    },
+    {
+      "local": "game:LeagueOfLegends",
+      "dbpedia": "http://dbpedia.org/resource/League_of_Legends",
+      "relation": "owl:sameAs"
+    },
+    {
+      "local": "game:TheWitcher3",
+      "dbpedia": "http://dbpedia.org/resource/The_Witcher_3:_Wild_Hunt",
+      "relation": "owl:sameAs"
+    },
+    {
+      "local": "game:Nintendo",
+      "dbpedia": "http://dbpedia.org/resource/Nintendo",
+      "relation": "owl:sameAs"
+    },
+    {
+      "local": "game:Activision",
+      "dbpedia": "http://dbpedia.org/resource/Activision",
+      "relation": "owl:sameAs"
+    },
+    {
+      "local": "game:Mojang",
+      "dbpedia": "http://dbpedia.org/resource/Mojang",
+      "relation": "owl:sameAs"
+    },
+    {
+      "local": "game:RiotGames",
+      "dbpedia": "http://dbpedia.org/resource/Riot_Games",
+      "relation": "owl:sameAs"
+    },
+    {
+      "local": "game:PlayStation5",
+      "dbpedia": "http://dbpedia.org/resource/PlayStation_5",
+      "relation": "owl:sameAs"
+    },
+    {
+      "local": "game:XboxSeriesX",
+      "dbpedia": "http://dbpedia.org/resource/Xbox_Series_X_and_Series_S",
+      "relation": "owl:sameAs"
+    }
+  ]
+}

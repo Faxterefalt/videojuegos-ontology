@@ -1,0 +1,180 @@
+# ==============================================================
+# CONSULTAS SPARQL FEDERADAS - Integración Local + DBpedia
+# ==============================================================
+
+# 1. OBTENER INFORMACIÓN LOCAL Y DE DBPEDIA SOBRE UN JUEGO
+PREFIX game: <http://example.org/game#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?nombreLocal ?descripcionLocal ?nombreDBpedia ?descripcionDBpedia ?fechaDBpedia
+WHERE {
+  # Datos locales
+  ?juego rdf:type game:Juego .
+  ?juego game:nombreJuego ?nombreLocal .
+  ?juego game:descripcionJuego ?descripcionLocal .
+  
+  # Enlace a DBpedia
+  ?juego owl:sameAs ?juegoDBpedia .
+  
+  # Datos de DBpedia
+  ?juegoDBpedia rdfs:label ?nombreDBpedia .
+  OPTIONAL { ?juegoDBpedia rdfs:comment ?descripcionDBpedia . }
+  OPTIONAL { ?juegoDBpedia dbo:releaseDate ?fechaDBpedia . }
+  
+  FILTER (LANG(?nombreDBpedia) = "en")
+  FILTER (LANG(?descripcionDBpedia) = "en" || !BOUND(?descripcionDBpedia))
+}
+LIMIT 10
+
+---
+
+# 2. ENCONTRAR DESARROLLADORES LOCALES Y SUS COINCIDENCIAS EN DBPEDIA
+PREFIX game: <http://example.org/game#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?nombreLocal ?nombreDBpedia ?anioFundacionLocal ?paisOrigen
+WHERE {
+  # Desarrolladora local
+  ?dev rdf:type game:Desarrolladora .
+  ?dev game:nombreEmpresa ?nombreLocal .
+  ?dev game:anioFundacion ?anioFundacionLocal .
+  OPTIONAL { ?dev game:paisOrigen ?paisOrigen . }
+  
+  # Enlace a DBpedia
+  ?dev owl:sameAs ?devDBpedia .
+  
+  # Información de DBpedia
+  ?devDBpedia rdfs:label ?nombreDBpedia .
+  
+  FILTER (LANG(?nombreDBpedia) = "en")
+}
+ORDER BY ?nombreLocal
+
+---
+
+# 3. JUEGOS POR GÉNERO DESDE AMBAS FUENTES
+PREFIX game: <http://example.org/game#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?juego ?nombreLocal ?generoLocal ?generoDBpedia
+WHERE {
+  # Datos locales
+  ?juego rdf:type game:Juego .
+  ?juego game:nombreJuego ?nombreLocal .
+  ?juego game:tieneGenero ?genero .
+  ?genero game:nombreGenero ?generoLocal .
+  
+  # Enriquecimiento desde DBpedia (opcional)
+  OPTIONAL {
+    ?juego owl:sameAs ?juegoDBpedia .
+    ?juegoDBpedia dbo:genre ?generoDBpedia .
+  }
+}
+LIMIT 20
+
+---
+
+# 4. VERIFICAR CONSISTENCIA: Comparar datos locales vs DBpedia
+PREFIX game: <http://example.org/game#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?juego ?nombreLocal ?nombreDBpedia 
+  (IF(?nombreLocal = STR(?nombreDBpedia), "✓ Coincide", "✗ Diferente") as ?consistencia)
+WHERE {
+  ?juego rdf:type game:Juego .
+  ?juego game:nombreJuego ?nombreLocal .
+  ?juego owl:sameAs ?juegoDBpedia .
+  ?juegoDBpedia rdfs:label ?nombreDBpedia .
+  
+  FILTER (LANG(?nombreDBpedia) = "en")
+}
+
+---
+
+# 5. ENCONTRAR JUEGOS SIMILARES EN DBPEDIA POR GÉNERO
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?juego ?nombre ?genero
+WHERE {
+  ?juego rdf:type dbo:VideoGame .
+  ?juego rdfs:label ?nombre .
+  ?juego dbo:genre ?generoRes .
+  ?generoRes rdfs:label ?genero .
+  
+  FILTER (LANG(?nombre) = "en")
+  FILTER (LANG(?genero) = "en")
+  FILTER (REGEX(?nombre, "Minecraft|Call of Duty|League of Legends", "i"))
+}
+LIMIT 10
+
+---
+
+# 6. OBTENER PREMIOS DE JUEGOS DESDE DBpedia
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?juego ?nombre ?award ?awardYear
+WHERE {
+  ?juego rdf:type dbo:VideoGame .
+  ?juego rdfs:label ?nombre .
+  ?juego dbo:award ?awardRes .
+  ?awardRes rdfs:label ?award .
+  OPTIONAL { ?awardRes dbo:awardYear ?awardYear . }
+  
+  FILTER (LANG(?nombre) = "en")
+  FILTER (LANG(?award) = "en" || !BOUND(?award))
+}
+LIMIT 10
+
+---
+
+# 7. LISTAR PLATAFORMAS Y SUS CARACTERÍSTICAS
+PREFIX game: <http://example.org/game#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?plataforma ?nombreLocal ?nombreDBpedia ?fabricante
+WHERE {
+  # Plataforma local
+  ?plat rdf:type game:Consola .
+  ?plat game:nombrePlataforma ?nombreLocal .
+  OPTIONAL { ?plat game:fabricante ?fabricante . }
+  
+  # Enlace a DBpedia
+  OPTIONAL {
+    ?plat owl:sameAs ?platDBpedia .
+    ?platDBpedia rdfs:label ?nombreDBpedia .
+    FILTER (LANG(?nombreDBpedia) = "en")
+  }
+}
+
+---
+
+# 8. GENERAR ESTADÍSTICAS: Juegos por desarrollador
+PREFIX game: <http://example.org/game#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?desarrolladora ?nombreDev (COUNT(?juego) as ?cantidadJuegos)
+WHERE {
+  ?juego rdf:type game:Juego .
+  ?juego game:desarrolladoPor ?desarrolladora .
+  ?desarrolladora game:nombreEmpresa ?nombreDev .
+}
+GROUP BY ?desarrolladora ?nombreDev
+ORDER BY DESC(?cantidadJuegos)
