@@ -2,6 +2,7 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from rdflib import Graph, Namespace, RDF, RDFS, Literal, URIRef
 from rdflib.namespace import OWL, XSD
 import sys
+import time
 
 # Configuración de namespaces
 VG = Namespace("http://www.semanticweb.org/videojuegos#")
@@ -23,51 +24,147 @@ class BuscadorSemantico:
         except:
             print(f"✓ Creando nueva ontología en {owl_file}")
         
-        # Configurar endpoint de DBpedia
+        # Configurar endpoint de DBpedia con timeout y user agent
         self.sparql = SPARQLWrapper("http://dbpedia.org/sparql")
         self.sparql.setReturnFormat(JSON)
+        self.sparql.setTimeout(30)
+        self.sparql.addCustomHttpHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
     
     def consultar_dbpedia(self, limite=20):
-        """Consulta videojuegos desde DBpedia"""
+        """Consulta videojuegos desde DBpedia con reintentos"""
         query = f"""
         PREFIX dbo: <http://dbpedia.org/ontology/>
-        PREFIX dbr: <http://dbpedia.org/resource/>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         
-        SELECT DISTINCT ?game ?label ?releaseDate ?developer ?genre ?platform ?abstract
+        SELECT DISTINCT ?game ?label ?releaseDate ?developer ?genre
         WHERE {{
             ?game a dbo:VideoGame .
             ?game rdfs:label ?label .
+            FILTER (lang(?label) = 'en')
             OPTIONAL {{ ?game dbo:releaseDate ?releaseDate }}
             OPTIONAL {{ ?game dbo:developer ?developer }}
             OPTIONAL {{ ?game dbo:genre ?genre }}
-            OPTIONAL {{ ?game dbo:computingPlatform ?platform }}
-            OPTIONAL {{ ?game dbo:abstract ?abstract }}
-            FILTER (lang(?label) = 'es' || lang(?label) = 'en')
-            FILTER (lang(?abstract) = 'es' || lang(?abstract) = 'en')
         }}
         LIMIT {limite}
         """
         
         self.sparql.setQuery(query)
-        try:
-            results = self.sparql.query().convert()
-            return results["results"]["bindings"]
-        except Exception as e:
-            print(f"✗ Error al consultar DBpedia: {e}")
-            return []
+        
+        print("Intentando conectar con DBpedia...")
+        max_intentos = 3
+        
+        for intento in range(1, max_intentos + 1):
+            try:
+                print(f"   Intento {intento}/{max_intentos}...")
+                results = self.sparql.query().convert()
+                
+                if "results" in results and "bindings" in results["results"]:
+                    bindings = results["results"]["bindings"]
+                    if bindings:
+                        print(f"✓ Conexión exitosa - {len(bindings)} videojuegos obtenidos")
+                        return bindings
+                    else:
+                        print("⚠ Respuesta vacía de DBpedia")
+                else:
+                    print("⚠ Formato de respuesta inesperado")
+                
+            except Exception as e:
+                print(f"✗ Error en intento {intento}: {str(e)[:100]}")
+                if intento < max_intentos:
+                    print(f"   Esperando 3 segundos...")
+                    time.sleep(3)
+        
+        print("\n⚠ No se pudo obtener datos de DBpedia.")
+        print("Creando datos de ejemplo...")
+        return self._crear_datos_ejemplo()
+    
+    def _crear_datos_ejemplo(self):
+        """Crea datos de ejemplo si DBpedia no funciona"""
+        ejemplos = [
+            {
+                "game": {"value": "http://dbpedia.org/resource/The_Legend_of_Zelda"},
+                "label": {"value": "The Legend of Zelda"},
+                "releaseDate": {"value": "1986-02-21"},
+                "genre": {"value": "http://dbpedia.org/resource/Action-adventure_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/Super_Mario_Bros."},
+                "label": {"value": "Super Mario Bros."},
+                "releaseDate": {"value": "1985-09-13"},
+                "developer": {"value": "http://dbpedia.org/resource/Nintendo"},
+                "genre": {"value": "http://dbpedia.org/resource/Platform_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/Minecraft"},
+                "label": {"value": "Minecraft"},
+                "releaseDate": {"value": "2011-11-18"},
+                "developer": {"value": "http://dbpedia.org/resource/Mojang_Studios"},
+                "genre": {"value": "http://dbpedia.org/resource/Sandbox_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/The_Witcher_3:_Wild_Hunt"},
+                "label": {"value": "The Witcher 3: Wild Hunt"},
+                "releaseDate": {"value": "2015-05-19"},
+                "developer": {"value": "http://dbpedia.org/resource/CD_Projekt_Red"},
+                "genre": {"value": "http://dbpedia.org/resource/Role-playing_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/Grand_Theft_Auto_V"},
+                "label": {"value": "Grand Theft Auto V"},
+                "releaseDate": {"value": "2013-09-17"},
+                "developer": {"value": "http://dbpedia.org/resource/Rockstar_Games"},
+                "genre": {"value": "http://dbpedia.org/resource/Action_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/Dark_Souls"},
+                "label": {"value": "Dark Souls"},
+                "releaseDate": {"value": "2011-09-22"},
+                "developer": {"value": "http://dbpedia.org/resource/FromSoftware"},
+                "genre": {"value": "http://dbpedia.org/resource/Action_role-playing_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/Portal_(video_game)"},
+                "label": {"value": "Portal"},
+                "releaseDate": {"value": "2007-10-10"},
+                "developer": {"value": "http://dbpedia.org/resource/Valve_Corporation"},
+                "genre": {"value": "http://dbpedia.org/resource/Puzzle_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/Half-Life_2"},
+                "label": {"value": "Half-Life 2"},
+                "releaseDate": {"value": "2004-11-16"},
+                "developer": {"value": "http://dbpedia.org/resource/Valve_Corporation"},
+                "genre": {"value": "http://dbpedia.org/resource/First-person_shooter"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/Red_Dead_Redemption_2"},
+                "label": {"value": "Red Dead Redemption 2"},
+                "releaseDate": {"value": "2018-10-26"},
+                "developer": {"value": "http://dbpedia.org/resource/Rockstar_Games"},
+                "genre": {"value": "http://dbpedia.org/resource/Action-adventure_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/Cyberpunk_2077"},
+                "label": {"value": "Cyberpunk 2077"},
+                "releaseDate": {"value": "2020-12-10"},
+                "developer": {"value": "http://dbpedia.org/resource/CD_Projekt_Red"},
+                "genre": {"value": "http://dbpedia.org/resource/Role-playing_game"}
+            }
+        ]
+        
+        print(f"✓ Creados {len(ejemplos)} videojuegos de ejemplo")
+        return ejemplos
     
     def poblar_ontologia(self, limite=20):
-        """Pobla la ontología con datos de DBpedia"""
+        """Pobla la ontología con datos de DBpedia o ejemplos"""
         print(f"\n Consultando DBpedia (límite: {limite} videojuegos)...")
         resultados = self.consultar_dbpedia(limite)
         
         if not resultados:
-            print("✗ No se obtuvieron resultados de DBpedia")
+            print("✗ No se obtuvieron resultados")
             return
         
-        print(f"✓ Obtenidos {len(resultados)} resultados\n")
-        print("📥 Poblando ontología...")
+        print(f"\n Poblando ontología con {len(resultados)} videojuegos...")
         
         count = 0
         for row in resultados:
@@ -88,49 +185,62 @@ class BuscadorSemantico:
                     except:
                         pass
                 
-                # Agregar descripción
-                if "abstract" in row:
-                    abstract = row["abstract"]["value"]
-                    self.graph.add((game_uri, VG.descripcion, Literal(abstract[:500])))
-                
                 # Agregar desarrollador
                 if "developer" in row:
                     dev_uri = URIRef(row["developer"]["value"])
+                    dev_name = row["developer"]["value"].split("/")[-1].replace("_", " ")
                     self.graph.add((dev_uri, RDF.type, VG.Desarrollador))
+                    self.graph.add((dev_uri, RDFS.label, Literal(dev_name)))
                     self.graph.add((game_uri, VG.desarrolladoPor, dev_uri))
                 
                 # Agregar género
                 if "genre" in row:
                     genre_uri = URIRef(row["genre"]["value"])
+                    genre_name = row["genre"]["value"].split("/")[-1].replace("_", " ")
                     self.graph.add((genre_uri, RDF.type, VG.Genero))
+                    self.graph.add((genre_uri, RDFS.label, Literal(genre_name)))
                     self.graph.add((game_uri, VG.tieneGenero, genre_uri))
                 
-                # Agregar plataforma
-                if "platform" in row:
-                    platform_uri = URIRef(row["platform"]["value"])
-                    self.graph.add((platform_uri, RDF.type, VG.Plataforma))
-                    self.graph.add((game_uri, VG.tienePlataforma, platform_uri))
-                
                 count += 1
-                print(f"  ✓ {count}. {label}")
+                anio = ""
+                if "releaseDate" in row:
+                    try:
+                        anio = f" ({row['releaseDate']['value'][:4]})"
+                    except:
+                        pass
+                print(f"  ✓ {count}. {label}{anio}")
+                
             except Exception as e:
-                print(f"  ✗ Error procesando: {e}")
+                print(f"  ✗ Error procesando {label}: {str(e)[:50]}")
         
         # Guardar ontología
-        self.graph.serialize(destination=self.owl_file, format="xml")
-        print(f"\n✓ Ontología guardada con {count} videojuegos en {self.owl_file}")
+        try:
+            self.graph.serialize(destination=self.owl_file, format="xml")
+            print(f"\n Ontología guardada exitosamente")
+            print(f"    {self.owl_file}")
+            print(f"    {count} videojuegos agregados")
+        except Exception as e:
+            print(f"\n✗ Error al guardar: {e}")
     
     def buscar_por_titulo(self, termino):
         """Busca videojuegos por título"""
         query = f"""
-        SELECT ?game ?titulo ?anio ?descripcion
+        SELECT ?game ?titulo ?anio ?desarrollador ?genero
         WHERE {{
             ?game rdf:type vg:Videojuego .
             ?game vg:titulo ?titulo .
             OPTIONAL {{ ?game vg:anioLanzamiento ?anio }}
-            OPTIONAL {{ ?game vg:descripcion ?descripcion }}
+            OPTIONAL {{ 
+                ?game vg:desarrolladoPor ?dev .
+                ?dev rdfs:label ?desarrollador 
+            }}
+            OPTIONAL {{ 
+                ?game vg:tieneGenero ?gen .
+                ?gen rdfs:label ?genero 
+            }}
             FILTER (CONTAINS(LCASE(?titulo), LCASE("{termino}")))
         }}
+        ORDER BY ?titulo
         """
         return self._ejecutar_consulta(query)
     
@@ -142,9 +252,13 @@ class BuscadorSemantico:
             ?game rdf:type vg:Videojuego .
             ?game vg:titulo ?titulo .
             ?game vg:anioLanzamiento ?anio .
-            OPTIONAL {{ ?game vg:desarrolladoPor ?desarrollador }}
+            OPTIONAL {{ 
+                ?game vg:desarrolladoPor ?dev .
+                ?dev rdfs:label ?desarrollador 
+            }}
             FILTER (?anio = {anio})
         }}
+        ORDER BY ?titulo
         """
         return self._ejecutar_consulta(query)
     
@@ -155,21 +269,31 @@ class BuscadorSemantico:
         WHERE {{
             ?game rdf:type vg:Videojuego .
             ?game vg:titulo ?titulo .
-            ?game vg:desarrolladoPor ?desarrollador .
+            ?game vg:desarrolladoPor ?dev .
+            ?dev rdfs:label ?desarrollador .
             OPTIONAL {{ ?game vg:anioLanzamiento ?anio }}
-            FILTER (CONTAINS(LCASE(STR(?desarrollador)), LCASE("{termino}")))
+            FILTER (CONTAINS(LCASE(?desarrollador), LCASE("{termino}")))
         }}
+        ORDER BY ?titulo
         """
         return self._ejecutar_consulta(query)
     
     def listar_todos(self):
         """Lista todos los videojuegos"""
         query = """
-        SELECT ?game ?titulo ?anio
+        SELECT ?game ?titulo ?anio ?desarrollador ?genero
         WHERE {
             ?game rdf:type vg:Videojuego .
             ?game vg:titulo ?titulo .
             OPTIONAL { ?game vg:anioLanzamiento ?anio }
+            OPTIONAL { 
+                ?game vg:desarrolladoPor ?dev .
+                ?dev rdfs:label ?desarrollador 
+            }
+            OPTIONAL { 
+                ?game vg:tieneGenero ?gen .
+                ?gen rdfs:label ?genero 
+            }
         }
         ORDER BY ?titulo
         """
@@ -201,51 +325,58 @@ def main():
         opcion = input("\nSelecciona una opción: ").strip()
         
         if opcion == "1":
-            limite = input("¿Cuántos videojuegos descargar? (default 20): ").strip()
-            limite = int(limite) if limite.isdigit() else 20
+            limite = input("¿Cuántos videojuegos descargar? (default 10): ").strip()
+            limite = int(limite) if limite.isdigit() else 10
             buscador.poblar_ontologia(limite)
         
         elif opcion == "2":
-            termino = input("Ingresa término de búsqueda: ").strip()
-            resultados = buscador.buscar_por_titulo(termino)
-            print(f"\n📋 Encontrados {len(resultados)} resultados:")
-            for i, row in enumerate(resultados, 1):
-                print(f"\n{i}. {row.titulo}")
-                if row.anio:
-                    print(f"   Año: {row.anio}")
-                if hasattr(row, 'descripcion') and row.descripcion:
-                    print(f"   {row.descripcion[:200]}...")
+            termino = input(" Ingresa término de búsqueda: ").strip()
+            if termino:
+                resultados = buscador.buscar_por_titulo(termino)
+                print(f"\n Encontrados {len(resultados)} resultados:")
+                for i, row in enumerate(resultados, 1):
+                    info = f"\n{i}. {row.titulo}"
+                    if row.anio:
+                        info += f" ({row.anio})"
+                    if hasattr(row, 'desarrollador') and row.desarrollador:
+                        info += f"\n    Desarrollador: {row.desarrollador}"
+                    if hasattr(row, 'genero') and row.genero:
+                        info += f"\n    Género: {row.genero}"
+                    print(info)
         
         elif opcion == "3":
-            anio = input("Ingresa año: ").strip()
+            anio = input(" Ingresa año: ").strip()
             if anio.isdigit():
                 resultados = buscador.buscar_por_anio(int(anio))
-                print(f"\n📋 Encontrados {len(resultados)} resultados para {anio}:")
+                print(f"\n Encontrados {len(resultados)} resultados para {anio}:")
                 for i, row in enumerate(resultados, 1):
-                    print(f"{i}. {row.titulo}")
+                    dev = f" - {row.desarrollador}" if hasattr(row, 'desarrollador') and row.desarrollador else ""
+                    print(f"{i}. {row.titulo}{dev}")
         
         elif opcion == "4":
-            termino = input("Ingresa desarrollador: ").strip()
-            resultados = buscador.buscar_por_desarrollador(termino)
-            print(f"\n📋 Encontrados {len(resultados)} resultados:")
-            for i, row in enumerate(resultados, 1):
-                print(f"{i}. {row.titulo} - {row.desarrollador}")
+            termino = input(" Ingresa desarrollador: ").strip()
+            if termino:
+                resultados = buscador.buscar_por_desarrollador(termino)
+                print(f"\n Encontrados {len(resultados)} resultados:")
+                for i, row in enumerate(resultados, 1):
+                    anio = f" ({row.anio})" if row.anio else ""
+                    print(f"{i}. {row.titulo}{anio} - {row.desarrollador}")
         
         elif opcion == "5":
             resultados = buscador.listar_todos()
-            print(f"\n📋 Total: {len(resultados)} videojuegos")
+            print(f"\n Total: {len(resultados)} videojuegos en la ontología")
             for i, row in enumerate(resultados, 1):
                 anio_str = f" ({row.anio})" if row.anio else ""
                 print(f"{i}. {row.titulo}{anio_str}")
         
         elif opcion == "6":
-            print("\n👋 ¡Hasta luego!")
+            print("\n Saliendo...")
             break
         
         else:
             print("\n✗ Opción no válida")
         
-        input("\nPresiona Enter para continuar...")
+        input("\n⏎ Presiona Enter para continuar...")
 
 if __name__ == "__main__":
     main()
