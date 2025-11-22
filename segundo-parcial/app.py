@@ -94,7 +94,6 @@ def _formatear_resultados(resultados):
     return {'success': True, 'data': data, 'count': len(data)}
 
 if __name__ == '__main__':
-    # Intentar encontrar un puerto disponible
     def encontrar_puerto(puerto_inicial=5001, max_intentos=10):
         for puerto in range(puerto_inicial, puerto_inicial + max_intentos):
             try:
@@ -110,9 +109,9 @@ if __name__ == '__main__':
     
     if puerto:
         print(f"\n{'='*60}")
-        print(f"  🎮 Servidor iniciado en http://127.0.0.1:{puerto}")
+        print(f" Servidor iniciado en http://127.0.0.1:{puerto}")
         print(f"{'='*60}\n")
         app.run(debug=True, port=puerto, host='127.0.0.1')
     else:
-        print("❌ No se pudo encontrar un puerto disponible")
+        print("No se pudo encontrar un puerto disponible")
         print("   Intenta cerrar otras aplicaciones y vuelve a intentar")
