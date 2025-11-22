@@ -1,4 +1,4 @@
-# 🎮 Buscador Semántico de Videojuegos
+# Buscador Semántico de Videojuegos
 
 <div align="center">
 
@@ -18,28 +18,29 @@
 
 ---
 
-## 📋 Características
+## Características
 
-✨ **Búsqueda Inteligente**
+**Primera Entrega**
 - Búsqueda por título, año de lanzamiento y desarrollador
 - Consultas SPARQL sobre ontología OWL
 - Integración con DBpedia para datos externos
-
-🎨 **Interfaz Moderna**
-- Diseño responsive con Bootstrap 5
-- Visualización en tarjetas interactivas
-- Estadísticas en tiempo real
-- Dark mode friendly
-
-🧠 **Web Semántica**
 - Ontología OWL personalizada
 - Vocabulario RDF/RDFS
 - Inferencias semánticas
 - Compatibilidad con estándares W3C
 
+**Segunda Entrega**
+- Diseño responsive con Bootstrap 5
+- Visualización en tarjetas interactivas
+- Estadísticas en tiempo real
+- Conexión a dbpedia
+
+ **Tercera Entrega*
+- Multilingualidad (sepa la bola)
+
 ---
 
-## 🚀 Instalación
+## Instalación
 
 ### Requisitos Previos
 
@@ -81,7 +82,7 @@ pip install -r segundo-parcial/requirements.txt
 
 ---
 
-## 🎯 Uso
+## Uso
 
 ### Modo 1: Interfaz Web (Recomendado)
 
@@ -114,7 +115,7 @@ Para los usuarios avanzados, también es posible interactuar con la aplicación 
 
 ---
 
-## 🛠️ Tecnologías
+## Tecnologías
 
 - **Backend:** Flask, rdflib, SPARQLWrapper
 - **Frontend:** HTML, CSS, JavaScript, Bootstrap 5
