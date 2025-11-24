@@ -225,14 +225,17 @@ class BuscadorSemantico:
     def buscar_por_titulo(self, termino):
         """Busca videojuegos por título"""
         query = f"""
-        SELECT ?game ?titulo ?anio ?desarrollador ?genero
+        SELECT ?game ?titulo 
+               (GROUP_CONCAT(DISTINCT ?anio; separator=",") as ?anios)
+               (SAMPLE(?desarrollador) as ?dev)
+               (GROUP_CONCAT(DISTINCT ?genero; separator=",") as ?generos)
         WHERE {{
             ?game rdf:type vg:Videojuego .
             ?game vg:titulo ?titulo .
             OPTIONAL {{ ?game vg:anioLanzamiento ?anio }}
             OPTIONAL {{ 
-                ?game vg:desarrolladoPor ?dev .
-                ?dev rdfs:label ?desarrollador 
+                ?game vg:desarrolladoPor ?devUri .
+                ?devUri rdfs:label ?desarrollador 
             }}
             OPTIONAL {{ 
                 ?game vg:tieneGenero ?gen .
@@ -240,6 +243,7 @@ class BuscadorSemantico:
             }}
             FILTER (CONTAINS(LCASE(?titulo), LCASE("{termino}")))
         }}
+        GROUP BY ?game ?titulo
         ORDER BY ?titulo
         """
         return self._ejecutar_consulta(query)
@@ -247,17 +251,20 @@ class BuscadorSemantico:
     def buscar_por_anio(self, anio):
         """Busca videojuegos por año"""
         query = f"""
-        SELECT ?game ?titulo ?anio ?desarrollador
+        SELECT ?game ?titulo 
+               (GROUP_CONCAT(DISTINCT ?anio; separator=",") as ?anios)
+               (SAMPLE(?desarrollador) as ?dev)
         WHERE {{
             ?game rdf:type vg:Videojuego .
             ?game vg:titulo ?titulo .
             ?game vg:anioLanzamiento ?anio .
             OPTIONAL {{ 
-                ?game vg:desarrolladoPor ?dev .
-                ?dev rdfs:label ?desarrollador 
+                ?game vg:desarrolladoPor ?devUri .
+                ?devUri rdfs:label ?desarrollador 
             }}
             FILTER (?anio = {anio})
         }}
+        GROUP BY ?game ?titulo
         ORDER BY ?titulo
         """
         return self._ejecutar_consulta(query)
@@ -265,15 +272,18 @@ class BuscadorSemantico:
     def buscar_por_desarrollador(self, termino):
         """Busca videojuegos por desarrollador"""
         query = f"""
-        SELECT ?game ?titulo ?anio ?desarrollador
+        SELECT ?game ?titulo 
+               (GROUP_CONCAT(DISTINCT ?anio; separator=",") as ?anios)
+               (SAMPLE(?desarrollador) as ?dev)
         WHERE {{
             ?game rdf:type vg:Videojuego .
             ?game vg:titulo ?titulo .
-            ?game vg:desarrolladoPor ?dev .
-            ?dev rdfs:label ?desarrollador .
+            ?game vg:desarrolladoPor ?devUri .
+            ?devUri rdfs:label ?desarrollador .
             OPTIONAL {{ ?game vg:anioLanzamiento ?anio }}
             FILTER (CONTAINS(LCASE(?desarrollador), LCASE("{termino}")))
         }}
+        GROUP BY ?game ?titulo
         ORDER BY ?titulo
         """
         return self._ejecutar_consulta(query)
@@ -281,20 +291,24 @@ class BuscadorSemantico:
     def listar_todos(self):
         """Lista todos los videojuegos"""
         query = """
-        SELECT ?game ?titulo ?anio ?desarrollador ?genero
+        SELECT ?game ?titulo 
+               (GROUP_CONCAT(DISTINCT ?anio; separator=",") as ?anios)
+               (SAMPLE(?desarrollador) as ?dev)
+               (GROUP_CONCAT(DISTINCT ?genero; separator=",") as ?generos)
         WHERE {
             ?game rdf:type vg:Videojuego .
             ?game vg:titulo ?titulo .
             OPTIONAL { ?game vg:anioLanzamiento ?anio }
             OPTIONAL { 
-                ?game vg:desarrolladoPor ?dev .
-                ?dev rdfs:label ?desarrollador 
+                ?game vg:desarrolladoPor ?devUri .
+                ?devUri rdfs:label ?desarrollador 
             }
             OPTIONAL { 
                 ?game vg:tieneGenero ?gen .
                 ?gen rdfs:label ?genero 
             }
         }
+        GROUP BY ?game ?titulo
         ORDER BY ?titulo
         """
         return self._ejecutar_consulta(query)
@@ -336,12 +350,12 @@ def main():
                 print(f"\n Encontrados {len(resultados)} resultados:")
                 for i, row in enumerate(resultados, 1):
                     info = f"\n{i}. {row.titulo}"
-                    if row.anio:
-                        info += f" ({row.anio})"
+                    if row.anios:
+                        info += f" ({row.anios})"
                     if hasattr(row, 'desarrollador') and row.desarrollador:
                         info += f"\n    Desarrollador: {row.desarrollador}"
-                    if hasattr(row, 'genero') and row.genero:
-                        info += f"\n    Género: {row.genero}"
+                    if hasattr(row, 'generos') and row.generos:
+                        info += f"\n    Género: {row.generos}"
                     print(info)
         
         elif opcion == "3":

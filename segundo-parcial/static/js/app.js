@@ -109,14 +109,33 @@ function mostrarResultados(data) {
     html += '<div class="row">';
     
     data.data.forEach(item => {
+        // Formatear años
+        let aniosHTML = '';
+        if (item.anios && item.anios.length > 0) {
+            if (item.anios.length === 1) {
+                aniosHTML = `<p class="text-muted mb-2"><i class="bi bi-calendar"></i> ${item.anios[0]}</p>`;
+            } else {
+                const aniosFormatted = item.anios.join(', ');
+                aniosHTML = `<p class="text-muted mb-2"><i class="bi bi-calendar-range"></i> ${aniosFormatted}</p>`;
+            }
+        }
+        
+        // Formatear géneros
+        let generosHTML = '';
+        if (item.generos && item.generos.length > 0) {
+            generosHTML = item.generos.map(g => 
+                `<span class="badge bg-primary me-1">${g}</span>`
+            ).join('');
+        }
+        
         html += `
             <div class="col-md-6 col-lg-4 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">${item.titulo}</h5>
-                        ${item.anio ? `<p class="text-muted mb-2"><i class="bi bi-calendar"></i> ${item.anio}</p>` : ''}
+                        ${aniosHTML}
                         ${item.desarrollador ? `<p class="mb-2"><i class="bi bi-building"></i> ${item.desarrollador}</p>` : ''}
-                        ${item.genero ? `<span class="badge bg-primary">${item.genero}</span>` : ''}
+                        ${generosHTML}
                     </div>
                     <div class="card-footer bg-transparent">
                         <small class="text-muted">

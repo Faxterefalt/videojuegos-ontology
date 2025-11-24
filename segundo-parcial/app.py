@@ -83,11 +83,28 @@ def _formatear_resultados(resultados):
     """Convierte resultados SPARQL a formato JSON"""
     data = []
     for row in resultados:
+        # Procesar años (pueden ser múltiples separados por coma)
+        anios = None
+        if hasattr(row, 'anios') and row.anios:
+            anios_str = str(row.anios)
+            anios = sorted([int(a.strip()) for a in anios_str.split(',') if a.strip().isdigit()])
+        
+        # Procesar géneros (pueden ser múltiples separados por coma)
+        generos = None
+        if hasattr(row, 'generos') and row.generos:
+            generos_str = str(row.generos)
+            generos = [g.strip() for g in generos_str.split(',') if g.strip()]
+        
+        # Procesar desarrollador
+        desarrollador = None
+        if hasattr(row, 'dev') and row.dev:
+            desarrollador = str(row.dev)
+        
         item = {
             'titulo': str(row.titulo) if hasattr(row, 'titulo') else '',
-            'anio': int(row.anio) if hasattr(row, 'anio') and row.anio else None,
-            'desarrollador': str(row.desarrollador) if hasattr(row, 'desarrollador') and row.desarrollador else None,
-            'genero': str(row.genero) if hasattr(row, 'genero') and row.genero else None,
+            'anios': anios,  # Array de años
+            'desarrollador': desarrollador,
+            'generos': generos,  # Array de géneros
             'uri': str(row.game) if hasattr(row, 'game') else ''
         }
         data.append(item)
