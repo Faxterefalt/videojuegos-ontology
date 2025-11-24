@@ -39,6 +39,15 @@ def buscar_anio():
     resultados = buscador.buscar_por_anio(anio)
     return jsonify(_formatear_resultados(resultados))
 
+@app.route('/api/buscar/general', methods=['GET'])
+def buscar_general():
+    """Búsqueda general en todos los campos"""
+    termino = request.args.get('q', '')
+    if not termino:
+        return jsonify({'success': False, 'error': 'Término vacío'}), 400
+    resultados = buscador.buscar_general(termino)
+    return jsonify(_formatear_resultados(resultados))
+
 @app.route('/api/buscar/desarrollador', methods=['GET'])
 def buscar_desarrollador():
     """Buscar por desarrollador"""

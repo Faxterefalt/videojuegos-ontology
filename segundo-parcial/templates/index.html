@@ -42,7 +42,12 @@
         <!-- Pestañas de Búsqueda -->
         <ul class="nav nav-tabs" id="searchTabs" role="tablist">
             <li class="nav-item">
-                <button class="nav-link active" id="titulo-tab" data-bs-toggle="tab" data-bs-target="#titulo">
+                <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general">
+                    <i class="bi bi-search"></i> Búsqueda General
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="titulo-tab" data-bs-toggle="tab" data-bs-target="#titulo">
                     <i class="bi bi-card-text"></i> Por Título
                 </button>
             </li>
@@ -65,8 +70,24 @@
 
         <!-- Contenido de Pestañas -->
         <div class="tab-content p-3 border border-top-0" id="searchTabsContent">
+            <!-- Búsqueda General -->
+            <div class="tab-pane fade show active" id="general">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="buscarGeneral" 
+                           placeholder="Buscar en títulos, desarrolladores, géneros, años..."
+                           autocomplete="off">
+                    <button class="btn btn-primary" onclick="buscarGeneral()">
+                        <i class="bi bi-search"></i> Buscar
+                    </button>
+                </div>
+                <small class="text-muted">
+                    <i class="bi bi-lightning-charge"></i> 
+                    Búsqueda en tiempo real - Los resultados aparecen mientras escribes
+                </small>
+            </div>
+
             <!-- Búsqueda por Título -->
-            <div class="tab-pane fade show active" id="titulo">
+            <div class="tab-pane fade" id="titulo">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" id="buscarTitulo" placeholder="Ej: Mario, Zelda...">
                     <button class="btn btn-primary" onclick="buscarPorTitulo()">

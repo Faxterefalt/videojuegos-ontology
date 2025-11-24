@@ -313,6 +313,37 @@ class BuscadorSemantico:
         """
         return self._ejecutar_consulta(query)
     
+    def buscar_general(self, termino):
+        """Búsqueda general en todos los campos de la ontología"""
+        query = f"""
+        SELECT DISTINCT ?game ?titulo 
+               (GROUP_CONCAT(DISTINCT ?anio; separator=",") as ?anios)
+               (SAMPLE(?desarrollador) as ?dev)
+               (GROUP_CONCAT(DISTINCT ?genero; separator=",") as ?generos)
+        WHERE {{
+            ?game rdf:type vg:Videojuego .
+            ?game vg:titulo ?titulo .
+            OPTIONAL {{ ?game vg:anioLanzamiento ?anio }}
+            OPTIONAL {{ 
+                ?game vg:desarrolladoPor ?devUri .
+                ?devUri rdfs:label ?desarrollador 
+            }}
+            OPTIONAL {{ 
+                ?game vg:tieneGenero ?gen .
+                ?gen rdfs:label ?genero 
+            }}
+            FILTER (
+                CONTAINS(LCASE(?titulo), LCASE("{termino}")) ||
+                CONTAINS(LCASE(STR(?desarrollador)), LCASE("{termino}")) ||
+                CONTAINS(LCASE(STR(?genero)), LCASE("{termino}")) ||
+                CONTAINS(LCASE(STR(?anio)), LCASE("{termino}"))
+            )
+        }}
+        GROUP BY ?game ?titulo
+        ORDER BY ?titulo
+        """
+        return self._ejecutar_consulta(query)
+    
     def _ejecutar_consulta(self, query):
         """Ejecuta una consulta SPARQL en la ontología local"""
         resultados = self.graph.query(query)

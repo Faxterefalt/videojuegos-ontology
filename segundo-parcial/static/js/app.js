@@ -1,6 +1,9 @@
 // Detectar automáticamente el puerto desde la URL actual
 const API_BASE = window.location.origin;
 
+// Variable para el temporizador de debounce
+let searchTimeout = null;
+
 // Función auxiliar para mostrar/ocultar loading
 function toggleLoading(show) {
     document.getElementById('loading').style.display = show ? 'block' : 'none';
@@ -41,6 +44,56 @@ async function poblarOntologia() {
     } finally {
         toggleLoading(false);
     }
+}
+
+// Búsqueda general
+async function buscarGeneral() {
+    const termino = document.getElementById('buscarGeneral').value.trim();
+    
+    // Si el campo está vacío, limpiar resultados
+    if (!termino) {
+        document.getElementById('resultados').innerHTML = '';
+        return;
+    }
+    
+    // Mínimo 2 caracteres para buscar
+    if (termino.length < 2) {
+        document.getElementById('resultados').innerHTML = `
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> Ingresa al menos 2 caracteres para buscar
+            </div>
+        `;
+        return;
+    }
+    
+    toggleLoading(true);
+    try {
+        const response = await fetch(`${API_BASE}/api/buscar/general?q=${encodeURIComponent(termino)}`);
+        const data = await response.json();
+        toggleLoading(false);
+        
+        if (data.success) {
+            mostrarResultados(data);
+        } else {
+            mostrarAlerta('Error en la búsqueda: ' + (data.error || 'Error desconocido'), 'danger');
+        }
+    } catch (error) {
+        toggleLoading(false);
+        mostrarAlerta('Error de conexión: ' + error, 'danger');
+    }
+}
+
+// Función para búsqueda en tiempo real con debounce
+function buscarGeneralTiempoReal() {
+    // Cancelar búsqueda anterior si existe
+    if (searchTimeout) {
+        clearTimeout(searchTimeout);
+    }
+    
+    // Esperar 500ms después de que el usuario deje de escribir
+    searchTimeout = setTimeout(() => {
+        buscarGeneral();
+    }, 500);
 }
 
 // Buscar por título
@@ -185,4 +238,44 @@ document.getElementById('statsModal').addEventListener('show.bs.modal', async fu
     } catch (error) {
         content.innerHTML = '<div class="alert alert-danger">Error al cargar estadísticas</div>';
     }
+});
+
+// Agregar event listener para Enter en el campo de búsqueda general
+document.addEventListener('DOMContentLoaded', function() {
+    const inputGeneral = document.getElementById('buscarGeneral');
+    if (inputGeneral) {
+        // Búsqueda en tiempo real mientras se escribe
+        inputGeneral.addEventListener('input', function(e) {
+            buscarGeneralTiempoReal();
+        });
+        
+        // También mantener funcionalidad de Enter
+        inputGeneral.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                // Cancelar debounce y buscar inmediatamente
+                if (searchTimeout) {
+                    clearTimeout(searchTimeout);
+                }
+                buscarGeneral();
+            }
+        });
+    }
+    
+    // También para los otros campos de búsqueda
+    const inputs = {
+        'buscarTitulo': buscarPorTitulo,
+        'buscarAnio': buscarPorAnio,
+        'buscarDev': buscarPorDesarrollador
+    };
+    
+    Object.keys(inputs).forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    inputs[id]();
+                }
+            });
+        }
+    });
 });
