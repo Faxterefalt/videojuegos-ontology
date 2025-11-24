@@ -185,7 +185,7 @@ async function buscarPorTitulo() {
     if (!termino) return mostrarAlerta('Ingresa un término de búsqueda', 'warning');
     
     toggleLoading(true);
-    const response = await fetch(`${API_BASE}/api/buscar/titulo?q=${encodeURIComponent(termino)}`);
+    const response = await fetch(`${API_BASE}/api/buscar/titulo?q=${encodeURIComponent(termino)}&hybrid=true`);
     const data = await response.json();
     toggleLoading(false);
     
@@ -211,7 +211,7 @@ async function buscarPorDesarrollador() {
     if (!termino) return mostrarAlerta('Ingresa un desarrollador', 'warning');
     
     toggleLoading(true);
-    const response = await fetch(`${API_BASE}/api/buscar/desarrollador?q=${encodeURIComponent(termino)}`);
+    const response = await fetch(`${API_BASE}/api/buscar/desarrollador?q=${encodeURIComponent(termino)}&hybrid=true`);
     const data = await response.json();
     toggleLoading(false);
     
@@ -235,13 +235,36 @@ function mostrarResultados(data) {
     if (!data.success || data.count === 0) {
         container.innerHTML = `
             <div class="alert alert-info">
-                <i class="bi bi-info-circle"></i> No se encontraron resultados
+                <i class="bi bi-info-circle"></i> ${data.message || 'No se encontraron resultados'}
             </div>
         `;
         return;
     }
     
-    let html = `<h5 class="mb-3"><i class="bi bi-trophy"></i> ${data.count} resultado(s) encontrado(s)</h5>`;
+    // Mostrar badge de origen
+    let sourceBadge = '';
+    if (data.source === 'dbpedia') {
+        sourceBadge = `
+            <div class="alert alert-warning">
+                <i class="bi bi-cloud"></i> 
+                <strong>Resultados de DBpedia Online</strong> - 
+                Estos juegos no están en tu ontología local.
+                <button class="btn btn-sm btn-primary ms-3" onclick="agregarTodosDesdeDBpedia(${JSON.stringify(data.data).replace(/"/g, '&quot;')})">
+                    <i class="bi bi-download"></i> Agregar todos a mi ontología
+                </button>
+            </div>
+        `;
+    } else if (data.source === 'local') {
+        sourceBadge = `
+            <div class="alert alert-success">
+                <i class="bi bi-hdd"></i> 
+                <strong>Resultados de tu Ontología Local</strong>
+            </div>
+        `;
+    }
+    
+    let html = sourceBadge;
+    html += `<h5 class="mb-3"><i class="bi bi-trophy"></i> ${data.count} resultado(s) encontrado(s)</h5>`;
     html += '<div class="row">';
     
     data.data.forEach(item => {
@@ -264,10 +287,19 @@ function mostrarResultados(data) {
             ).join('');
         }
         
+        // Badge de origen
+        let originBadge = '';
+        if (data.source === 'dbpedia') {
+            originBadge = '<span class="badge bg-warning text-dark mb-2"><i class="bi bi-cloud"></i> DBpedia</span>';
+        } else {
+            originBadge = '<span class="badge bg-success mb-2"><i class="bi bi-hdd"></i> Local</span>';
+        }
+        
         html += `
             <div class="col-md-6 col-lg-4 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
+                        ${originBadge}
                         <h5 class="card-title">${item.titulo}</h5>
                         ${aniosHTML}
                         ${item.desarrollador ? `<p class="mb-2"><i class="bi bi-building"></i> ${item.desarrollador}</p>` : ''}
@@ -275,7 +307,7 @@ function mostrarResultados(data) {
                     </div>
                     <div class="card-footer bg-transparent">
                         <small class="text-muted">
-                            <a href="${item.uri}" target="_blank" class="text-decoration-none">
+                            <a href="${item.uri || item.game}" target="_blank" class="text-decoration-none">
                                 <i class="bi bi-box-arrow-up-right"></i> Ver en DBpedia
                             </a>
                         </small>
@@ -287,6 +319,36 @@ function mostrarResultados(data) {
     
     html += '</div>';
     container.innerHTML = html;
+}
+
+// Agregar todos los resultados de DBpedia a la ontología local
+async function agregarTodosDesdeDBpedia(juegos) {
+    if (!confirm(`¿Deseas agregar ${juegos.length} juego(s) a tu ontología local?`)) {
+        return;
+    }
+    
+    toggleLoading(true);
+    
+    try {
+        const response = await fetch(`${API_BASE}/api/agregar-desde-dbpedia`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({juegos: juegos})
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            mostrarAlerta(data.message, 'success');
+            verificarConexion(); // Actualizar contador
+        } else {
+            mostrarAlerta('Error: ' + data.error, 'danger');
+        }
+    } catch (error) {
+        mostrarAlerta('Error de conexión: ' + error, 'danger');
+    } finally {
+        toggleLoading(false);
+    }
 }
 
 // Cargar estadísticas cuando se abre el modal

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from buscador_semantico import BuscadorSemantico, VG
+from hybrid_search import HybridSearch
 from rdflib import RDF
 import os
 import socket
@@ -9,6 +10,7 @@ app = Flask(__name__)
 # Configuración
 OWL_PATH = r"c:\Users\FABIAN\Desktop\GALLETAS\WEB SEMÁNTICAS\videojuegos-ontology\segundo-parcial\videojuegos.owl"
 buscador = BuscadorSemantico(OWL_PATH)
+hybrid_search = HybridSearch(buscador)
 
 @app.route('/')
 def index():
@@ -81,11 +83,24 @@ def poblar():
 
 @app.route('/api/buscar/titulo', methods=['GET'])
 def buscar_titulo():
-    """Buscar por título"""
+    """Buscar por título con búsqueda híbrida"""
     try:
         termino = request.args.get('q', '')
-        resultados = buscador.buscar_por_titulo(termino)
-        return jsonify(_formatear_resultados(resultados))
+        modo_hibrido = request.args.get('hybrid', 'true').lower() == 'true'
+        
+        if modo_hibrido:
+            # Búsqueda híbrida (local + DBpedia)
+            resultado = hybrid_search.buscar_titulo_hibrido(termino)
+            
+            if resultado['success']:
+                return jsonify(_formatear_resultados_hibridos(resultado))
+            else:
+                return jsonify({'success': False, 'data': [], 'count': 0, 'message': resultado['message']})
+        else:
+            # Solo búsqueda local
+            resultados = buscador.buscar_por_titulo(termino)
+            return jsonify(_formatear_resultados(resultados))
+            
     except Exception as e:
         print(f"Error en buscar_titulo: {str(e)}")
         return jsonify({'success': False, 'error': str(e)}), 500
@@ -103,26 +118,79 @@ def buscar_anio():
 
 @app.route('/api/buscar/general', methods=['GET'])
 def buscar_general():
-    """Búsqueda general en todos los campos"""
+    """Búsqueda general con modo híbrido"""
     try:
         termino = request.args.get('q', '')
+        modo_hibrido = request.args.get('hybrid', 'true').lower() == 'true'
+        
         if not termino:
             return jsonify({'success': False, 'error': 'Término vacío'}), 400
-        resultados = buscador.buscar_general(termino)
-        return jsonify(_formatear_resultados(resultados))
+        
+        if modo_hibrido:
+            # Búsqueda híbrida
+            resultado = hybrid_search.buscar_general_hibrido(termino)
+            
+            if resultado['success']:
+                return jsonify(_formatear_resultados_hibridos(resultado))
+            else:
+                return jsonify({'success': False, 'data': [], 'count': 0, 'message': resultado['message']})
+        else:
+            # Solo búsqueda local
+            resultados = buscador.buscar_general(termino)
+            return jsonify(_formatear_resultados(resultados))
+            
     except Exception as e:
         print(f"Error en buscar_general: {str(e)}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/buscar/desarrollador', methods=['GET'])
 def buscar_desarrollador():
-    """Buscar por desarrollador"""
+    """Buscar por desarrollador con modo híbrido"""
     try:
         termino = request.args.get('q', '')
-        resultados = buscador.buscar_por_desarrollador(termino)
-        return jsonify(_formatear_resultados(resultados))
+        modo_hibrido = request.args.get('hybrid', 'true').lower() == 'true'
+        
+        if modo_hibrido:
+            # Búsqueda híbrida
+            resultado = hybrid_search.buscar_desarrollador_hibrido(termino)
+            
+            if resultado['success']:
+                return jsonify(_formatear_resultados_hibridos(resultado))
+            else:
+                return jsonify({'success': False, 'data': [], 'count': 0, 'message': resultado['message']})
+        else:
+            # Solo búsqueda local
+            resultados = buscador.buscar_por_desarrollador(termino)
+            return jsonify(_formatear_resultados(resultados))
+            
     except Exception as e:
         print(f"Error en buscar_desarrollador: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/agregar-desde-dbpedia', methods=['POST'])
+def agregar_desde_dbpedia():
+    """Agrega juegos encontrados en DBpedia a la ontología local"""
+    try:
+        data = request.get_json()
+        juegos = data.get('juegos', [])
+        
+        if not juegos:
+            return jsonify({'success': False, 'message': 'No hay juegos para agregar'}), 400
+        
+        count = hybrid_search.agregar_juegos_dbpedia_a_ontologia(juegos)
+        
+        # Contar total después de agregar
+        total = sum(1 for _ in buscador.graph.triples((None, RDF.type, VG.Videojuego)))
+        
+        return jsonify({
+            'success': True,
+            'message': f'{count} juegos agregados a la ontología local',
+            'agregados': count,
+            'total': total
+        })
+        
+    except Exception as e:
+        print(f"Error en agregar_desde_dbpedia: {str(e)}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/listar', methods=['GET'])
@@ -199,6 +267,32 @@ def _formatear_resultados(resultados):
         return {'success': True, 'data': data, 'count': len(data)}
     except Exception as e:
         print(f"Error en _formatear_resultados: {str(e)}")
+        return {'success': False, 'data': [], 'count': 0, 'error': str(e)}
+
+def _formatear_resultados_hibridos(resultado):
+    """Formatea resultados de búsqueda híbrida"""
+    try:
+        if resultado['source'] == 'local':
+            # Resultados locales - usar formato estándar
+            return _formatear_resultados(resultado['results'])
+        elif resultado['source'] == 'dbpedia':
+            # Resultados de DBpedia - ya están formateados
+            return {
+                'success': True,
+                'data': resultado['results'],
+                'count': resultado['count'],
+                'source': 'dbpedia',
+                'message': resultado['message']
+            }
+        else:
+            return {
+                'success': False,
+                'data': [],
+                'count': 0,
+                'message': resultado['message']
+            }
+    except Exception as e:
+        print(f"Error en _formatear_resultados_hibridos: {str(e)}")
         return {'success': False, 'data': [], 'count': 0, 'error': str(e)}
 
 if __name__ == '__main__':
