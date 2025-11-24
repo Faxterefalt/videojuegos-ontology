@@ -3,11 +3,15 @@ from rdflib import Graph, Namespace, RDF, RDFS, Literal, URIRef
 from rdflib.namespace import OWL, XSD
 import sys
 import time
+import requests
 
-# Configuración de namespaces
+# Configuración de namespaces (exportables)
 VG = Namespace("http://www.semanticweb.org/videojuegos#")
 DBO = Namespace("http://dbpedia.org/ontology/")
 DBR = Namespace("http://dbpedia.org/resource/")
+
+# Exportar para uso en otros módulos
+__all__ = ['BuscadorSemantico', 'VG', 'DBO', 'DBR']
 
 class BuscadorSemantico:
     def __init__(self, owl_file):
@@ -21,7 +25,11 @@ class BuscadorSemantico:
         try:
             self.graph.parse(owl_file, format="xml")
             print(f"✓ Ontología cargada desde {owl_file}")
-        except:
+            # Contar videojuegos existentes
+            count = sum(1 for _ in self.graph.triples((None, RDF.type, VG.Videojuego)))
+            if count > 0:
+                print(f"  {count} videojuegos en la ontología local")
+        except Exception as e:
             print(f"✓ Creando nueva ontología en {owl_file}")
         
         # Configurar endpoint de DBpedia con timeout y user agent
@@ -30,8 +38,52 @@ class BuscadorSemantico:
         self.sparql.setTimeout(30)
         self.sparql.addCustomHttpHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
     
+    def verificar_conexion_dbpedia(self):
+        """Verifica si DBpedia está disponible"""
+        try:
+            print("Verificando conexión con DBpedia...")
+            
+            # Intento 1: Petición HTTP simple
+            response = requests.get("http://dbpedia.org/sparql", timeout=10)
+            if response.status_code == 200:
+                print("✓ DBpedia responde correctamente")
+                
+                # Intento 2: Query SPARQL de prueba
+                test_query = """
+                SELECT (COUNT(*) as ?count)
+                WHERE {
+                    ?s a <http://dbpedia.org/ontology/VideoGame>
+                }
+                LIMIT 1
+                """
+                self.sparql.setQuery(test_query)
+                result = self.sparql.query().convert()
+                
+                if "results" in result:
+                    print("✓ Endpoint SPARQL funcional")
+                    return True
+            
+            print("⚠ DBpedia no responde adecuadamente")
+            return False
+            
+        except requests.exceptions.Timeout:
+            print("✗ Timeout al conectar con DBpedia")
+            return False
+        except requests.exceptions.ConnectionError:
+            print("✗ Error de conexión con DBpedia")
+            return False
+        except Exception as e:
+            print(f"✗ Error inesperado: {str(e)[:100]}")
+            return False
+    
     def consultar_dbpedia(self, limite=20):
         """Consulta videojuegos desde DBpedia con reintentos"""
+        # Verificar conexión primero
+        if not self.verificar_conexion_dbpedia():
+            print("\n⚠ No se puede conectar con DBpedia.")
+            print("Usando datos de ejemplo...")
+            return self._crear_datos_ejemplo()
+        
         query = f"""
         PREFIX dbo: <http://dbpedia.org/ontology/>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -50,7 +102,7 @@ class BuscadorSemantico:
         
         self.sparql.setQuery(query)
         
-        print("Intentando conectar con DBpedia...")
+        print("Consultando DBpedia...")
         max_intentos = 3
         
         for intento in range(1, max_intentos + 1):
@@ -61,7 +113,7 @@ class BuscadorSemantico:
                 if "results" in results and "bindings" in results["results"]:
                     bindings = results["results"]["bindings"]
                     if bindings:
-                        print(f"✓ Conexión exitosa - {len(bindings)} videojuegos obtenidos")
+                        print(f"✓ Éxito - {len(bindings)} videojuegos obtenidos de DBpedia")
                         return bindings
                     else:
                         print("⚠ Respuesta vacía de DBpedia")
@@ -74,7 +126,7 @@ class BuscadorSemantico:
                     print(f"   Esperando 3 segundos...")
                     time.sleep(3)
         
-        print("\n⚠ No se pudo obtener datos de DBpedia.")
+        print("\n⚠ No se pudo obtener datos de DBpedia después de varios intentos.")
         print("Creando datos de ejemplo...")
         return self._crear_datos_ejemplo()
     
@@ -149,22 +201,63 @@ class BuscadorSemantico:
                 "releaseDate": {"value": "2020-12-10"},
                 "developer": {"value": "http://dbpedia.org/resource/CD_Projekt_Red"},
                 "genre": {"value": "http://dbpedia.org/resource/Role-playing_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/Elden_Ring"},
+                "label": {"value": "Elden Ring"},
+                "releaseDate": {"value": "2022-02-25"},
+                "developer": {"value": "http://dbpedia.org/resource/FromSoftware"},
+                "genre": {"value": "http://dbpedia.org/resource/Action_role-playing_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/God_of_War_(2018_video_game)"},
+                "label": {"value": "God of War"},
+                "releaseDate": {"value": "2018-04-20"},
+                "developer": {"value": "http://dbpedia.org/resource/Santa_Monica_Studio"},
+                "genre": {"value": "http://dbpedia.org/resource/Action-adventure_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/Horizon_Zero_Dawn"},
+                "label": {"value": "Horizon Zero Dawn"},
+                "releaseDate": {"value": "2017-02-28"},
+                "developer": {"value": "http://dbpedia.org/resource/Guerrilla_Games"},
+                "genre": {"value": "http://dbpedia.org/resource/Action_role-playing_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/The_Last_of_Us"},
+                "label": {"value": "The Last of Us"},
+                "releaseDate": {"value": "2013-06-14"},
+                "developer": {"value": "http://dbpedia.org/resource/Naughty_Dog"},
+                "genre": {"value": "http://dbpedia.org/resource/Action-adventure_game"}
+            },
+            {
+                "game": {"value": "http://dbpedia.org/resource/Bloodborne"},
+                "label": {"value": "Bloodborne"},
+                "releaseDate": {"value": "2015-03-24"},
+                "developer": {"value": "http://dbpedia.org/resource/FromSoftware"},
+                "genre": {"value": "http://dbpedia.org/resource/Action_role-playing_game"}
             }
         ]
         
-        print(f"✓ Creados {len(ejemplos)} videojuegos de ejemplo")
+        print(f"✓ Creados {len(ejemplos)} videojuegos de ejemplo (modo offline)")
         return ejemplos
     
     def poblar_ontologia(self, limite=20):
         """Pobla la ontología con datos de DBpedia o ejemplos"""
-        print(f"\n Consultando DBpedia (límite: {limite} videojuegos)...")
+        print(f"\n{'='*60}")
+        print(f" POBLANDO ONTOLOGÍA")
+        print(f"{'='*60}")
+        print(f"Límite solicitado: {limite} videojuegos")
+        
         resultados = self.consultar_dbpedia(limite)
         
         if not resultados:
             print("✗ No se obtuvieron resultados")
             return
         
-        print(f"\n Poblando ontología con {len(resultados)} videojuegos...")
+        print(f"\n{'─'*60}")
+        print(f"Procesando {len(resultados)} videojuegos...")
+        print(f"{'─'*60}")
         
         count = 0
         for row in resultados:
@@ -216,14 +309,22 @@ class BuscadorSemantico:
         # Guardar ontología
         try:
             self.graph.serialize(destination=self.owl_file, format="xml")
-            print(f"\n Ontología guardada exitosamente")
-            print(f"    {self.owl_file}")
-            print(f"    {count} videojuegos agregados")
+            print(f"\n{'='*60}")
+            print(f"✓ ONTOLOGÍA GUARDADA EXITOSAMENTE")
+            print(f"{'='*60}")
+            print(f"  Archivo: {self.owl_file}")
+            print(f"  Total agregado: {count} videojuegos")
+            
+            # Contar total en ontología
+            total = sum(1 for _ in self.graph.triples((None, RDF.type, VG.Videojuego)))
+            print(f"  Total en ontología: {total} videojuegos")
+            print(f"{'='*60}\n")
         except Exception as e:
             print(f"\n✗ Error al guardar: {e}")
     
     def buscar_por_titulo(self, termino):
         """Busca videojuegos por título"""
+        print(f"\n Buscando por título: '{termino}'")
         query = f"""
         SELECT ?game ?titulo 
                (GROUP_CONCAT(DISTINCT ?anio; separator=",") as ?anios)
@@ -246,10 +347,13 @@ class BuscadorSemantico:
         GROUP BY ?game ?titulo
         ORDER BY ?titulo
         """
-        return self._ejecutar_consulta(query)
+        resultados = self._ejecutar_consulta(query)
+        print(f"✓ {len(resultados)} resultado(s) encontrado(s)")
+        return resultados
     
     def buscar_por_anio(self, anio):
         """Busca videojuegos por año"""
+        print(f"\n Buscando por año: {anio}")
         query = f"""
         SELECT ?game ?titulo 
                (GROUP_CONCAT(DISTINCT ?anio; separator=",") as ?anios)
@@ -267,10 +371,13 @@ class BuscadorSemantico:
         GROUP BY ?game ?titulo
         ORDER BY ?titulo
         """
-        return self._ejecutar_consulta(query)
+        resultados = self._ejecutar_consulta(query)
+        print(f"✓ {len(resultados)} resultado(s) encontrado(s)")
+        return resultados
     
     def buscar_por_desarrollador(self, termino):
         """Busca videojuegos por desarrollador"""
+        print(f"\n Buscando por desarrollador: '{termino}'")
         query = f"""
         SELECT ?game ?titulo 
                (GROUP_CONCAT(DISTINCT ?anio; separator=",") as ?anios)
@@ -286,10 +393,13 @@ class BuscadorSemantico:
         GROUP BY ?game ?titulo
         ORDER BY ?titulo
         """
-        return self._ejecutar_consulta(query)
+        resultados = self._ejecutar_consulta(query)
+        print(f"✓ {len(resultados)} resultado(s) encontrado(s)")
+        return resultados
     
     def listar_todos(self):
         """Lista todos los videojuegos"""
+        print(f"\n Listando todos los videojuegos")
         query = """
         SELECT ?game ?titulo 
                (GROUP_CONCAT(DISTINCT ?anio; separator=",") as ?anios)
@@ -311,10 +421,13 @@ class BuscadorSemantico:
         GROUP BY ?game ?titulo
         ORDER BY ?titulo
         """
-        return self._ejecutar_consulta(query)
+        resultados = self._ejecutar_consulta(query)
+        print(f"✓ Total: {len(resultados)} videojuegos")
+        return resultados
     
     def buscar_general(self, termino):
         """Búsqueda general en todos los campos de la ontología"""
+        print(f"\n Búsqueda general: '{termino}'")
         query = f"""
         SELECT DISTINCT ?game ?titulo 
                (GROUP_CONCAT(DISTINCT ?anio; separator=",") as ?anios)
@@ -342,7 +455,9 @@ class BuscadorSemantico:
         GROUP BY ?game ?titulo
         ORDER BY ?titulo
         """
-        return self._ejecutar_consulta(query)
+        resultados = self._ejecutar_consulta(query)
+        print(f"✓ {len(resultados)} resultado(s) encontrado(s)")
+        return resultados
     
     def _ejecutar_consulta(self, query):
         """Ejecuta una consulta SPARQL en la ontología local"""

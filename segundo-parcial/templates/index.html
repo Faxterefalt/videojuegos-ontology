@@ -15,9 +15,14 @@
             <span class="navbar-brand mb-0 h1">
                 <i class="bi bi-controller"></i> Buscador Semántico de Videojuegos
             </span>
-            <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#statsModal">
-                <i class="bi bi-graph-up"></i> Estadísticas
-            </button>
+            <div>
+                <span id="dbpedia-status" class="badge bg-secondary me-2">
+                    <i class="bi bi-circle-fill"></i> Verificando...
+                </span>
+                <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#statsModal">
+                    <i class="bi bi-graph-up"></i> Estadísticas
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -25,7 +30,10 @@
         <!-- Panel de Control -->
         <div class="card mb-4">
             <div class="card-body">
-                <h5 class="card-title"><i class="bi bi-database"></i> Gestión de Ontología</h5>
+                <h5 class="card-title">
+                    <i class="bi bi-database"></i> Gestión de Ontología
+                    <span id="local-count" class="badge bg-info ms-2">0 locales</span>
+                </h5>
                 <div class="row">
                     <div class="col-md-8">
                         <input type="number" id="limite" class="form-control" placeholder="Número de videojuegos" value="10">
@@ -35,6 +43,12 @@
                             <i class="bi bi-download"></i> Poblar desde DBpedia
                         </button>
                     </div>
+                </div>
+                <div class="mt-2">
+                    <small class="text-muted">
+                        <i class="bi bi-info-circle"></i>
+                        <span id="connection-info">Verificando conexión...</span>
+                    </small>
                 </div>
             </div>
         </div>

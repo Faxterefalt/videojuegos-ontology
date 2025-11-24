@@ -4,6 +4,85 @@ const API_BASE = window.location.origin;
 // Variable para el temporizador de debounce
 let searchTimeout = null;
 
+// Verificar conexión al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    verificarConexion();
+    
+    // Configurar event listeners
+    const inputGeneral = document.getElementById('buscarGeneral');
+    if (inputGeneral) {
+        // Búsqueda en tiempo real mientras se escribe
+        inputGeneral.addEventListener('input', function(e) {
+            buscarGeneralTiempoReal();
+        });
+        
+        // También mantener funcionalidad de Enter
+        inputGeneral.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                // Cancelar debounce y buscar inmediatamente
+                if (searchTimeout) {
+                    clearTimeout(searchTimeout);
+                }
+                buscarGeneral();
+            }
+        });
+    }
+    
+    // También para los otros campos de búsqueda
+    const inputs = {
+        'buscarTitulo': buscarPorTitulo,
+        'buscarAnio': buscarPorAnio,
+        'buscarDev': buscarPorDesarrollador
+    };
+    
+    Object.keys(inputs).forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    inputs[id]();
+                }
+            });
+        }
+    });
+});
+
+// Verificar conexión con DBpedia
+async function verificarConexion() {
+    const statusBadge = document.getElementById('dbpedia-status');
+    const connectionInfo = document.getElementById('connection-info');
+    const localCount = document.getElementById('local-count');
+    
+    try {
+        const response = await fetch(`${API_BASE}/api/verificar-dbpedia`);
+        const data = await response.json();
+        
+        if (data.success) {
+            if (data.dbpedia_disponible) {
+                statusBadge.className = 'badge bg-success me-2';
+                statusBadge.innerHTML = '<i class="bi bi-circle-fill"></i> DBpedia Online';
+                connectionInfo.textContent = 'DBpedia disponible - Puedes poblar con datos en línea';
+            } else {
+                statusBadge.className = 'badge bg-warning me-2';
+                statusBadge.innerHTML = '<i class="bi bi-circle-fill"></i> DBpedia Offline';
+                connectionInfo.textContent = 'DBpedia no disponible - Usando datos locales y ejemplos';
+            }
+            
+            localCount.textContent = `${data.videojuegos_locales} locales`;
+        } else {
+            statusBadge.className = 'badge bg-danger me-2';
+            statusBadge.innerHTML = '<i class="bi bi-circle-fill"></i> Error';
+            connectionInfo.textContent = 'Error al verificar conexión';
+        }
+    } catch (error) {
+        statusBadge.className = 'badge bg-danger me-2';
+        statusBadge.innerHTML = '<i class="bi bi-circle-fill"></i> Error';
+        connectionInfo.textContent = 'Error de conexión con el servidor';
+        console.error('Error:', error);
+    }
+}
+
+
 // Función auxiliar para mostrar/ocultar loading
 function toggleLoading(show) {
     document.getElementById('loading').style.display = show ? 'block' : 'none';
@@ -25,6 +104,8 @@ async function poblarOntologia() {
     const limite = document.getElementById('limite').value || 10;
     toggleLoading(true);
     
+    mostrarAlerta('Iniciando población de ontología...', 'info');
+    
     try {
         const response = await fetch(`${API_BASE}/api/poblar`, {
             method: 'POST',
@@ -36,6 +117,8 @@ async function poblarOntologia() {
         
         if (data.success) {
             mostrarAlerta(data.message, 'success');
+            // Actualizar contador
+            verificarConexion();
         } else {
             mostrarAlerta('Error: ' + data.error, 'danger');
         }
@@ -138,7 +221,7 @@ async function buscarPorDesarrollador() {
 // Listar todos
 async function listarTodos() {
     toggleLoading(true);
-    const response = await fetch('/api/listar');
+    const response = await fetch(`${API_BASE}/api/listar`);
     const data = await response.json();
     toggleLoading(false);
     
@@ -212,7 +295,7 @@ document.getElementById('statsModal').addEventListener('show.bs.modal', async fu
     content.innerHTML = '<div class="text-center"><div class="spinner-border"></div></div>';
     
     try {
-        const response = await fetch('/api/estadisticas');
+        const response = await fetch(`${API_BASE}/api/estadisticas`);
         const data = await response.json();
         
         let html = `
@@ -238,44 +321,4 @@ document.getElementById('statsModal').addEventListener('show.bs.modal', async fu
     } catch (error) {
         content.innerHTML = '<div class="alert alert-danger">Error al cargar estadísticas</div>';
     }
-});
-
-// Agregar event listener para Enter en el campo de búsqueda general
-document.addEventListener('DOMContentLoaded', function() {
-    const inputGeneral = document.getElementById('buscarGeneral');
-    if (inputGeneral) {
-        // Búsqueda en tiempo real mientras se escribe
-        inputGeneral.addEventListener('input', function(e) {
-            buscarGeneralTiempoReal();
-        });
-        
-        // También mantener funcionalidad de Enter
-        inputGeneral.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                // Cancelar debounce y buscar inmediatamente
-                if (searchTimeout) {
-                    clearTimeout(searchTimeout);
-                }
-                buscarGeneral();
-            }
-        });
-    }
-    
-    // También para los otros campos de búsqueda
-    const inputs = {
-        'buscarTitulo': buscarPorTitulo,
-        'buscarAnio': buscarPorAnio,
-        'buscarDev': buscarPorDesarrollador
-    };
-    
-    Object.keys(inputs).forEach(id => {
-        const input = document.getElementById(id);
-        if (input) {
-            input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    inputs[id]();
-                }
-            });
-        }
-    });
 });
