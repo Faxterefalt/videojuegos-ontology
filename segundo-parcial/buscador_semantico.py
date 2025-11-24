@@ -4,6 +4,7 @@ from rdflib.namespace import OWL, XSD
 import sys
 import time
 import requests
+from dbpedia_sync import DBpediaSync
 
 # Configuración de namespaces (exportables)
 VG = Namespace("http://www.semanticweb.org/videojuegos#")
@@ -20,6 +21,9 @@ class BuscadorSemantico:
         self.graph.bind("dbo", DBO)
         self.graph.bind("dbr", DBR)
         self.owl_file = owl_file
+        
+        # Inicializar sincronizador de DBpedia
+        self.dbpedia_sync = DBpediaSync()
         
         # Cargar ontología existente
         try:
@@ -77,13 +81,41 @@ class BuscadorSemantico:
             return False
     
     def consultar_dbpedia(self, limite=20):
-        """Consulta videojuegos desde DBpedia con reintentos"""
+        """Consulta videojuegos desde DBpedia evitando duplicados - MÉTODO PRINCIPAL"""
         # Verificar conexión primero
         if not self.verificar_conexion_dbpedia():
             print("\n⚠ No se puede conectar con DBpedia.")
             print("Usando datos de ejemplo...")
             return self._crear_datos_ejemplo()
         
+        print(f"\n{'─'*60}")
+        print("CONSULTANDO DBPEDIA CON VALIDACIÓN DE DUPLICADOS")
+        print(f"{'─'*60}")
+        
+        # Obtener juegos que ya existen en la ontología
+        uris_existentes = self.dbpedia_sync.obtener_juegos_existentes(self.graph, VG)
+        
+        if not uris_existentes:
+            print("   No hay juegos previos, consultando normalmente...")
+            # Si no hay juegos, usar consulta simple
+            return self._consultar_dbpedia_simple(limite)
+        
+        # Usar estrategias múltiples para obtener juegos nuevos
+        juegos_nuevos = self.dbpedia_sync.consultar_dbpedia_con_estrategias(limite, uris_existentes)
+        
+        if juegos_nuevos:
+            print(f"\n✓ Total de juegos NUEVOS obtenidos: {len(juegos_nuevos)}")
+            return juegos_nuevos
+        else:
+            print("\n⚠ No se pudieron obtener juegos nuevos de DBpedia.")
+            print("Usando datos de ejemplo...")
+            # Filtrar ejemplos que no existan
+            ejemplos = self._crear_datos_ejemplo()
+            ejemplos_nuevos = [ej for ej in ejemplos if ej["game"]["value"] not in uris_existentes]
+            return ejemplos_nuevos if ejemplos_nuevos else ejemplos[:limite]
+    
+    def _consultar_dbpedia_simple(self, limite):
+        """Consulta simple cuando no hay juegos previos"""
         query = f"""
         PREFIX dbo: <http://dbpedia.org/ontology/>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -102,34 +134,19 @@ class BuscadorSemantico:
         
         self.sparql.setQuery(query)
         
-        print("Consultando DBpedia...")
-        max_intentos = 3
+        try:
+            print("   Consultando DBpedia...")
+            results = self.sparql.query().convert()
+            
+            if "results" in results and "bindings" in results["results"]:
+                bindings = results["results"]["bindings"]
+                print(f"   ✓ {len(bindings)} juegos obtenidos")
+                return bindings
+        except Exception as e:
+            print(f"   ✗ Error: {str(e)[:100]}")
         
-        for intento in range(1, max_intentos + 1):
-            try:
-                print(f"   Intento {intento}/{max_intentos}...")
-                results = self.sparql.query().convert()
-                
-                if "results" in results and "bindings" in results["results"]:
-                    bindings = results["results"]["bindings"]
-                    if bindings:
-                        print(f"✓ Éxito - {len(bindings)} videojuegos obtenidos de DBpedia")
-                        return bindings
-                    else:
-                        print("⚠ Respuesta vacía de DBpedia")
-                else:
-                    print("⚠ Formato de respuesta inesperado")
-                
-            except Exception as e:
-                print(f"✗ Error en intento {intento}: {str(e)[:100]}")
-                if intento < max_intentos:
-                    print(f"   Esperando 3 segundos...")
-                    time.sleep(3)
-        
-        print("\n⚠ No se pudo obtener datos de DBpedia después de varios intentos.")
-        print("Creando datos de ejemplo...")
-        return self._crear_datos_ejemplo()
-    
+        return []
+
     def _crear_datos_ejemplo(self):
         """Crea datos de ejemplo si DBpedia no funciona"""
         ejemplos = [
@@ -247,7 +264,7 @@ class BuscadorSemantico:
         print(f"\n{'='*60}")
         print(f" POBLANDO ONTOLOGÍA")
         print(f"{'='*60}")
-        print(f"Límite solicitado: {limite} videojuegos")
+        print(f"Límite solicitado: {limite} videojuegos nuevos")
         
         resultados = self.consultar_dbpedia(limite)
         
@@ -259,11 +276,22 @@ class BuscadorSemantico:
         print(f"Procesando {len(resultados)} videojuegos...")
         print(f"{'─'*60}")
         
-        count = 0
+        count_agregados = 0
+        count_duplicados = 0
+        
+        # Obtener URIs existentes para doble verificación
+        uris_existentes = self.dbpedia_sync.obtener_juegos_existentes(self.graph, VG)
+        
         for row in resultados:
             try:
                 game_uri = URIRef(row["game"]["value"])
                 label = row.get("label", {}).get("value", "Sin título")
+                
+                # Verificar si el juego ya existe (doble verificación)
+                if not self.dbpedia_sync.validar_juego_nuevo(game_uri, uris_existentes):
+                    count_duplicados += 1
+                    print(f"  ⊙ {label} (ya existe, omitiendo)")
+                    continue
                 
                 # Agregar videojuego
                 self.graph.add((game_uri, RDF.type, VG.Videojuego))
@@ -294,34 +322,50 @@ class BuscadorSemantico:
                     self.graph.add((genre_uri, RDFS.label, Literal(genre_name)))
                     self.graph.add((game_uri, VG.tieneGenero, genre_uri))
                 
-                count += 1
+                count_agregados += 1
+                uris_existentes.add(str(game_uri))  # Agregar a la lista para futuras verificaciones
+                
                 anio = ""
                 if "releaseDate" in row:
                     try:
                         anio = f" ({row['releaseDate']['value'][:4]})"
                     except:
                         pass
-                print(f"  ✓ {count}. {label}{anio}")
+                print(f"  ✓ {count_agregados}. {label}{anio} (NUEVO)")
                 
             except Exception as e:
                 print(f"  ✗ Error procesando {label}: {str(e)[:50]}")
         
-        # Guardar ontología
-        try:
-            self.graph.serialize(destination=self.owl_file, format="xml")
+
+        reporte = self.dbpedia_sync.generar_reporte_sincronizacion(
+            limite, count_agregados, count_duplicados
+        )
+        
+        if count_agregados > 0:
+            try:
+                self.graph.serialize(destination=self.owl_file, format="xml")
+                print(f"\n{'='*60}")
+                print(f"✓ ONTOLOGÍA GUARDADA EXITOSAMENTE")
+                print(f"{'='*60}")
+                print(f"  Archivo: {self.owl_file}")
+                print(f"  Nuevos agregados: {count_agregados} videojuegos")
+                print(f"  Duplicados omitidos: {count_duplicados}")
+                
+                total = sum(1 for _ in self.graph.triples((None, RDF.type, VG.Videojuego)))
+                print(f"  Total en ontología: {total} videojuegos")
+                print(f"{'='*60}\n")
+            except Exception as e:
+                print(f"\n✗ Error al guardar: {e}")
+        else:
             print(f"\n{'='*60}")
-            print(f"✓ ONTOLOGÍA GUARDADA EXITOSAMENTE")
+            print(f"⚠ NO SE AGREGARON NUEVOS VIDEOJUEGOS")
             print(f"{'='*60}")
-            print(f"  Archivo: {self.owl_file}")
-            print(f"  Total agregado: {count} videojuegos")
-            
-            # Contar total en ontología
+            print(f"  {reporte['mensaje']}")
             total = sum(1 for _ in self.graph.triples((None, RDF.type, VG.Videojuego)))
             print(f"  Total en ontología: {total} videojuegos")
+            print(f"  SUGERENCIA: Aumenta el límite de juegos a solicitar")
             print(f"{'='*60}\n")
-        except Exception as e:
-            print(f"\n✗ Error al guardar: {e}")
-    
+
     def buscar_por_titulo(self, termino):
         """Busca videojuegos por título"""
         print(f"\n Buscando por título: '{termino}'")
