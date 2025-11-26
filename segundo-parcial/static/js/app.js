@@ -159,14 +159,23 @@ async function buscarGeneral() {
     
     toggleLoading(true);
     
-    // MOSTRAR resultados inmediatamente de caché si existen
-    const cachedResults = sessionStorage.getItem(`search_${termino}`);
-    if (cachedResults) {
-        const data = JSON.parse(cachedResults);
-        mostrarResultados(data);
-        mostrarAlerta('Resultados desde caché (instantáneo)', 'info');
-        toggleLoading(false);
-        return;
+    // FIXED: NO usar caché para términos que parecen consultas inteligentes
+    const palabrasInteligentes = ['más', 'mas', 'mejor', 'goty', 'ganador', 'jugadores', 
+                                   'reciente', 'nuevo', 'vendido', 'popular', 'premio'];
+    const esConsultaInteligente = palabrasInteligentes.some(p => termino.toLowerCase().includes(p));
+    
+    if (!esConsultaInteligente) {
+        // Solo usar caché para búsquedas normales
+        const cachedResults = sessionStorage.getItem(`search_${termino}`);
+        if (cachedResults) {
+            const data = JSON.parse(cachedResults);
+            mostrarResultados(data);
+            mostrarAlerta('Resultados desde caché (instantáneo)', 'info');
+            toggleLoading(false);
+            return;
+        }
+    } else {
+        console.log('🤖 Consulta inteligente detectada, omitiendo caché');
     }
     
     try {
@@ -184,10 +193,17 @@ async function buscarGeneral() {
         toggleLoading(false);
         
         if (data.success) {
-            // Guardar en caché
-            sessionStorage.setItem(`search_${termino}`, JSON.stringify(data));
+            // Guardar en caché SOLO si NO es búsqueda inteligente
+            if (!esConsultaInteligente) {
+                sessionStorage.setItem(`search_${termino}`, JSON.stringify(data));
+            }
             
             mostrarResultados(data);
+            
+            if (data.analisis && data.analisis.confianza > 0.5) {
+                console.log(`🤖 Búsqueda inteligente: ${data.analisis.descripcion}`);
+            }
+            
             console.log(`⚡ Búsqueda completada en ${searchTime}s`);
         } else {
             mostrarAlerta('Error: ' + (data.error || 'Error desconocido'), 'danger');
@@ -356,8 +372,8 @@ function mostrarResultados(data) {
         return;
     }
     
-    // NUEVO: Verificar si son resultados híbridos
-    if (data.source === 'hybrid') {
+    // FIXED: Verificar AMBOS tipos de resultados híbridos
+    if (data.source === 'hybrid' || data.source === 'hybrid_intelligent') {
         mostrarResultadosHibridos(data);
         return;
     }
@@ -371,14 +387,33 @@ function mostrarResultadosHibridos(data) {
     const container = document.getElementById('resultados');
     let html = '';
     
-    // Encabezado general
-    html += `
-        <div class="alert alert-info">
-            <i class="bi bi-lightbulb"></i> 
-            <strong>Búsqueda Híbrida Completa</strong> - 
-            Mostrando resultados de tu ontología local Y de DBpedia
-        </div>
-    `;
+    // NUEVO: Mostrar análisis de búsqueda inteligente si existe
+    if (data.analisis && data.analisis.confianza > 0.3) {
+        const confianzaPercent = (data.analisis.confianza * 100).toFixed(0);
+        const badgeClass = data.analisis.confianza > 0.7 ? 'success' : 'info';
+        
+        html += `
+            <div class="alert alert-${badgeClass} border-start border-4">
+                <div class="d-flex align-items-center mb-2">
+                    <i class="bi bi-lightbulb-fill fs-4 me-2"></i>
+                    <strong>Búsqueda Inteligente Activada</strong>
+                    <span class="badge bg-light text-dark ms-2">${confianzaPercent}% confianza</span>
+                </div>
+                <p class="mb-0">
+                    <i class="bi bi-arrow-right"></i> ${data.analisis.descripcion}
+                </p>
+            </div>
+        `;
+    } else {
+        // Encabezado normal
+        html += `
+            <div class="alert alert-info">
+                <i class="bi bi-search"></i> 
+                <strong>Búsqueda Híbrida</strong> - 
+                Resultados de ontología local y DBpedia
+            </div>
+        `;
+    }
     
     html += `<h5 class="mb-3"><i class="bi bi-trophy"></i> ${data.count} resultado(s) total(es)</h5>`;
     
@@ -403,11 +438,14 @@ function mostrarResultadosHibridos(data) {
     
     // SECCIÓN 2: RESULTADOS DE DBPEDIA (abajo)
     if (data.count_dbpedia > 0) {
+        const tituloSeccion = data.source === 'hybrid_intelligent' 
+            ? `<i class="bi bi-robot"></i> Resultados Inteligentes de DBpedia (${data.count_dbpedia})`
+            : `<i class="bi bi-cloud-fill"></i> Resultados de DBpedia (${data.count_dbpedia})`;
+        
         html += `
             <div class="mb-4">
-                <h6 class="text-warning">
-                    <i class="bi bi-cloud-fill"></i> 
-                    Resultados de DBpedia (${data.count_dbpedia})
+                <h6 class="text-primary">
+                    ${tituloSeccion}
                     <button class="btn btn-sm btn-primary ms-3" onclick="agregarTodosDesdeDBpedia(${JSON.stringify(data.dbpedia).replace(/"/g, '&quot;')})">
                         <i class="bi bi-download"></i> Agregar todos a ontología local
                     </button>

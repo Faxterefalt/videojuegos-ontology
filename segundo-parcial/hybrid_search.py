@@ -9,6 +9,14 @@ from semantic_reasoning import SemanticReasoner
 from multilingual import traductor_global
 import time
 
+# NUEVO: Importar con manejo de errores
+try:
+    from intelligent_search import IntelligentSearch
+    INTELLIGENT_SEARCH_DISPONIBLE = True
+except ImportError:
+    INTELLIGENT_SEARCH_DISPONIBLE = False
+    print("⚠ Búsqueda inteligente no disponible")
+
 class HybridSearch:
     def __init__(self, buscador_local, sparql_endpoint="http://dbpedia.org/sparql"):
         """
@@ -32,6 +40,17 @@ class HybridSearch:
         # NUEVO: Caché de resultados
         self.cache_resultados = {}
         self.CACHE_TTL = 180  # 3 minutos
+        
+        # NUEVO: Búsqueda inteligente (solo si está disponible)
+        if INTELLIGENT_SEARCH_DISPONIBLE:
+            try:
+                self.intelligent_search = IntelligentSearch(sparql_endpoint)
+                print("✓ Búsqueda inteligente inicializada")
+            except Exception as e:
+                self.intelligent_search = None
+                print(f"✗ Error al inicializar búsqueda inteligente: {e}")
+        else:
+            self.intelligent_search = None
     
     def buscar_titulo_hibrido(self, termino):
         """OPTIMIZADO con multilingüismo - búsqueda más rápida"""
@@ -206,7 +225,54 @@ class HybridSearch:
         }
     
     def buscar_general_hibrido(self, termino):
-        """Búsqueda general híbrida - SIEMPRE ambas fuentes"""
+        """Búsqueda general híbrida CON búsqueda inteligente (si está disponible)"""
+        print(f"\n{'='*60}")
+        print(f"BÚSQUEDA HÍBRIDA: '{termino}'")
+        print(f"{'='*60}")
+        
+        # 1. Intentar búsqueda inteligente solo si está disponible
+        if self.intelligent_search is not None:
+            try:
+                print("→ Intentando búsqueda inteligente...")
+                resultado_inteligente = self.intelligent_search.buscar_inteligente(termino, limite=15)
+                
+                if resultado_inteligente['success'] and resultado_inteligente['count'] > 0:
+                    print(f"\n✓ Búsqueda inteligente EXITOSA")
+                    print(f"  Tipo: {resultado_inteligente['analisis']['tipo']}")
+                    print(f"  Confianza: {resultado_inteligente['analisis']['confianza']:.2%}")
+                    print(f"  Resultados: {resultado_inteligente['count']}")
+                    
+                    # También buscar localmente
+                    print("\n[Local] Búsqueda local complementaria...")
+                    resultados_locales = self._buscar_local_expandido([termino])
+                    
+                    return {
+                        'success': True,
+                        'source': 'hybrid_intelligent',
+                        'local': {
+                            'results': resultados_locales,
+                            'count': len(resultados_locales)
+                        },
+                        'dbpedia': {
+                            'results': resultado_inteligente['resultados'],
+                            'count': resultado_inteligente['count']
+                        },
+                        'total_count': len(resultados_locales) + resultado_inteligente['count'],
+                        'message': f"{len(resultados_locales)} local(es), {resultado_inteligente['count']} de DBpedia (inteligente)",
+                        'analisis': resultado_inteligente['analisis']
+                    }
+                else:
+                    print(f"→ Búsqueda inteligente rechazada (confianza: {resultado_inteligente['analisis']['confianza']:.2%})")
+                    
+            except Exception as e:
+                print(f"✗ Error en búsqueda inteligente: {str(e)}")
+                import traceback
+                traceback.print_exc()
+        else:
+            print("⚠ Búsqueda inteligente no disponible")
+        
+        # 2. Fallback: búsqueda híbrida normal (SIEMPRE FUNCIONA)
+        print("\n→ Usando búsqueda híbrida estándar...")
         return self.buscar_titulo_hibrido(termino)
     
     def _buscar_en_dbpedia_por_titulo(self, termino):

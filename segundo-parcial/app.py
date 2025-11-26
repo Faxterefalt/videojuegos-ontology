@@ -376,29 +376,26 @@ def _formatear_resultados(resultados):
         return {'success': False, 'data': [], 'count': 0, 'error': str(e)}
 
 def _formatear_resultados_hibridos(resultado):
-    """Formatea resultados de búsqueda híbrida - NUEVA LÓGICA"""
+    """Formatea resultados de búsqueda híbrida - CON análisis inteligente"""
     try:
-        if resultado['source'] == 'hybrid':
-            # NUEVO: Resultados combinados (local + DBpedia)
+        # FIXED: Manejar AMBOS tipos de resultados híbridos
+        if resultado['source'] in ['hybrid', 'hybrid_intelligent']:
             data_local = []
             data_dbpedia = []
             
             # Procesar resultados locales
             if resultado['local']['count'] > 0:
                 for row in resultado['local']['results']:
-                    # Procesar años
                     anios = None
                     if hasattr(row, 'anios') and row.anios:
                         anios_str = str(row.anios)
                         anios = sorted([int(a.strip()) for a in anios_str.split(',') if a.strip().isdigit()])
                     
-                    # Procesar géneros
                     generos = None
                     if hasattr(row, 'generos') and row.generos:
                         generos_str = str(row.generos)
                         generos = [g.strip() for g in generos_str.split(',') if g.strip()]
                     
-                    # Procesar desarrollador
                     desarrollador = None
                     if hasattr(row, 'dev') and row.dev:
                         desarrollador = str(row.dev)
@@ -419,13 +416,14 @@ def _formatear_resultados_hibridos(resultado):
             
             return {
                 'success': True,
-                'source': 'hybrid',
+                'source': resultado['source'],
                 'local': data_local,
                 'dbpedia': data_dbpedia,
                 'count_local': len(data_local),
                 'count_dbpedia': len(data_dbpedia),
                 'count': len(data_local) + len(data_dbpedia),
-                'message': resultado['message']
+                'message': resultado['message'],
+                'analisis': resultado.get('analisis', {})  # INCLUIR análisis
             }
         
         elif resultado['source'] == 'local':
