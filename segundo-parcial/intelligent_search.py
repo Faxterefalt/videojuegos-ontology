@@ -13,19 +13,38 @@ class IntelligentSearch:
         self.sparql.setTimeout(15)
         self.sparql.addCustomHttpHeader("User-Agent", "Mozilla/5.0")
         
+        # FIXED: Traducciones mejoradas
+        self.traducciones_es_en = {
+            'más vendido': 'best selling',
+            'mas vendido': 'best selling',
+            'ganador': 'winner',
+            'ganó': 'won',
+            'goty': 'game of the year',
+            'juego del año': 'game of the year',
+            'más jugadores': 'most players',
+            'mas jugadores': 'most players',
+            'recientes': 'recent',
+            'reciente': 'recent',
+            'mejor': 'best',
+            'juegos': 'games',
+            'juego': 'game'
+        }
+        
         # Patrones de consulta (estilo Google)
         self.patrones = {
             'mas_vendido': {
                 'keywords': ['más vendido', 'mas vendido', 'best selling', 'mayor venta', 
                            'top ventas', 'más exitoso', 'mas exitoso', 'bestseller'],
                 'tipo': 'superlativo_ventas',
-                'descripcion': 'Juegos más vendidos de todos los tiempos'
+                'descripcion': 'Juegos más vendidos de todos los tiempos',
+                'singular': True  # NUEVO: indica que solo debe retornar 1 resultado
             },
             'goty': {
                 'keywords': ['goty', 'game of the year', 'juego del año', 'ganador goty',
-                           'ganó goty', 'premio', 'award', 'premiado', 'game of year'],
+                           'ganó goty', 'ganador del goty', 'winner goty', 'premiado'],
                 'tipo': 'premio',
-                'descripcion': 'Juegos ganadores de premios GOTY'
+                'descripcion': 'Juegos ganadores de premios GOTY',
+                'singular': False
             },
             'mas_jugadores': {
                 'keywords': ['más jugadores', 'mas jugadores', 'most players', 
@@ -63,6 +82,17 @@ class IntelligentSearch:
             }
         }
     
+    def traducir_consulta(self, consulta):
+        """Traduce consulta español a inglés MEJORADO"""
+        consulta_traducida = consulta.lower()
+        
+        for es, en in self.traducciones_es_en.items():
+            if es in consulta_traducida:
+                consulta_traducida = consulta_traducida.replace(es, en)
+        
+        print(f"   Traducción: '{consulta}' → '{consulta_traducida}'")
+        return consulta_traducida
+    
     def analizar_consulta(self, consulta):
         """Analiza consulta en lenguaje natural con NLP básico"""
         consulta_lower = consulta.lower().strip()
@@ -78,7 +108,9 @@ class IntelligentSearch:
             'parametros': {'termino': consulta},
             'descripcion': 'Búsqueda general',
             'confianza': 0.0,
-            'entidades': []
+            'entidades': [],
+            'singular': False,  # NUEVO
+            'consulta_traducida': self.traducir_consulta(consulta)  # NUEVO
         }
         
         # 1. Detectar año específico
@@ -87,17 +119,16 @@ class IntelligentSearch:
             anio = int(anio_match.group())
             resultado['parametros']['anio'] = anio
             resultado['entidades'].append(('AÑO', anio))
-            resultado['confianza'] = 0.7  # FIXED: Asignar directamente
+            resultado['confianza'] = 0.7
             print(f"✓ Año detectado: {anio}")
         
-        # 2. Detectar patrones de consulta PRIMERO (más importante)
-        max_confianza = resultado['confianza']  # FIXED: Empezar desde confianza actual
+        # 2. Detectar patrones de consulta
+        max_confianza = resultado['confianza']
         mejor_patron = None
         
         for patron_key, patron_info in self.patrones.items():
             for keyword in patron_info['keywords']:
                 if keyword in consulta_lower:
-                    # Calcular confianza (mínimo 0.6)
                     confianza = max(0.6, len(keyword) / len(consulta_lower))
                     
                     if confianza > max_confianza:
@@ -105,16 +136,18 @@ class IntelligentSearch:
                         mejor_patron = {
                             'tipo': patron_info['tipo'],
                             'keyword': keyword,
-                            'descripcion': patron_info['descripcion']
+                            'descripcion': patron_info['descripcion'],
+                            'singular': patron_info.get('singular', False)  # NUEVO
                         }
         
         if mejor_patron:
             resultado['tipo'] = mejor_patron['tipo']
             resultado['descripcion'] = mejor_patron['descripcion']
-            resultado['confianza'] = max_confianza  # FIXED: Usar max_confianza
+            resultado['confianza'] = max_confianza
+            resultado['singular'] = mejor_patron['singular']  # NUEVO
             resultado['entidades'].append(('PATRON', mejor_patron['keyword']))
             print(f"✓ Patrón: {mejor_patron['tipo']}")
-            print(f"✓ Keyword: '{mejor_patron['keyword']}'")
+            print(f"✓ Singular: {mejor_patron['singular']}")
         
         # 3. Detectar géneros
         generos = {
@@ -186,7 +219,8 @@ class IntelligentSearch:
         print(f"{'─'*60}")
         print(f"Tipo final: {resultado['tipo']}")
         print(f"Entidades: {len(resultado['entidades'])}")
-        print(f"Confianza FINAL: {resultado['confianza']:.2%}")  # FIXED: Mostrar claramente
+        print(f"Confianza FINAL: {resultado['confianza']:.2%}")
+        print(f"Singular: {resultado['singular']}")
         print(f"{'='*60}\n")
         
         return resultado
@@ -195,9 +229,8 @@ class IntelligentSearch:
         """Ejecuta búsqueda basada en análisis NLP"""
         analisis = self.analizar_consulta(consulta)
         
-        # FIXED: Umbral más bajo para aceptar consultas
         if analisis['confianza'] < 0.3:
-            print(f"→ Confianza demasiado baja ({analisis['confianza']:.2%}), usando búsqueda estándar")
+            print(f"→ Confianza demasiado baja ({analisis['confianza']:.2%})")
             return {
                 'success': False,
                 'resultados': [],
@@ -205,32 +238,38 @@ class IntelligentSearch:
                 'count': 0
             }
         
-        print(f"✓ Confianza aceptable ({analisis['confianza']:.2%}), ejecutando búsqueda inteligente...")
+        print(f"✓ Confianza aceptable ({analisis['confianza']:.2%})")
         
         tipo = analisis['tipo']
         params = analisis['parametros']
+        singular = analisis['singular']
+        
+        # NUEVO: Ajustar límite si es singular
+        limite_efectivo = 1 if singular else limite
         
         try:
-            # Ejecutar query según tipo detectado
             if tipo == 'superlativo_ventas':
-                resultados = self._query_mas_vendidos(params, limite)
+                resultados = self._query_mas_vendidos(params, limite_efectivo)
             elif tipo == 'premio':
-                resultados = self._query_premiados(params, limite)
+                resultados = self._query_premiados(params, limite_efectivo)
             elif tipo == 'superlativo_jugadores':
-                resultados = self._query_mas_populares(params, limite)
+                resultados = self._query_mas_populares(params, limite_efectivo)
             elif tipo == 'superlativo_calificacion':
-                resultados = self._query_mejor_calificados(params, limite)
+                resultados = self._query_mejor_calificados(params, limite_efectivo)
             elif tipo == 'superlativo_reciente':
-                resultados = self._query_mas_recientes(params, limite)
+                resultados = self._query_mas_recientes(params, limite_efectivo)
             elif tipo == 'superlativo_antiguo':
-                resultados = self._query_mas_antiguos(params, limite)
+                resultados = self._query_mas_antiguos(params, limite_efectivo)
             else:
-                resultados = self._query_general(params, limite)
+                resultados = self._query_general(params, limite_efectivo)
+            
+            # NUEVO: Eliminar duplicados y filtrar no lanzados
+            resultados = self._filtrar_y_deduplicar(resultados, params)
             
             if len(resultados) > 0:
-                print(f"✓ Query exitosa: {len(resultados)} resultados")
+                print(f"✓ Query exitosa: {len(resultados)} resultados únicos")
             else:
-                print(f"⚠ Query ejecutada pero sin resultados")
+                print(f"⚠ Query sin resultados después de filtrado")
             
             return {
                 'success': True,
@@ -239,7 +278,7 @@ class IntelligentSearch:
                 'count': len(resultados)
             }
         except Exception as e:
-            print(f"✗ Error ejecutando query: {str(e)}")
+            print(f"✗ Error: {str(e)}")
             import traceback
             traceback.print_exc()
             return {
@@ -250,11 +289,48 @@ class IntelligentSearch:
                 'error': str(e)
             }
     
-    def _query_mas_vendidos(self, params, limite):
-        """Query para juegos más vendidos"""
-        filtro_anio = f"FILTER (YEAR(?releaseDate) = {params['anio']})" if 'anio' in params else ""
+    def _filtrar_y_deduplicar(self, resultados, params):
+        """Filtra duplicados pero PERMITE juegos futuros cercanos (2025)"""
+        import datetime
         
-        # FIXED: Query más específica con juegos realmente vendidos
+        vistos = set()
+        filtrados = []
+        anio_actual = datetime.datetime.now().year
+        
+        for resultado in resultados:
+            titulo = resultado['titulo'].lower()
+            
+            # Eliminar duplicados por título
+            if titulo in vistos:
+                print(f"   ⊙ Duplicado omitido: {resultado['titulo']}")
+                continue
+            
+            # ARREGLADO: Permitir juegos del año siguiente (2025 si estamos en 2024)
+            if resultado.get('anios'):
+                anio_juego = resultado['anios'][0]
+                # Solo filtrar si es más de 1 año en el futuro
+                if anio_juego > anio_actual + 1:
+                    print(f"   ✗ Muy futuro omitido: {resultado['titulo']} ({anio_juego})")
+                    continue
+            
+            # Para "más vendido", excluir versiones futuras como GTA VI
+            if 'vendido' in params.get('termino', '').lower():
+                # Excluir juegos que claramente no han salido
+                if any(x in titulo for x in ['vi ', ' 6', 'six']) and not any(x in titulo for x in ['v ', ' 5', 'five']):
+                    # Verificar que realmente sea futuro
+                    if resultado.get('anios') and resultado['anios'][0] > anio_actual:
+                        print(f"   ✗ Versión futura omitida: {resultado['titulo']} ({resultado['anios'][0]})")
+                        continue
+            
+            vistos.add(titulo)
+            filtrados.append(resultado)
+        
+        return filtrados
+    
+    def _query_mas_vendidos(self, params, limite):
+        """Query para EL juego más vendido - ARREGLADA"""
+        filtro_anio = f"FILTER (YEAR(?releaseDate) <= 2024)" if 'anio' not in params else f"FILTER (YEAR(?releaseDate) = {params['anio']})"
+        
         query = f"""
         PREFIX dbo: <http://dbpedia.org/ontology/>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -271,28 +347,107 @@ class IntelligentSearch:
             
             {filtro_anio}
             
-            # Juegos conocidos como best-sellers
+            # Top juegos más vendidos de la historia
             FILTER (
-                CONTAINS(LCASE(?label), 'minecraft') ||
-                CONTAINS(LCASE(?label), 'grand theft auto') ||
                 CONTAINS(LCASE(?label), 'tetris') ||
-                CONTAINS(LCASE(?label), 'mario kart') ||
-                CONTAINS(LCASE(?label), 'pokemon')
+                (CONTAINS(LCASE(?label), 'minecraft') && !CONTAINS(LCASE(?label), 'story')) ||
+                (CONTAINS(LCASE(?label), 'grand theft auto v') && !CONTAINS(LCASE(?label), 'vi')) ||
+                CONTAINS(LCASE(?label), 'wii sports') ||
+                CONTAINS(LCASE(?label), 'super mario bros')
             )
         }}
-        LIMIT {limite}
+        ORDER BY DESC(?releaseDate)
+        LIMIT {limite * 3}
         """
         return self._ejecutar_query(query)
     
     def _query_premiados(self, params, limite):
-        """Query para juegos premiados/GOTY"""
+        """Query para juegos GOTY - CORREGIDA para 2024"""
         anio = params.get('anio')
         
-        if anio:
-            filtro = f"FILTER (YEAR(?releaseDate) = {anio})"
-        else:
-            filtro = ""
+        # Mapeo ACTUALIZADO de ganadores GOTY
+        ganadores_goty = {
+            2024: "baldur's gate 3",  # GOTY 2023 anunciado en 2024
+            2023: "elden ring",
+            2022: "it takes two",
+            2021: "the last of us part ii",
+            2020: "sekiro",
+            2019: "god of war",
+            2018: "the legend of zelda: breath of the wild"
+        }
         
+        if anio and anio in ganadores_goty:
+            ganador = ganadores_goty[anio]
+            query = f"""
+            PREFIX dbo: <http://dbpedia.org/ontology/>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            
+            SELECT DISTINCT ?game ?label ?releaseDate ?developer ?genre
+            WHERE {{
+                ?game a dbo:VideoGame .
+                ?game rdfs:label ?label .
+                FILTER (lang(?label) = 'en')
+                FILTER (CONTAINS(LCASE(?label), '{ganador}'))
+                
+                OPTIONAL {{ ?game dbo:releaseDate ?releaseDate }}
+                OPTIONAL {{ ?game dbo:developer ?developer }}
+                OPTIONAL {{ ?game dbo:genre ?genre }}
+            }}
+            LIMIT {limite}
+            """
+            print(f"   → GOTY {anio}: Buscando '{ganador}'")
+        elif anio:
+            # Año sin ganador conocido, buscar juegos del año
+            query = f"""
+            PREFIX dbo: <http://dbpedia.org/ontology/>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            
+            SELECT DISTINCT ?game ?label ?releaseDate ?developer ?genre
+            WHERE {{
+                ?game a dbo:VideoGame .
+                ?game rdfs:label ?label .
+                ?game dbo:releaseDate ?releaseDate .
+                FILTER (lang(?label) = 'en')
+                FILTER (YEAR(?releaseDate) = {anio})
+                
+                OPTIONAL {{ ?game dbo:developer ?developer }}
+                OPTIONAL {{ ?game dbo:genre ?genre }}
+            }}
+            ORDER BY DESC(?releaseDate)
+            LIMIT {limite}
+            """
+        else:
+            # Sin año específico
+            query = f"""
+            PREFIX dbo: <http://dbpedia.org/ontology/>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            
+            SELECT DISTINCT ?game ?label ?releaseDate ?developer ?genre
+            WHERE {{
+                ?game a dbo:VideoGame .
+                ?game rdfs:label ?label .
+                FILTER (lang(?label) = 'en')
+                
+                OPTIONAL {{ ?game dbo:releaseDate ?releaseDate }}
+                OPTIONAL {{ ?game dbo:developer ?developer }}
+                OPTIONAL {{ ?game dbo:genre ?genre }}
+                
+                FILTER (
+                    CONTAINS(LCASE(?label), "baldur's gate 3") ||
+                    CONTAINS(LCASE(?label), 'elden ring') ||
+                    CONTAINS(LCASE(?label), 'the last of us') ||
+                    CONTAINS(LCASE(?label), 'god of war') ||
+                    CONTAINS(LCASE(?label), 'the witcher 3')
+                )
+            }}
+            ORDER BY DESC(?releaseDate)
+            LIMIT {limite}
+            """
+        
+        return self._ejecutar_query(query)
+    
+    def _query_mas_populares(self, params, limite):
+        """Query para juegos con MÁS JUGADORES - ARREGLADA"""
         query = f"""
         PREFIX dbo: <http://dbpedia.org/ontology/>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -307,18 +462,18 @@ class IntelligentSearch:
             OPTIONAL {{ ?game dbo:developer ?developer }}
             OPTIONAL {{ ?game dbo:genre ?genre }}
             
-            {filtro}
-            
+            # Top juegos con más jugadores activos
             FILTER (
-                CONTAINS(LCASE(?label), 'the last of us') ||
-                CONTAINS(LCASE(?label), 'the witcher 3') ||
-                CONTAINS(LCASE(?label), 'elden ring') ||
-                CONTAINS(LCASE(?label), 'god of war') ||
-                CONTAINS(LCASE(?label), 'breath of the wild') ||
-                CONTAINS(LCASE(?label), "baldur's gate") ||
-                CONTAINS(LCASE(?label), 'red dead redemption 2') ||
-                CONTAINS(LCASE(?label), 'sekiro') ||
-                CONTAINS(LCASE(?label), 'it takes two')
+                CONTAINS(LCASE(?label), 'minecraft') ||
+                CONTAINS(LCASE(?label), 'league of legends') ||
+                CONTAINS(LCASE(?label), 'fortnite') ||
+                CONTAINS(LCASE(?label), 'roblox') ||
+                CONTAINS(LCASE(?label), 'counter-strike') ||
+                CONTAINS(LCASE(?label), 'dota') ||
+                CONTAINS(LCASE(?label), 'valorant') ||
+                CONTAINS(LCASE(?label), 'grand theft auto v') ||
+                CONTAINS(LCASE(?label), 'world of warcraft') ||
+                CONTAINS(LCASE(?label), 'apex legends')
             )
         }}
         ORDER BY DESC(?releaseDate)
@@ -326,71 +481,8 @@ class IntelligentSearch:
         """
         return self._ejecutar_query(query)
     
-    def _query_mas_populares(self, params, limite):
-        """Query para juegos con más jugadores"""
-        query = f"""
-        PREFIX dbo: <http://dbpedia.org/ontology/>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        
-        SELECT DISTINCT ?game ?label ?releaseDate ?developer ?genre
-        WHERE {{
-            ?game a dbo:VideoGame .
-            ?game rdfs:label ?label .
-            FILTER (lang(?label) = 'en')
-            
-            OPTIONAL {{ ?game dbo:releaseDate ?releaseDate }}
-            OPTIONAL {{ ?game dbo:developer ?developer }}
-            OPTIONAL {{ ?game dbo:genre ?genre }}
-            
-            FILTER (
-                CONTAINS(LCASE(?label), 'league of legends') ||
-                CONTAINS(LCASE(?label), 'fortnite') ||
-                CONTAINS(LCASE(?label), 'minecraft') ||
-                CONTAINS(LCASE(?label), 'roblox') ||
-                CONTAINS(LCASE(?label), 'counter-strike') ||
-                CONTAINS(LCASE(?label), 'valorant') ||
-                CONTAINS(LCASE(?label), 'dota') ||
-                CONTAINS(LCASE(?label), 'apex legends') ||
-                CONTAINS(LCASE(?label), 'world of warcraft')
-            )
-        }}
-        LIMIT {limite}
-        """
-        return self._ejecutar_query(query)
-    
-    def _query_mejor_calificados(self, params, limite):
-        """Query para juegos mejor calificados"""
-        query = f"""
-        PREFIX dbo: <http://dbpedia.org/ontology/>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        
-        SELECT DISTINCT ?game ?label ?releaseDate ?developer ?genre
-        WHERE {{
-            ?game a dbo:VideoGame .
-            ?game rdfs:label ?label .
-            FILTER (lang(?label) = 'en')
-            
-            OPTIONAL {{ ?game dbo:releaseDate ?releaseDate }}
-            OPTIONAL {{ ?game dbo:developer ?developer }}
-            OPTIONAL {{ ?game dbo:genre ?genre }}
-            
-            FILTER (
-                CONTAINS(LCASE(?label), 'the legend of zelda') ||
-                CONTAINS(LCASE(?label), 'super mario') ||
-                CONTAINS(LCASE(?label), 'grand theft auto v') ||
-                CONTAINS(LCASE(?label), 'the witcher 3') ||
-                CONTAINS(LCASE(?label), 'red dead redemption') ||
-                CONTAINS(LCASE(?label), 'half-life') ||
-                CONTAINS(LCASE(?label), 'portal')
-            )
-        }}
-        LIMIT {limite}
-        """
-        return self._ejecutar_query(query)
-    
     def _query_mas_recientes(self, params, limite):
-        """Query para juegos recientes - ARREGLADA"""
-        # Si hay desarrollador, filtrarlo
+        """Query para juegos RECIENTES - INCLUYE 2025"""
         filtro_dev = ""
         if 'desarrollador' in params:
             dev = params['desarrollador'].title()
@@ -400,6 +492,7 @@ class IntelligentSearch:
             FILTER (CONTAINS(LCASE(?devLabel), LCASE("{dev}")))
             """
         
+        # ARREGLADO: Incluir 2025 para juegos recientes
         query = f"""
         PREFIX dbo: <http://dbpedia.org/ontology/>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -410,7 +503,7 @@ class IntelligentSearch:
             ?game rdfs:label ?label .
             ?game dbo:releaseDate ?releaseDate .
             FILTER (lang(?label) = 'en')
-            FILTER (YEAR(?releaseDate) >= 2020)
+            FILTER (YEAR(?releaseDate) >= 2023 && YEAR(?releaseDate) <= 2025)
             
             {filtro_dev}
             
@@ -418,12 +511,12 @@ class IntelligentSearch:
             OPTIONAL {{ ?game dbo:genre ?genre }}
         }}
         ORDER BY DESC(?releaseDate)
-        LIMIT {limite}
+        LIMIT {limite * 2}
         """
         return self._ejecutar_query(query)
     
-    def _query_mas_antiguos(self, params, limite):
-        """Query para juegos clásicos"""
+    def _query_mejor_calificados(self, params, limite):
+        """Query para juegos mejor calificados - MEJORADA"""
         query = f"""
         PREFIX dbo: <http://dbpedia.org/ontology/>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -432,83 +525,28 @@ class IntelligentSearch:
         WHERE {{
             ?game a dbo:VideoGame .
             ?game rdfs:label ?label .
-            ?game dbo:releaseDate ?releaseDate .
             FILTER (lang(?label) = 'en')
-            FILTER (YEAR(?releaseDate) <= 1990)
             
+            OPTIONAL {{ ?game dbo:releaseDate ?releaseDate }}
             OPTIONAL {{ ?game dbo:developer ?developer }}
             OPTIONAL {{ ?game dbo:genre ?genre }}
+            
+            # Juegos mejor calificados de la historia
+            FILTER (
+                CONTAINS(LCASE(?label), 'the legend of zelda') ||
+                CONTAINS(LCASE(?label), 'super mario') ||
+                CONTAINS(LCASE(?label), 'grand theft auto v') ||
+                CONTAINS(LCASE(?label), 'the witcher 3') ||
+                CONTAINS(LCASE(?label), 'red dead redemption') ||
+                CONTAINS(LCASE(?label), 'half-life') ||
+                CONTAINS(LCASE(?label), 'portal') ||
+                CONTAINS(LCASE(?label), 'elden ring') ||
+                CONTAINS(LCASE(?label), "baldur's gate")
+            )
         }}
-        ORDER BY ?releaseDate
+        ORDER BY DESC(?releaseDate)
         LIMIT {limite}
         """
-        return self._ejecutar_query(query)
-    
-    def _query_general(self, params, limite):
-        """Búsqueda general - MÁS FLEXIBLE"""
-        # Si hay desarrollador, priorizar eso
-        if 'desarrollador' in params:
-            dev = params['desarrollador'].title()
-            query = f"""
-            PREFIX dbo: <http://dbpedia.org/ontology/>
-            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-            
-            SELECT DISTINCT ?game ?label ?releaseDate ?developer ?genre
-            WHERE {{
-                ?game a dbo:VideoGame .
-                ?game rdfs:label ?label .
-                ?game dbo:developer ?dev .
-                ?dev rdfs:label ?devLabel .
-                FILTER (lang(?label) = 'en')
-                FILTER (CONTAINS(LCASE(?devLabel), LCASE("{dev}")))
-                
-                OPTIONAL {{ ?game dbo:releaseDate ?releaseDate }}
-                BIND(?dev as ?developer)
-                OPTIONAL {{ ?game dbo:genre ?genre }}
-            }}
-            ORDER BY DESC(?releaseDate)
-            LIMIT {limite}
-            """
-        # Si hay género
-        elif 'genero' in params:
-            query = f"""
-            PREFIX dbo: <http://dbpedia.org/ontology/>
-            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-            
-            SELECT DISTINCT ?game ?label ?releaseDate ?developer ?genre
-            WHERE {{
-                ?game a dbo:VideoGame .
-                ?game rdfs:label ?label .
-                FILTER (lang(?label) = 'en')
-                
-                OPTIONAL {{ ?game dbo:releaseDate ?releaseDate }}
-                OPTIONAL {{ ?game dbo:developer ?developer }}
-                OPTIONAL {{ ?game dbo:genre ?genre }}
-            }}
-            ORDER BY RAND()
-            LIMIT {limite}
-            """
-        else:
-            # Búsqueda por término
-            termino = params.get('termino', '')
-            query = f"""
-            PREFIX dbo: <http://dbpedia.org/ontology/>
-            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-            
-            SELECT DISTINCT ?game ?label ?releaseDate ?developer ?genre
-            WHERE {{
-                ?game a dbo:VideoGame .
-                ?game rdfs:label ?label .
-                FILTER (lang(?label) = 'en')
-                FILTER (CONTAINS(LCASE(?label), LCASE("{termino}")))
-                
-                OPTIONAL {{ ?game dbo:releaseDate ?releaseDate }}
-                OPTIONAL {{ ?game dbo:developer ?developer }}
-                OPTIONAL {{ ?game dbo:genre ?genre }}
-            }}
-            LIMIT {limite}
-            """
-        
         return self._ejecutar_query(query)
     
     def _ejecutar_query(self, query):

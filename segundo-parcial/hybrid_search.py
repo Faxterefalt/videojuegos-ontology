@@ -225,40 +225,53 @@ class HybridSearch:
         }
     
     def buscar_general_hibrido(self, termino):
-        """Búsqueda general híbrida CON búsqueda inteligente (si está disponible)"""
+        """Búsqueda general híbrida CON búsqueda inteligente"""
         print(f"\n{'='*60}")
         print(f"BÚSQUEDA HÍBRIDA: '{termino}'")
         print(f"{'='*60}")
         
-        # 1. Intentar búsqueda inteligente solo si está disponible
         if self.intelligent_search is not None:
             try:
                 print("→ Intentando búsqueda inteligente...")
-                resultado_inteligente = self.intelligent_search.buscar_inteligente(termino, limite=15)
+                # ARREGLADO: Aumentar límite para búsquedas específicas
+                limite_busqueda = 30 if any(x in termino.lower() for x in ['recientes', 'nintendo', 'jugadores']) else 20
+                
+                resultado_inteligente = self.intelligent_search.buscar_inteligente(termino, limite=limite_busqueda)
                 
                 if resultado_inteligente['success'] and resultado_inteligente['count'] > 0:
                     print(f"\n✓ Búsqueda inteligente EXITOSA")
                     print(f"  Tipo: {resultado_inteligente['analisis']['tipo']}")
                     print(f"  Confianza: {resultado_inteligente['analisis']['confianza']:.2%}")
-                    print(f"  Resultados: {resultado_inteligente['count']}")
+                    print(f"  Resultados únicos: {resultado_inteligente['count']}")
                     
-                    # También buscar localmente
+                    # Buscar localmente
                     print("\n[Local] Búsqueda local complementaria...")
                     resultados_locales = self._buscar_local_expandido([termino])
+                    
+                    # Eliminar duplicados entre local y DBpedia
+                    dbpedia_titulos = {r['titulo'].lower() for r in resultado_inteligente['resultados']}
+                    resultados_locales_unicos = []
+                    
+                    for r in resultados_locales:
+                        titulo_local = str(r.titulo).lower()
+                        if titulo_local not in dbpedia_titulos:
+                            resultados_locales_unicos.append(r)
+                    
+                    print(f"  Locales únicos: {len(resultados_locales_unicos)}")
                     
                     return {
                         'success': True,
                         'source': 'hybrid_intelligent',
                         'local': {
-                            'results': resultados_locales,
-                            'count': len(resultados_locales)
+                            'results': resultados_locales_unicos,
+                            'count': len(resultados_locales_unicos)
                         },
                         'dbpedia': {
                             'results': resultado_inteligente['resultados'],
                             'count': resultado_inteligente['count']
                         },
-                        'total_count': len(resultados_locales) + resultado_inteligente['count'],
-                        'message': f"{len(resultados_locales)} local(es), {resultado_inteligente['count']} de DBpedia (inteligente)",
+                        'total_count': len(resultados_locales_unicos) + resultado_inteligente['count'],
+                        'message': f"{len(resultados_locales_unicos)} local(es), {resultado_inteligente['count']} de DBpedia (inteligente)",
                         'analisis': resultado_inteligente['analisis']
                     }
                 else:
@@ -271,7 +284,6 @@ class HybridSearch:
         else:
             print("⚠ Búsqueda inteligente no disponible")
         
-        # 2. Fallback: búsqueda híbrida normal (SIEMPRE FUNCIONA)
         print("\n→ Usando búsqueda híbrida estándar...")
         return self.buscar_titulo_hibrido(termino)
     
