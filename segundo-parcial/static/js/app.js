@@ -129,68 +129,139 @@ async function poblarOntologia() {
     }
 }
 
-// Búsqueda general
+// NUEVO: Controlador de aborto para cancelar búsquedas
+let currentSearchController = null;
+
+// Búsqueda general OPTIMIZADA
 async function buscarGeneral() {
     const termino = document.getElementById('buscarGeneral').value.trim();
     
-    // Si el campo está vacío, limpiar resultados
     if (!termino) {
         document.getElementById('resultados').innerHTML = '';
         return;
     }
     
-    // Mínimo 2 caracteres para buscar
     if (termino.length < 2) {
         document.getElementById('resultados').innerHTML = `
             <div class="alert alert-info">
-                <i class="bi bi-info-circle"></i> Ingresa al menos 2 caracteres para buscar
+                <i class="bi bi-info-circle"></i> Ingresa al menos 2 caracteres
             </div>
         `;
         return;
     }
     
+    // CANCELAR búsqueda anterior si existe
+    if (currentSearchController) {
+        currentSearchController.abort();
+    }
+    
+    currentSearchController = new AbortController();
+    
     toggleLoading(true);
+    
+    // MOSTRAR resultados inmediatamente de caché si existen
+    const cachedResults = sessionStorage.getItem(`search_${termino}`);
+    if (cachedResults) {
+        const data = JSON.parse(cachedResults);
+        mostrarResultados(data);
+        mostrarAlerta('Resultados desde caché (instantáneo)', 'info');
+        toggleLoading(false);
+        return;
+    }
+    
     try {
-        const response = await fetch(`${API_BASE}/api/buscar/general?q=${encodeURIComponent(termino)}`);
+        const startTime = performance.now();
+        
+        const response = await fetch(
+            `${API_BASE}/api/buscar/general?q=${encodeURIComponent(termino)}`,
+            { signal: currentSearchController.signal }
+        );
+        
         const data = await response.json();
+        const endTime = performance.now();
+        const searchTime = ((endTime - startTime) / 1000).toFixed(2);
+        
         toggleLoading(false);
         
         if (data.success) {
+            // Guardar en caché
+            sessionStorage.setItem(`search_${termino}`, JSON.stringify(data));
+            
             mostrarResultados(data);
+            console.log(`⚡ Búsqueda completada en ${searchTime}s`);
         } else {
-            mostrarAlerta('Error en la búsqueda: ' + (data.error || 'Error desconocido'), 'danger');
+            mostrarAlerta('Error: ' + (data.error || 'Error desconocido'), 'danger');
         }
     } catch (error) {
-        toggleLoading(false);
-        mostrarAlerta('Error de conexión: ' + error, 'danger');
+        if (error.name === 'AbortError') {
+            console.log('Búsqueda cancelada');
+        } else {
+            toggleLoading(false);
+            mostrarAlerta('Error de conexión: ' + error, 'danger');
+        }
     }
 }
 
-// Función para búsqueda en tiempo real con debounce
+// Búsqueda en tiempo real OPTIMIZADA
 function buscarGeneralTiempoReal() {
-    // Cancelar búsqueda anterior si existe
     if (searchTimeout) {
         clearTimeout(searchTimeout);
     }
     
-    // Esperar 500ms después de que el usuario deje de escribir
+    // AUMENTADO de 500ms a 800ms para reducir requests
     searchTimeout = setTimeout(() => {
         buscarGeneral();
-    }, 500);
+    }, 800);
 }
 
-// Buscar por título
+// Buscar por título OPTIMIZADO
 async function buscarPorTitulo() {
     const termino = document.getElementById('buscarTitulo').value;
-    if (!termino) return mostrarAlerta('Ingresa un término de búsqueda', 'warning');
+    if (!termino) return mostrarAlerta('Ingresa un término', 'warning');
+    
+    // Verificar caché
+    const cachedResults = sessionStorage.getItem(`titulo_${termino}`);
+    if (cachedResults) {
+        mostrarResultados(JSON.parse(cachedResults));
+        mostrarAlerta('⚡ Resultados desde caché', 'success');
+        return;
+    }
     
     toggleLoading(true);
-    const response = await fetch(`${API_BASE}/api/buscar/titulo?q=${encodeURIComponent(termino)}&hybrid=true`);
-    const data = await response.json();
-    toggleLoading(false);
     
-    mostrarResultados(data);
+    try {
+        const response = await fetch(`${API_BASE}/api/buscar/titulo?q=${encodeURIComponent(termino)}&hybrid=true`);
+        const data = await response.json();
+        
+        // Guardar en caché
+        if (data.success) {
+            sessionStorage.setItem(`titulo_${termino}`, JSON.stringify(data));
+        }
+        
+        toggleLoading(false);
+        mostrarResultados(data);
+    } catch (error) {
+        toggleLoading(false);
+        mostrarAlerta('Error: ' + error, 'danger');
+    }
 }
+
+// NUEVO: Limpiar caché después de 5 minutos
+setInterval(() => {
+    const now = Date.now();
+    for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        if (key && key.startsWith('search_')) {
+            // Limpiar cachés antiguos
+            try {
+                const data = JSON.parse(sessionStorage.getItem(key));
+                if (data.timestamp && (now - data.timestamp > 300000)) { // 5 min
+                    sessionStorage.removeItem(key);
+                }
+            } catch (e) {}
+        }
+    }
+}, 60000); // Cada minuto
 
 // Buscar por año
 async function buscarPorAnio() {
@@ -241,16 +312,153 @@ function mostrarResultados(data) {
         return;
     }
     
+    // NUEVO: Verificar si son resultados híbridos
+    if (data.source === 'hybrid') {
+        mostrarResultadosHibridos(data);
+        return;
+    }
+    
+    // Fallback: mostrar resultados normales (legacy)
+    mostrarResultadosSimples(data);
+}
+
+// NUEVA FUNCIÓN: Mostrar resultados híbridos (local + DBpedia)
+function mostrarResultadosHibridos(data) {
+    const container = document.getElementById('resultados');
+    let html = '';
+    
+    // Encabezado general
+    html += `
+        <div class="alert alert-info">
+            <i class="bi bi-lightbulb"></i> 
+            <strong>Búsqueda Híbrida Completa</strong> - 
+            Mostrando resultados de tu ontología local Y de DBpedia
+        </div>
+    `;
+    
+    html += `<h5 class="mb-3"><i class="bi bi-trophy"></i> ${data.count} resultado(s) total(es)</h5>`;
+    
+    // SECCIÓN 1: RESULTADOS LOCALES (arriba)
+    if (data.count_local > 0) {
+        html += `
+            <div class="mb-4">
+                <h6 class="text-success">
+                    <i class="bi bi-hdd-fill"></i> 
+                    Resultados Locales (${data.count_local})
+                </h6>
+                <hr class="mb-3">
+                <div class="row">
+        `;
+        
+        data.local.forEach(item => {
+            html += crearCardJuego(item, 'local');
+        });
+        
+        html += '</div></div>';
+    }
+    
+    // SECCIÓN 2: RESULTADOS DE DBPEDIA (abajo)
+    if (data.count_dbpedia > 0) {
+        html += `
+            <div class="mb-4">
+                <h6 class="text-warning">
+                    <i class="bi bi-cloud-fill"></i> 
+                    Resultados de DBpedia (${data.count_dbpedia})
+                    <button class="btn btn-sm btn-primary ms-3" onclick="agregarTodosDesdeDBpedia(${JSON.stringify(data.dbpedia).replace(/"/g, '&quot;')})">
+                        <i class="bi bi-download"></i> Agregar todos a ontología local
+                    </button>
+                </h6>
+                <hr class="mb-3">
+                <div class="row">
+        `;
+        
+        data.dbpedia.forEach(item => {
+            html += crearCardJuego(item, 'dbpedia');
+        });
+        
+        html += '</div></div>';
+    }
+    
+    // Si no hay ningún resultado
+    if (data.count_local === 0 && data.count_dbpedia === 0) {
+        html += `
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle"></i> 
+                No se encontraron resultados ni en local ni en DBpedia
+            </div>
+        `;
+    }
+    
+    container.innerHTML = html;
+}
+
+// NUEVA FUNCIÓN: Crear card de juego con origen
+function crearCardJuego(item, source) {
+    // Formatear años
+    let aniosHTML = '';
+    if (item.anios && item.anios.length > 0) {
+        if (item.anios.length === 1) {
+            aniosHTML = `<p class="text-muted mb-2"><i class="bi bi-calendar"></i> ${item.anios[0]}</p>`;
+        } else {
+            const aniosFormatted = item.anios.join(', ');
+            aniosHTML = `<p class="text-muted mb-2"><i class="bi bi-calendar-range"></i> ${aniosFormatted}</p>`;
+        }
+    }
+    
+    // Formatear géneros
+    let generosHTML = '';
+    if (item.generos && item.generos.length > 0) {
+        generosHTML = item.generos.map(g => 
+            `<span class="badge bg-primary me-1">${g}</span>`
+        ).join('');
+    }
+    
+    // Badge de origen
+    let originBadge = '';
+    let cardClass = '';
+    if (source === 'local') {
+        originBadge = '<span class="badge bg-success mb-2"><i class="bi bi-hdd"></i> Local</span>';
+        cardClass = 'border-success';
+    } else {
+        originBadge = '<span class="badge bg-warning text-dark mb-2"><i class="bi bi-cloud"></i> DBpedia</span>';
+        cardClass = 'border-warning';
+    }
+    
+    return `
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100 shadow-sm ${cardClass}">
+                <div class="card-body">
+                    ${originBadge}
+                    <h5 class="card-title">${item.titulo}</h5>
+                    ${aniosHTML}
+                    ${item.desarrollador ? `<p class="mb-2"><i class="bi bi-building"></i> ${item.desarrollador}</p>` : ''}
+                    ${generosHTML}
+                </div>
+                <div class="card-footer bg-transparent">
+                    <small class="text-muted">
+                        <a href="${item.uri || item.game}" target="_blank" class="text-decoration-none">
+                            <i class="bi bi-box-arrow-up-right"></i> Ver en DBpedia
+                        </a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Función legacy para resultados simples (por si acaso)
+function mostrarResultadosSimples(data) {
+    const container = document.getElementById('resultados');
+    
     // Mostrar badge de origen
     let sourceBadge = '';
     if (data.source === 'dbpedia') {
         sourceBadge = `
             <div class="alert alert-warning">
                 <i class="bi bi-cloud"></i> 
-                <strong>Resultados de DBpedia Online</strong> - 
-                Estos juegos no están en tu ontología local.
+                <strong>Resultados de DBpedia Online</strong>
                 <button class="btn btn-sm btn-primary ms-3" onclick="agregarTodosDesdeDBpedia(${JSON.stringify(data.data).replace(/"/g, '&quot;')})">
-                    <i class="bi bi-download"></i> Agregar todos a mi ontología
+                    <i class="bi bi-download"></i> Agregar todos
                 </button>
             </div>
         `;
@@ -258,63 +466,18 @@ function mostrarResultados(data) {
         sourceBadge = `
             <div class="alert alert-success">
                 <i class="bi bi-hdd"></i> 
-                <strong>Resultados de tu Ontología Local</strong>
+                <strong>Resultados Locales</strong>
             </div>
         `;
     }
     
     let html = sourceBadge;
-    html += `<h5 class="mb-3"><i class="bi bi-trophy"></i> ${data.count} resultado(s) encontrado(s)</h5>`;
+    html += `<h5 class="mb-3"><i class="bi bi-trophy"></i> ${data.count} resultado(s)</h5>`;
     html += '<div class="row">';
     
-    data.data.forEach(item => {
-        // Formatear años
-        let aniosHTML = '';
-        if (item.anios && item.anios.length > 0) {
-            if (item.anios.length === 1) {
-                aniosHTML = `<p class="text-muted mb-2"><i class="bi bi-calendar"></i> ${item.anios[0]}</p>`;
-            } else {
-                const aniosFormatted = item.anios.join(', ');
-                aniosHTML = `<p class="text-muted mb-2"><i class="bi bi-calendar-range"></i> ${aniosFormatted}</p>`;
-            }
-        }
-        
-        // Formatear géneros
-        let generosHTML = '';
-        if (item.generos && item.generos.length > 0) {
-            generosHTML = item.generos.map(g => 
-                `<span class="badge bg-primary me-1">${g}</span>`
-            ).join('');
-        }
-        
-        // Badge de origen
-        let originBadge = '';
-        if (data.source === 'dbpedia') {
-            originBadge = '<span class="badge bg-warning text-dark mb-2"><i class="bi bi-cloud"></i> DBpedia</span>';
-        } else {
-            originBadge = '<span class="badge bg-success mb-2"><i class="bi bi-hdd"></i> Local</span>';
-        }
-        
-        html += `
-            <div class="col-md-6 col-lg-4 mb-3">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        ${originBadge}
-                        <h5 class="card-title">${item.titulo}</h5>
-                        ${aniosHTML}
-                        ${item.desarrollador ? `<p class="mb-2"><i class="bi bi-building"></i> ${item.desarrollador}</p>` : ''}
-                        ${generosHTML}
-                    </div>
-                    <div class="card-footer bg-transparent">
-                        <small class="text-muted">
-                            <a href="${item.uri || item.game}" target="_blank" class="text-decoration-none">
-                                <i class="bi bi-box-arrow-up-right"></i> Ver en DBpedia
-                            </a>
-                        </small>
-                    </div>
-                </div>
-            </div>
-        `;
+    const items = data.data || [];
+    items.forEach(item => {
+        html += crearCardJuego(item, data.source || 'local');
     });
     
     html += '</div>';

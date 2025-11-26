@@ -5,6 +5,7 @@ Busca primero en la ontología local y luego en DBpedia si no hay resultados
 
 from SPARQLWrapper import SPARQLWrapper, JSON
 from rdflib import Literal
+from semantic_reasoning import SemanticReasoner
 import time
 
 class HybridSearch:
@@ -19,149 +20,186 @@ class HybridSearch:
         self.buscador = buscador_local
         self.sparql = SPARQLWrapper(sparql_endpoint)
         self.sparql.setReturnFormat(JSON)
-        self.sparql.setTimeout(30)
-        self.sparql.addCustomHttpHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+        self.sparql.setTimeout(8)  # REDUCIDO de 30 a 8
+        self.sparql.addCustomHttpHeader("User-Agent", "Mozilla/5.0")
+        
+        self.semantic_reasoner = SemanticReasoner(sparql_endpoint)
+        
+        # NUEVO: Caché de resultados
+        self.cache_resultados = {}
+        self.CACHE_TTL = 180  # 3 minutos
     
     def buscar_titulo_hibrido(self, termino):
-        """
-        Busca por título primero localmente, luego en DBpedia
-        
-        Args:
-            termino: Término de búsqueda
-            
-        Returns:
-            dict: Resultados con información de origen (local/online)
-        """
+        """OPTIMIZADO - búsqueda más rápida"""
         print(f"\n{'='*60}")
-        print(f"BÚSQUEDA HÍBRIDA POR TÍTULO: '{termino}'")
+        print(f"BÚSQUEDA HÍBRIDA OPTIMIZADA: '{termino}'")
         print(f"{'='*60}")
         
-        # Paso 1: Buscar localmente
-        print("\n[1/2] Buscando en ontología local...")
-        resultados_locales = self.buscador.buscar_por_titulo(termino)
+        # Verificar caché
+        cache_key = f"hybrid_{termino.lower()}"
+        if cache_key in self.cache_resultados:
+            import time
+            tiempo_cache = self.cache_resultados[cache_key]['timestamp']
+            if time.time() - tiempo_cache < self.CACHE_TTL:
+                print("✓ Resultados desde caché (instantáneo)")
+                return self.cache_resultados[cache_key]['data']
         
-        if resultados_locales:
-            print(f"✓ Encontrados {len(resultados_locales)} resultado(s) LOCAL(ES)")
-            return {
-                'success': True,
-                'source': 'local',
+        # OPTIMIZACIÓN: Expansión limitada
+        terminos_expandidos = [termino]  # Solo término original por defecto
+        
+        # Solo expandir si es sigla conocida
+        if termino.lower() in self.semantic_reasoner.siglas_conocidas:
+            terminos_expandidos.extend(
+                self.semantic_reasoner.siglas_conocidas[termino.lower()][:2]
+            )
+        
+        # Búsqueda local (RÁPIDA)
+        print("\n[1/2] Búsqueda local (rápida)...")
+        resultados_locales = self._buscar_local_expandido(terminos_expandidos)
+        
+        # Búsqueda DBpedia (OPTIMIZADA)
+        print("\n[2/2] Búsqueda DBpedia (optimizada)...")
+        resultados_dbpedia_raw = []
+        
+        try:
+            # Usar búsqueda rápida con timeout corto
+            resultados_dbpedia_raw = self.semantic_reasoner.buscar_semanticamente_dbpedia(
+                termino, 
+                limite=15  # Reducido de 20 a 15
+            )
+        except Exception as e:
+            print(f"   ⚠ DBpedia timeout (continuando con local)")
+        
+        resultados_dbpedia = self._formatear_resultados_dbpedia(resultados_dbpedia_raw) if resultados_dbpedia_raw else []
+        
+        count_local = len(resultados_locales)
+        count_dbpedia = len(resultados_dbpedia)
+        
+        print(f"\nLocal: {count_local}, DBpedia: {count_dbpedia}\n")
+        
+        resultado_final = {
+            'success': True,
+            'source': 'hybrid',
+            'local': {
                 'results': resultados_locales,
-                'count': len(resultados_locales),
-                'message': f'Resultados encontrados en ontología local'
-            }
-        
-        # Paso 2: Si no hay resultados locales, buscar en DBpedia
-        print("⊙ No se encontraron resultados locales")
-        print("\n[2/2] Buscando en DBpedia...")
-        
-        resultados_dbpedia = self._buscar_en_dbpedia_por_titulo(termino)
-        
-        if resultados_dbpedia:
-            print(f"✓ Encontrados {len(resultados_dbpedia)} resultado(s) en DBpedia")
-            return {
-                'success': True,
-                'source': 'dbpedia',
+                'count': count_local
+            },
+            'dbpedia': {
                 'results': resultados_dbpedia,
-                'count': len(resultados_dbpedia),
-                'message': f'Resultados encontrados en DBpedia (no están en tu ontología local)'
-            }
-        
-        print("✗ No se encontraron resultados ni local ni en DBpedia")
-        return {
-            'success': False,
-            'source': 'none',
-            'results': [],
-            'count': 0,
-            'message': 'No se encontraron resultados'
+                'count': count_dbpedia
+            },
+            'total_count': count_local + count_dbpedia,
+            'message': f'{count_local} local(es), {count_dbpedia} de DBpedia',
+            'terminos_usados': terminos_expandidos[:2]
         }
+        
+        # Guardar en caché
+        import time
+        self.cache_resultados[cache_key] = {
+            'data': resultado_final,
+            'timestamp': time.time()
+        }
+        
+        return resultado_final
+    
+    def _buscar_local_expandido(self, terminos):
+        """OPTIMIZADO - búsqueda local más eficiente"""
+        resultados = []
+        uris_encontradas = set()
+        
+        # OPTIMIZACIÓN: Solo buscar con 2 términos máximo
+        for termino in terminos[:2]:
+            try:
+                res = self.buscador.buscar_por_titulo(termino)
+                for r in res:
+                    uri = str(r.game) if hasattr(r, 'game') else ''
+                    if uri and uri not in uris_encontradas:
+                        resultados.append(r)
+                        uris_encontradas.add(uri)
+                        
+                # Si ya tenemos 20 resultados, parar
+                if len(resultados) >= 20:
+                    break
+            except:
+                pass
+        
+        return resultados[:20]  # Limitar a 20
+    
+    def _formatear_resultados_dbpedia(self, resultados_dbpedia):
+        """Formatea resultados de DBpedia"""
+        resultados_formateados = []
+        
+        for row in resultados_dbpedia:
+            resultado = {
+                'game': row['game']['value'],
+                'titulo': row['label']['value'],
+                'anios': [],
+                'desarrollador': None,
+                'generos': [],
+                'source': 'dbpedia',
+                'relevancia': row.get('semantic_score', 0)
+            }
+            
+            # Procesar año
+            if 'releaseDate' in row:
+                try:
+                    year = row['releaseDate']['value'][:4]
+                    resultado['anios'] = [int(year)]
+                except:
+                    pass
+            
+            # Procesar desarrollador
+            if 'developer' in row:
+                dev_name = row['developer']['value'].split('/')[-1].replace('_', ' ')
+                resultado['desarrollador'] = dev_name
+            
+            # Procesar género
+            if 'genre' in row:
+                genre_name = row['genre']['value'].split('/')[-1].replace('_', ' ')
+                resultado['generos'] = [genre_name]
+            
+            resultados_formateados.append(resultado)
+        
+        return resultados_formateados
     
     def buscar_desarrollador_hibrido(self, termino):
-        """Búsqueda híbrida por desarrollador"""
+        """Búsqueda híbrida por desarrollador - SIEMPRE ambas fuentes"""
         print(f"\n{'='*60}")
-        print(f"BÚSQUEDA HÍBRIDA POR DESARROLLADOR: '{termino}'")
+        print(f"BÚSQUEDA SEMÁNTICA POR DESARROLLADOR: '{termino}'")
         print(f"{'='*60}")
         
-        # Buscar localmente
+        terminos_expandidos = self.semantic_reasoner.expandir_consulta(termino)
+        
+        # Buscar en AMBAS fuentes
         print("\n[1/2] Buscando en ontología local...")
         resultados_locales = self.buscador.buscar_por_desarrollador(termino)
         
-        if resultados_locales:
-            print(f"✓ Encontrados {len(resultados_locales)} resultado(s) LOCAL(ES)")
-            return {
-                'success': True,
-                'source': 'local',
-                'results': resultados_locales,
-                'count': len(resultados_locales),
-                'message': f'Resultados encontrados en ontología local'
-            }
-        
-        # Buscar en DBpedia
-        print("⊙ No se encontraron resultados locales")
         print("\n[2/2] Buscando en DBpedia...")
-        
         resultados_dbpedia = self._buscar_en_dbpedia_por_desarrollador(termino)
         
-        if resultados_dbpedia:
-            print(f"✓ Encontrados {len(resultados_dbpedia)} resultado(s) en DBpedia")
-            return {
-                'success': True,
-                'source': 'dbpedia',
-                'results': resultados_dbpedia,
-                'count': len(resultados_dbpedia),
-                'message': f'Resultados encontrados en DBpedia (no están en tu ontología local)'
-            }
+        count_local = len(resultados_locales)
+        count_dbpedia = len(resultados_dbpedia)
+        
+        print(f"\nLocal: {count_local}, DBpedia: {count_dbpedia}\n")
         
         return {
-            'success': False,
-            'source': 'none',
-            'results': [],
-            'count': 0,
-            'message': 'No se encontraron resultados'
+            'success': True,
+            'source': 'hybrid',
+            'local': {
+                'results': resultados_locales,
+                'count': count_local
+            },
+            'dbpedia': {
+                'results': resultados_dbpedia,
+                'count': count_dbpedia
+            },
+            'total_count': count_local + count_dbpedia,
+            'message': f'{count_local} local(es), {count_dbpedia} de DBpedia'
         }
     
     def buscar_general_hibrido(self, termino):
-        """Búsqueda general híbrida"""
-        print(f"\n{'='*60}")
-        print(f"BÚSQUEDA GENERAL HÍBRIDA: '{termino}'")
-        print(f"{'='*60}")
-        
-        # Buscar localmente
-        print("\n[1/2] Buscando en ontología local...")
-        resultados_locales = self.buscador.buscar_general(termino)
-        
-        if resultados_locales:
-            print(f"✓ Encontrados {len(resultados_locales)} resultado(s) LOCAL(ES)")
-            return {
-                'success': True,
-                'source': 'local',
-                'results': resultados_locales,
-                'count': len(resultados_locales),
-                'message': f'Resultados encontrados en ontología local'
-            }
-        
-        # Buscar en DBpedia
-        print("⊙ No se encontraron resultados locales")
-        print("\n[2/2] Buscando en DBpedia...")
-        
-        resultados_dbpedia = self._buscar_en_dbpedia_general(termino)
-        
-        if resultados_dbpedia:
-            print(f"✓ Encontrados {len(resultados_dbpedia)} resultado(s) en DBpedia")
-            return {
-                'success': True,
-                'source': 'dbpedia',
-                'results': resultados_dbpedia,
-                'count': len(resultados_dbpedia),
-                'message': f'Resultados encontrados en DBpedia (no están en tu ontología local)'
-            }
-        
-        return {
-            'success': False,
-            'source': 'none',
-            'results': [],
-            'count': 0,
-            'message': 'No se encontraron resultados'
-        }
+        """Búsqueda general híbrida - SIEMPRE ambas fuentes"""
+        return self.buscar_titulo_hibrido(termino)
     
     def _buscar_en_dbpedia_por_titulo(self, termino):
         """Busca en DBpedia por título"""
@@ -342,5 +380,3 @@ class HybridSearch:
         if count > 0:
             self.buscador.graph.serialize(destination=self.buscador.owl_file, format="xml")
             print(f"\n✓ {count} juegos de DBpedia agregados a la ontología local")
-        
-        return count

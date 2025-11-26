@@ -7,6 +7,11 @@ import socket
 
 app = Flask(__name__)
 
+# NUEVO: Habilitar compresión de respuestas
+from flask_compress import Compress
+compress = Compress()
+compress.init_app(app)
+
 # Configuración
 OWL_PATH = r"c:\Users\FABIAN\Desktop\GALLETAS\WEB SEMÁNTICAS\videojuegos-ontology\segundo-parcial\videojuegos.owl"
 buscador = BuscadorSemantico(OWL_PATH)
@@ -118,7 +123,7 @@ def buscar_anio():
 
 @app.route('/api/buscar/general', methods=['GET'])
 def buscar_general():
-    """Búsqueda general con modo híbrido"""
+    """Búsqueda general OPTIMIZADA"""
     try:
         termino = request.args.get('q', '')
         modo_hibrido = request.args.get('hybrid', 'true').lower() == 'true'
@@ -126,22 +131,27 @@ def buscar_general():
         if not termino:
             return jsonify({'success': False, 'error': 'Término vacío'}), 400
         
+        # OPTIMIZACIÓN: Límite de longitud
+        if len(termino) > 100:
+            return jsonify({'success': False, 'error': 'Término muy largo'}), 400
+        
         if modo_hibrido:
-            # Búsqueda híbrida
             resultado = hybrid_search.buscar_general_hibrido(termino)
             
             if resultado['success']:
-                return jsonify(_formatear_resultados_hibridos(resultado))
+                response = jsonify(_formatear_resultados_hibridos(resultado))
+                # NUEVO: Agregar headers de caché
+                response.cache_control.max_age = 180  # 3 minutos
+                return response
             else:
                 return jsonify({'success': False, 'data': [], 'count': 0, 'message': resultado['message']})
         else:
-            # Solo búsqueda local
             resultados = buscador.buscar_general(termino)
             return jsonify(_formatear_resultados(resultados))
             
     except Exception as e:
         print(f"Error en buscar_general: {str(e)}")
-        return jsonify({'success': False, 'error': str(e)}), 500
+        return jsonify({'success': False, 'error': 'Error en búsqueda'}), 500
 
 @app.route('/api/buscar/desarrollador', methods=['GET'])
 def buscar_desarrollador():
@@ -270,13 +280,64 @@ def _formatear_resultados(resultados):
         return {'success': False, 'data': [], 'count': 0, 'error': str(e)}
 
 def _formatear_resultados_hibridos(resultado):
-    """Formatea resultados de búsqueda híbrida"""
+    """Formatea resultados de búsqueda híbrida - NUEVA LÓGICA"""
     try:
-        if resultado['source'] == 'local':
-            # Resultados locales - usar formato estándar
+        if resultado['source'] == 'hybrid':
+            # NUEVO: Resultados combinados (local + DBpedia)
+            data_local = []
+            data_dbpedia = []
+            
+            # Procesar resultados locales
+            if resultado['local']['count'] > 0:
+                for row in resultado['local']['results']:
+                    # Procesar años
+                    anios = None
+                    if hasattr(row, 'anios') and row.anios:
+                        anios_str = str(row.anios)
+                        anios = sorted([int(a.strip()) for a in anios_str.split(',') if a.strip().isdigit()])
+                    
+                    # Procesar géneros
+                    generos = None
+                    if hasattr(row, 'generos') and row.generos:
+                        generos_str = str(row.generos)
+                        generos = [g.strip() for g in generos_str.split(',') if g.strip()]
+                    
+                    # Procesar desarrollador
+                    desarrollador = None
+                    if hasattr(row, 'dev') and row.dev:
+                        desarrollador = str(row.dev)
+                    
+                    item = {
+                        'titulo': str(row.titulo) if hasattr(row, 'titulo') else '',
+                        'anios': anios,
+                        'desarrollador': desarrollador,
+                        'generos': generos,
+                        'uri': str(row.game) if hasattr(row, 'game') else '',
+                        'source': 'local'
+                    }
+                    data_local.append(item)
+            
+            # Procesar resultados de DBpedia
+            if resultado['dbpedia']['count'] > 0:
+                data_dbpedia = resultado['dbpedia']['results']
+            
+            return {
+                'success': True,
+                'source': 'hybrid',
+                'local': data_local,
+                'dbpedia': data_dbpedia,
+                'count_local': len(data_local),
+                'count_dbpedia': len(data_dbpedia),
+                'count': len(data_local) + len(data_dbpedia),
+                'message': resultado['message']
+            }
+        
+        elif resultado['source'] == 'local':
+            # Resultados solo locales (fallback)
             return _formatear_resultados(resultado['results'])
+        
         elif resultado['source'] == 'dbpedia':
-            # Resultados de DBpedia - ya están formateados
+            # Resultados solo DBpedia (fallback)
             return {
                 'success': True,
                 'data': resultado['results'],
@@ -293,6 +354,8 @@ def _formatear_resultados_hibridos(resultado):
             }
     except Exception as e:
         print(f"Error en _formatear_resultados_hibridos: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return {'success': False, 'data': [], 'count': 0, 'error': str(e)}
 
 if __name__ == '__main__':
