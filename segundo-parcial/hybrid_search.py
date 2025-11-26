@@ -328,6 +328,7 @@ class HybridSearch:
     def agregar_juegos_dbpedia_a_ontologia(self, juegos_dbpedia):
         """
         Agrega juegos encontrados en DBpedia a la ontología local
+        CORREGIDO - Usa namespaces correctamente
         
         Args:
             juegos_dbpedia: Lista de juegos obtenidos de DBpedia
@@ -335,48 +336,103 @@ class HybridSearch:
         Returns:
             int: Cantidad de juegos agregados
         """
-        from rdflib import URIRef, RDF, RDFS
+        from rdflib import URIRef, RDF, RDFS, Literal
         from rdflib.namespace import XSD
+        from buscador_semantico import VG  # Importar el namespace correcto
+        
+        print(f"\n{'='*60}")
+        print(f"AGREGANDO JUEGOS DE DBPEDIA A ONTOLOGÍA LOCAL")
+        print(f"{'='*60}")
+        print(f"Total de juegos a procesar: {len(juegos_dbpedia)}")
         
         count = 0
-        for juego in juegos_dbpedia:
+        errores = 0
+        
+        for idx, juego in enumerate(juegos_dbpedia, 1):
             try:
                 game_uri = URIRef(juego['game'])
+                titulo = juego.get('titulo', 'Sin título')
                 
                 # Verificar si ya existe
-                if (game_uri, RDF.type, self.buscador.graph.namespace_manager.store.namespace('vg')['Videojuego']) in self.buscador.graph:
+                if (game_uri, RDF.type, VG.Videojuego) in self.buscador.graph:
+                    print(f"  ⊙ {idx}. {titulo} (ya existe)")
                     continue
                 
                 # Agregar el juego
-                VG = self.buscador.graph.namespace_manager.store.namespace('vg')
-                
-                self.buscador.graph.add((game_uri, RDF.type, VG['Videojuego']))
-                self.buscador.graph.add((game_uri, VG['titulo'], Literal(juego['titulo'], lang="es")))
-                self.buscador.graph.add((game_uri, VG['dbpediaURI'], Literal(juego['game'], datatype=XSD.anyURI)))
+                self.buscador.graph.add((game_uri, RDF.type, VG.Videojuego))
+                self.buscador.graph.add((game_uri, VG.titulo, Literal(titulo, lang="es")))
+                self.buscador.graph.add((game_uri, VG.dbpediaURI, Literal(juego['game'], datatype=XSD.anyURI)))
                 
                 # Agregar año
-                if juego['anios']:
-                    self.buscador.graph.add((game_uri, VG['anioLanzamiento'], 
-                                           Literal(juego['anios'][0], datatype=XSD.integer)))
+                if juego.get('anios') and len(juego['anios']) > 0:
+                    try:
+                        anio = int(juego['anios'][0])
+                        self.buscador.graph.add((game_uri, VG.anioLanzamiento, 
+                                               Literal(anio, datatype=XSD.integer)))
+                    except (ValueError, TypeError) as e:
+                        print(f"      ⚠ Error procesando año: {e}")
                 
                 # Agregar desarrollador
-                if juego['desarrollador']:
-                    dev_uri = URIRef(f"http://dbpedia.org/resource/{juego['desarrollador'].replace(' ', '_')}")
-                    self.buscador.graph.add((dev_uri, RDF.type, VG['Desarrollador']))
-                    self.buscador.graph.add((dev_uri, RDFS.label, Literal(juego['desarrollador'])))
-                    self.buscador.graph.add((game_uri, VG['desarrolladoPor'], dev_uri))
+                if juego.get('desarrollador'):
+                    try:
+                        dev_name = juego['desarrollador']
+                        # Crear URI segura para el desarrollador
+                        dev_uri_safe = dev_name.replace(' ', '_').replace('/', '_').replace('&', 'and')
+                        dev_uri = URIRef(f"http://dbpedia.org/resource/{dev_uri_safe}")
+                        
+                        self.buscador.graph.add((dev_uri, RDF.type, VG.Desarrollador))
+                        self.buscador.graph.add((dev_uri, RDFS.label, Literal(dev_name)))
+                        self.buscador.graph.add((game_uri, VG.desarrolladoPor, dev_uri))
+                    except Exception as e:
+                        print(f"      ⚠ Error procesando desarrollador: {e}")
                 
                 # Agregar géneros
-                for genero in juego['generos']:
-                    genre_uri = URIRef(f"http://dbpedia.org/resource/{genero.replace(' ', '_')}")
-                    self.buscador.graph.add((genre_uri, RDF.type, VG['Genero']))
-                    self.buscador.graph.add((genre_uri, RDFS.label, Literal(genero)))
-                    self.buscador.graph.add((game_uri, VG['tieneGenero'], genre_uri))
+                if juego.get('generos'):
+                    for genero in juego['generos']:
+                        try:
+                            # Crear URI segura para el género
+                            genre_uri_safe = genero.replace(' ', '_').replace('/', '_').replace('&', 'and')
+                            genre_uri = URIRef(f"http://dbpedia.org/resource/{genre_uri_safe}")
+                            
+                            self.buscador.graph.add((genre_uri, RDF.type, VG.Genero))
+                            self.buscador.graph.add((genre_uri, RDFS.label, Literal(genero)))
+                            self.buscador.graph.add((game_uri, VG.tieneGenero, genre_uri))
+                        except Exception as e:
+                            print(f"      ⚠ Error procesando género {genero}: {e}")
+                
                 count += 1
                 
+                # Mostrar progreso
+                anio_str = f" ({juego['anios'][0]})" if juego.get('anios') else ""
+                print(f"  ✓ {idx}. {titulo}{anio_str}")
+                
             except Exception as e:
-                print(f"Error agregando juego: {str(e)[:50]}")
+                errores += 1
+                print(f"  ✗ {idx}. Error procesando {juego.get('titulo', 'desconocido')}: {str(e)[:80]}")
         
+        # Guardar si se agregaron juegos
         if count > 0:
-            self.buscador.graph.serialize(destination=self.buscador.owl_file, format="xml")
-            print(f"\n✓ {count} juegos de DBpedia agregados a la ontología local")
+            try:
+                self.buscador.graph.serialize(destination=self.buscador.owl_file, format="xml")
+                print(f"\n{'='*60}")
+                print(f"✓ ONTOLOGÍA GUARDADA EXITOSAMENTE")
+                print(f"{'='*60}")
+                print(f"  Nuevos agregados: {count}")
+                print(f"  Errores: {errores}")
+                
+                # Contar total
+                from buscador_semantico import VG
+                total = sum(1 for _ in self.buscador.graph.triples((None, RDF.type, VG.Videojuego)))
+                print(f"  Total en ontología: {total}")
+                print(f"{'='*60}\n")
+            except Exception as e:
+                print(f"\n✗ Error al guardar ontología: {e}")
+                import traceback
+                traceback.print_exc()
+                return 0
+        else:
+            print(f"\n⊙ No se agregaron juegos nuevos")
+            if errores > 0:
+                print(f"  Se encontraron {errores} errores")
+        
+        return count

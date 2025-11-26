@@ -413,15 +413,25 @@ function crearCardJuego(item, source) {
         ).join('');
     }
     
-    // Badge de origen
+    // Badge de origen y botón de agregar
     let originBadge = '';
     let cardClass = '';
+    let addButton = '';
+    
     if (source === 'local') {
         originBadge = '<span class="badge bg-success mb-2"><i class="bi bi-hdd"></i> Local</span>';
         cardClass = 'border-success';
     } else {
         originBadge = '<span class="badge bg-warning text-dark mb-2"><i class="bi bi-cloud"></i> DBpedia</span>';
         cardClass = 'border-warning';
+        
+        // Botón para agregar individualmente
+        const juegoJSON = JSON.stringify(item).replace(/"/g, '&quot;');
+        addButton = `
+            <button class="btn btn-sm btn-primary w-100 mt-2" onclick='agregarJuegoIndividual(${juegoJSON})'>
+                <i class="bi bi-download"></i> Agregar a local
+            </button>
+        `;
     }
     
     return `
@@ -433,6 +443,7 @@ function crearCardJuego(item, source) {
                     ${aniosHTML}
                     ${item.desarrollador ? `<p class="mb-2"><i class="bi bi-building"></i> ${item.desarrollador}</p>` : ''}
                     ${generosHTML}
+                    ${addButton}
                 </div>
                 <div class="card-footer bg-transparent">
                     <small class="text-muted">
@@ -486,7 +497,89 @@ function mostrarResultadosSimples(data) {
 
 // Agregar todos los resultados de DBpedia a la ontología local
 async function agregarTodosDesdeDBpedia(juegos) {
-    if (!confirm(`¿Deseas agregar ${juegos.length} juego(s) a tu ontología local?`)) {
+    // Validar que juegos sea un array
+    if (!Array.isArray(juegos) || juegos.length === 0) {
+        mostrarAlerta('No hay juegos válidos para agregar', 'warning');
+        return;
+    }
+    
+    // Sanitizar datos antes de enviar
+    const juegosSanitizados = juegos.map(juego => ({
+        game: juego.game || juego.uri || '',
+        titulo: juego.titulo || 'Sin título',
+        anios: Array.isArray(juego.anios) ? juego.anios : [],
+        desarrollador: juego.desarrollador || null,
+        generos: Array.isArray(juego.generos) ? juego.generos : []
+    })).filter(j => j.game); // Filtrar solo los que tienen URI
+    
+    if (juegosSanitizados.length === 0) {
+        mostrarAlerta('No hay juegos válidos para agregar', 'warning');
+        return;
+    }
+    
+    if (!confirm(`¿Deseas agregar ${juegosSanitizados.length} juego(s) a tu ontología local?`)) {
+        return;
+    }
+    
+    toggleLoading(true);
+    
+    try {
+        console.log('Enviando juegos:', juegosSanitizados); // Debug
+        
+        const response = await fetch(`${API_BASE}/api/agregar-desde-dbpedia`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ juegos: juegosSanitizados })
+        });
+        
+        const data = await response.json();
+        
+        console.log('Respuesta del servidor:', data); // Debug
+        
+        if (data.success) {
+            mostrarAlerta(data.message, 'success');
+            verificarConexion(); // Actualizar contador
+            
+            // Limpiar caché para forzar actualización
+            sessionStorage.clear();
+            
+            // Recargar resultados después de 1 segundo
+            setTimeout(() => {
+                const terminoBusqueda = document.getElementById('buscarGeneral').value;
+                if (terminoBusqueda) {
+                    buscarGeneral();
+                }
+            }, 1000);
+        } else {
+            mostrarAlerta('Error: ' + (data.error || 'Error desconocido'), 'danger');
+            console.error('Error del servidor:', data);
+        }
+    } catch (error) {
+        mostrarAlerta('Error de conexión: ' + error.message, 'danger');
+        console.error('Error completo:', error);
+    } finally {
+        toggleLoading(false);
+    }
+}
+
+// NUEVA FUNCIÓN: Agregar un solo juego
+async function agregarJuegoIndividual(juego) {
+    const juegoSanitizado = {
+        game: juego.game || juego.uri || '',
+        titulo: juego.titulo || 'Sin título',
+        anios: Array.isArray(juego.anios) ? juego.anios : [],
+        desarrollador: juego.desarrollador || null,
+        generos: Array.isArray(juego.generos) ? juego.generos : []
+    };
+    
+    if (!juegoSanitizado.game) {
+        mostrarAlerta('Juego inválido', 'warning');
+        return;
+    }
+    
+    if (!confirm(`¿Agregar "${juegoSanitizado.titulo}" a tu ontología local?`)) {
         return;
     }
     
@@ -495,20 +588,21 @@ async function agregarTodosDesdeDBpedia(juegos) {
     try {
         const response = await fetch(`${API_BASE}/api/agregar-desde-dbpedia`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({juegos: juegos})
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ juegos: [juegoSanitizado] })
         });
         
         const data = await response.json();
         
         if (data.success) {
-            mostrarAlerta(data.message, 'success');
-            verificarConexion(); // Actualizar contador
+            mostrarAlerta(`✓ "${juegoSanitizado.titulo}" agregado exitosamente`, 'success');
+            verificarConexion();
+            sessionStorage.clear();
         } else {
-            mostrarAlerta('Error: ' + data.error, 'danger');
+            mostrarAlerta('Error: ' + (data.error || 'No se pudo agregar'), 'danger');
         }
     } catch (error) {
-        mostrarAlerta('Error de conexión: ' + error, 'danger');
+        mostrarAlerta('Error: ' + error.message, 'danger');
     } finally {
         toggleLoading(false);
     }

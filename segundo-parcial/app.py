@@ -179,29 +179,85 @@ def buscar_desarrollador():
 
 @app.route('/api/agregar-desde-dbpedia', methods=['POST'])
 def agregar_desde_dbpedia():
-    """Agrega juegos encontrados en DBpedia a la ontología local"""
+    """Agrega juegos encontrados en DBpedia a la ontología local - MEJORADO"""
     try:
         data = request.get_json()
+        
+        if not data:
+            return jsonify({'success': False, 'message': 'No se recibieron datos'}), 400
+        
         juegos = data.get('juegos', [])
         
-        if not juegos:
-            return jsonify({'success': False, 'message': 'No hay juegos para agregar'}), 400
+        if not juegos or not isinstance(juegos, list):
+            return jsonify({'success': False, 'message': 'No hay juegos para agregar o formato inválido'}), 400
         
-        count = hybrid_search.agregar_juegos_dbpedia_a_ontologia(juegos)
+        print(f"\n{'='*60}")
+        print(f"SOLICITUD DE AGREGAR JUEGOS")
+        print(f"{'='*60}")
+        print(f"Cantidad de juegos recibidos: {len(juegos)}")
+        
+        # Validar estructura de cada juego
+        juegos_validos = []
+        for idx, juego in enumerate(juegos):
+            if isinstance(juego, dict) and ('game' in juego or 'uri' in juego):
+                # Normalizar estructura
+                juego_normalizado = {
+                    'game': juego.get('game') or juego.get('uri', ''),
+                    'titulo': juego.get('titulo', 'Sin título'),
+                    'anios': juego.get('anios', []),
+                    'desarrollador': juego.get('desarrollador'),
+                    'generos': juego.get('generos', [])
+                }
+                
+                if juego_normalizado['game']:
+                    juegos_validos.append(juego_normalizado)
+                    print(f"  ✓ Juego {idx+1}: {juego_normalizado['titulo']}")
+                else:
+                    print(f"  ✗ Juego {idx+1}: Sin URI válida")
+            else:
+                print(f"  ✗ Juego {idx+1}: Estructura inválida")
+        
+        if not juegos_validos:
+            return jsonify({
+                'success': False, 
+                'message': 'Ningún juego tiene una estructura válida'
+            }), 400
+        
+        print(f"\nJuegos válidos a procesar: {len(juegos_validos)}")
+        print(f"{'='*60}\n")
+        
+        # Intentar agregar los juegos
+        count = hybrid_search.agregar_juegos_dbpedia_a_ontologia(juegos_validos)
         
         # Contar total después de agregar
         total = sum(1 for _ in buscador.graph.triples((None, RDF.type, VG.Videojuego)))
         
-        return jsonify({
-            'success': True,
-            'message': f'{count} juegos agregados a la ontología local',
-            'agregados': count,
-            'total': total
-        })
+        if count > 0:
+            return jsonify({
+                'success': True,
+                'message': f'✓ {count} juego(s) agregado(s) exitosamente. Total en ontología: {total}',
+                'agregados': count,
+                'total': total
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': 'No se pudieron agregar juegos. Es posible que ya existan en la ontología.',
+                'agregados': 0,
+                'total': total
+            })
         
     except Exception as e:
-        print(f"Error en agregar_desde_dbpedia: {str(e)}")
-        return jsonify({'success': False, 'error': str(e)}), 500
+        import traceback
+        error_detail = traceback.format_exc()
+        print(f"\n✗ ERROR EN AGREGAR DESDE DBPEDIA:")
+        print(error_detail)
+        
+        return jsonify({
+            'success': False, 
+            'error': str(e),
+            'detail': 'Ver consola del servidor para detalles completos'
+        }), 500
 
 @app.route('/api/listar', methods=['GET'])
 def listar_todos():
