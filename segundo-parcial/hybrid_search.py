@@ -6,6 +6,7 @@ Busca primero en la ontología local y luego en DBpedia si no hay resultados
 from SPARQLWrapper import SPARQLWrapper, JSON
 from rdflib import Literal
 from semantic_reasoning import SemanticReasoner
+from multilingual import traductor_global
 import time
 
 class HybridSearch:
@@ -25,15 +26,22 @@ class HybridSearch:
         
         self.semantic_reasoner = SemanticReasoner(sparql_endpoint)
         
+        # NUEVO: Traductor multilingüe
+        self.traductor = traductor_global
+        
         # NUEVO: Caché de resultados
         self.cache_resultados = {}
         self.CACHE_TTL = 180  # 3 minutos
     
     def buscar_titulo_hibrido(self, termino):
-        """OPTIMIZADO - búsqueda más rápida"""
+        """OPTIMIZADO con multilingüismo - búsqueda más rápida"""
         print(f"\n{'='*60}")
-        print(f"BÚSQUEDA HÍBRIDA OPTIMIZADA: '{termino}'")
+        print(f"BÚSQUEDA HÍBRIDA MULTILINGÜE: '{termino}'")
         print(f"{'='*60}")
+        
+        # Detectar idioma
+        idioma = self.traductor.detectar_idioma(termino)
+        print(f"Idioma detectado: {idioma.upper()}")
         
         # Verificar caché
         cache_key = f"hybrid_{termino.lower()}"
@@ -44,8 +52,8 @@ class HybridSearch:
                 print("✓ Resultados desde caché (instantáneo)")
                 return self.cache_resultados[cache_key]['data']
         
-        # OPTIMIZACIÓN: Expansión limitada
-        terminos_expandidos = [termino]  # Solo término original por defecto
+        # OPTIMIZACIÓN: Expansión limitada CON traducciones
+        terminos_expandidos = self.traductor.expandir_con_traducciones(termino)[:3]
         
         # Solo expandir si es sigla conocida
         if termino.lower() in self.semantic_reasoner.siglas_conocidas:

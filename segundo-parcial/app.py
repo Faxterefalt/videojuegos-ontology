@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from buscador_semantico import BuscadorSemantico, VG
 from hybrid_search import HybridSearch
+from multilingual import traductor_global
 from rdflib import RDF
 import os
 import socket
@@ -298,6 +299,45 @@ def estadisticas():
         })
     except Exception as e:
         print(f"Error en estadisticas: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/traducir', methods=['GET'])
+def traducir():
+    """Endpoint para traducir términos"""
+    try:
+        termino = request.args.get('q', '')
+        
+        if not termino:
+            return jsonify({'success': False, 'error': 'Término vacío'}), 400
+        
+        idioma = traductor_global.detectar_idioma(termino)
+        expansiones = traductor_global.expandir_con_traducciones(termino)
+        
+        # Obtener traducciones específicas
+        traducciones_en = traductor_global.traducir_es_a_en(termino)
+        traducciones_es = traductor_global.traducir_en_a_es(termino)
+        
+        return jsonify({
+            'success': True,
+            'termino_original': termino,
+            'idioma_detectado': idioma,
+            'traducciones_ingles': traducciones_en,
+            'traducciones_espanol': traducciones_es,
+            'todas_expansiones': expansiones
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/estadisticas-multilingue', methods=['GET'])
+def estadisticas_multilingue():
+    """Estadísticas del sistema multilingüe"""
+    try:
+        stats = traductor_global.obtener_estadisticas()
+        return jsonify({
+            'success': True,
+            'estadisticas': stats
+        })
+    except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
 def _formatear_resultados(resultados):

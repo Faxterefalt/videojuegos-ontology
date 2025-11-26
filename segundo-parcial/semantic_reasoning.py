@@ -6,6 +6,7 @@ Expande consultas usando contexto, sinónimos, siglas y relaciones semánticas
 from SPARQLWrapper import SPARQLWrapper, JSON
 import re
 from difflib import SequenceMatcher
+from multilingual import traductor_global
 
 class SemanticReasoner:
     def __init__(self, sparql_endpoint="http://dbpedia.org/sparql"):
@@ -35,6 +36,10 @@ class SemanticReasoner:
             'tloz': ['The Legend of Zelda'],
             'botw': ['Breath of the Wild'],
             'totk': ['Tears of the Kingdom'],
+            'lol': ['League of Legends'],
+            'wow': ['World of Warcraft'],
+            'csgo': ['Counter-Strike: Global Offensive', 'Counter Strike Global Offensive'],
+            'pvz': ['Plants vs. Zombies', 'Plants and Zombies']
         }
         
         # Sinónimos y términos relacionados
@@ -47,14 +52,24 @@ class SemanticReasoner:
             'estrategia': ['strategy', 'rts', 'turn-based'],
             'simulación': ['simulation', 'sim', 'simulador'],
         }
+        
+        # NUEVO: Traductor multilingüe
+        self.traductor = traductor_global
     
     def expandir_consulta(self, termino):
-        """Expande una consulta OPTIMIZADO - más rápido"""
+        """Expande una consulta OPTIMIZADO con multilingüismo"""
         termino_lower = termino.lower().strip()
         terminos_expandidos = [termino]
         
-        print(f"\nEXPANSIÓN SEMÁNTICA DE: '{termino}'")
+        print(f"\nEXPANSIÓN SEMÁNTICA MULTILINGÜE DE: '{termino}'")
         print(f"{'─'*60}")
+        
+        # 0. NUEVO: Expansión multilingüe (PRIORIDAD)
+        traducciones = self.traductor.expandir_con_traducciones(termino)
+        if len(traducciones) > 1:  # Si hay traducciones además del original
+            terminos_expandidos.extend(traducciones[1:])  # Excluir el original
+            idioma = self.traductor.detectar_idioma(termino)
+            print(f"✓ Multilingüe ({idioma}): {', '.join(traducciones[1:3])}")
         
         # 1. Verificar si es una sigla conocida (INSTANTÁNEO)
         if termino_lower in self.siglas_conocidas:

@@ -208,10 +208,54 @@ function buscarGeneralTiempoReal() {
         clearTimeout(searchTimeout);
     }
     
-    // AUMENTADO de 500ms a 800ms para reducir requests
+    const termino = document.getElementById('buscarGeneral').value.trim();
+    
+    // Mostrar indicador de idioma si hay texto
+    if (termino.length >= 3) {
+        detectarYMostrarIdioma(termino);
+    }
+    
     searchTimeout = setTimeout(() => {
         buscarGeneral();
     }, 800);
+}
+
+// NUEVO: Detectar y mostrar idioma
+async function detectarYMostrarIdioma(termino) {
+    try {
+        const response = await fetch(`${API_BASE}/api/traducir?q=${encodeURIComponent(termino)}`);
+        const data = await response.json();
+        
+        if (data.success) {
+            const input = document.getElementById('buscarGeneral');
+            const idioma = data.idioma_detectado;
+            
+            // Agregar badge de idioma
+            let badge = document.getElementById('language-badge');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.id = 'language-badge';
+                badge.className = 'badge position-absolute';
+                badge.style.cssText = 'right: 100px; top: 50%; transform: translateY(-50%);';
+                input.parentElement.style.position = 'relative';
+                input.parentElement.appendChild(badge);
+            }
+            
+            if (idioma === 'es') {
+                badge.className = 'badge bg-success position-absolute';
+                badge.innerHTML = '<i class="bi bi-translate"></i> ES';
+                badge.title = `Español detectado. Traducciones: ${data.traducciones_ingles.join(', ')}`;
+            } else if (idioma === 'en') {
+                badge.className = 'badge bg-primary position-absolute';
+                badge.innerHTML = '<i class="bi bi-translate"></i> EN';
+                badge.title = `English detected. Traducciones: ${data.traducciones_espanol.join(', ')}`;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+    } catch (error) {
+        // Ignorar errores silenciosamente
+    }
 }
 
 // Buscar por título OPTIMIZADO
@@ -434,12 +478,19 @@ function crearCardJuego(item, source) {
         `;
     }
     
+    // NUEVO: Agregar título en ambos idiomas si está disponible
+    let tituloHTML = `<h5 class="card-title">${item.titulo}</h5>`;
+    
+    if (item.titulo_alternativo && item.titulo_alternativo !== item.titulo) {
+        tituloHTML += `<p class="text-muted small"><i class="bi bi-translate"></i> ${item.titulo_alternativo}</p>`;
+    }
+    
     return `
         <div class="col-md-6 col-lg-4 mb-3">
             <div class="card h-100 shadow-sm ${cardClass}">
                 <div class="card-body">
                     ${originBadge}
-                    <h5 class="card-title">${item.titulo}</h5>
+                    ${tituloHTML}
                     ${aniosHTML}
                     ${item.desarrollador ? `<p class="mb-2"><i class="bi bi-building"></i> ${item.desarrollador}</p>` : ''}
                     ${generosHTML}
