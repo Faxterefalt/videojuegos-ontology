@@ -376,9 +376,8 @@ def _formatear_resultados(resultados):
         return {'success': False, 'data': [], 'count': 0, 'error': str(e)}
 
 def _formatear_resultados_hibridos(resultado):
-    """Formatea resultados de búsqueda híbrida - CON análisis inteligente"""
+    """Formatea resultados de búsqueda híbrida - CON SOPORTE MULTILINGÜE"""
     try:
-        # FIXED: Manejar AMBOS tipos de resultados híbridos
         if resultado['source'] in ['hybrid', 'hybrid_intelligent']:
             data_local = []
             data_dbpedia = []
@@ -410,9 +409,21 @@ def _formatear_resultados_hibridos(resultado):
                     }
                     data_local.append(item)
             
-            # Procesar resultados de DBpedia
+            # Procesar resultados de DBpedia CON TRADUCCIONES
             if resultado['dbpedia']['count'] > 0:
-                data_dbpedia = resultado['dbpedia']['results']
+                for juego in resultado['dbpedia']['results']:
+                    # Usar label traducido si existe, sino usar label en inglés
+                    titulo = juego.get('label_traducido', {}).get('value', juego.get('titulo', 'Sin título'))
+                    
+                    data_dbpedia.append({
+                        'titulo': titulo,
+                        'anios': juego.get('anios', []),
+                        'desarrollador': juego.get('desarrollador'),
+                        'generos': juego.get('generos', []),
+                        'uri': juego.get('game', ''),
+                        'source': 'dbpedia',
+                        'idioma': juego.get('idioma_original', 'en')
+                    })
             
             return {
                 'success': True,
@@ -423,18 +434,30 @@ def _formatear_resultados_hibridos(resultado):
                 'count_dbpedia': len(data_dbpedia),
                 'count': len(data_local) + len(data_dbpedia),
                 'message': resultado['message'],
-                'analisis': resultado.get('analisis', {})  # INCLUIR análisis
+                'analisis': resultado.get('analisis', {})
             }
         
         elif resultado['source'] == 'local':
-            # Resultados solo locales (fallback)
             return _formatear_resultados(resultado['results'])
         
         elif resultado['source'] == 'dbpedia':
-            # Resultados solo DBpedia (fallback)
+            # Formatear resultados DBpedia con traducciones
+            data_dbpedia = []
+            for juego in resultado['results']:
+                titulo = juego.get('label_traducido', {}).get('value', juego.get('titulo', 'Sin título'))
+                data_dbpedia.append({
+                    'titulo': titulo,
+                    'anios': juego.get('anios', []),
+                    'desarrollador': juego.get('desarrollador'),
+                    'generos': juego.get('generos', []),
+                    'uri': juego.get('game', ''),
+                    'source': 'dbpedia',
+                    'idioma': juego.get('idioma_original', 'en')
+                })
+            
             return {
                 'success': True,
-                'data': resultado['results'],
+                'data': data_dbpedia,
                 'count': resultado['count'],
                 'source': 'dbpedia',
                 'message': resultado['message']

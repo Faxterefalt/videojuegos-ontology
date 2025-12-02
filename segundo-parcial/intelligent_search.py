@@ -328,7 +328,12 @@ class IntelligentSearch:
         return filtrados
     
     def _query_mas_vendidos(self, params, limite):
-        """Query para EL juego más vendido - ARREGLADA"""
+        """Query para EL juego más vendido - CON MULTILINGÜISMO"""
+        # Detectar idioma de la consulta
+        termino = params.get('termino', '')
+        from multilingual import traductor_global
+        idioma = traductor_global.detectar_idioma(termino)
+        
         filtro_anio = f"FILTER (YEAR(?releaseDate) <= 2024)" if 'anio' not in params else f"FILTER (YEAR(?releaseDate) = {params['anio']})"
         
         query = f"""
@@ -339,7 +344,7 @@ class IntelligentSearch:
         WHERE {{
             ?game a dbo:VideoGame .
             ?game rdfs:label ?label .
-            FILTER (lang(?label) = 'en')
+            FILTER (lang(?label) = '{idioma}')
             
             OPTIONAL {{ ?game dbo:releaseDate ?releaseDate }}
             OPTIONAL {{ ?game dbo:developer ?developer }}
@@ -482,7 +487,15 @@ class IntelligentSearch:
         return self._ejecutar_query(query)
     
     def _query_mas_recientes(self, params, limite):
-        """Query para juegos RECIENTES - INCLUYE 2025"""
+        """Query para juegos RECIENTES - CON MULTILINGÜISMO MEJORADO"""
+        # Detectar idioma y traducir si es necesario
+        termino = params.get('termino', '')
+        from multilingual import traductor_global
+        idioma_original = traductor_global.detectar_idioma(termino)
+        
+        # Decidir en qué idioma buscar (preferir idioma original si hay contenido)
+        idioma_busqueda = idioma_original if idioma_original in ['es', 'en', 'fr', 'de', 'it', 'pt'] else 'en'
+        
         filtro_dev = ""
         if 'desarrollador' in params:
             dev = params['desarrollador'].title()
@@ -492,7 +505,6 @@ class IntelligentSearch:
             FILTER (CONTAINS(LCASE(?devLabel), LCASE("{dev}")))
             """
         
-        # ARREGLADO: Incluir 2025 para juegos recientes
         query = f"""
         PREFIX dbo: <http://dbpedia.org/ontology/>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -502,7 +514,7 @@ class IntelligentSearch:
             ?game a dbo:VideoGame .
             ?game rdfs:label ?label .
             ?game dbo:releaseDate ?releaseDate .
-            FILTER (lang(?label) = 'en')
+            FILTER (lang(?label) = '{idioma_busqueda}')
             FILTER (YEAR(?releaseDate) >= 2023 && YEAR(?releaseDate) <= 2025)
             
             {filtro_dev}
@@ -550,7 +562,7 @@ class IntelligentSearch:
         return self._ejecutar_query(query)
     
     def _ejecutar_query(self, query):
-        """Ejecuta query y formatea resultados"""
+        """Ejecuta query y formatea resultados CON SOPORTE MULTILINGÜE MEJORADO"""
         self.sparql.setQuery(query)
         
         try:
@@ -568,7 +580,8 @@ class IntelligentSearch:
                         'anios': [],
                         'desarrollador': None,
                         'generos': [],
-                        'source': 'dbpedia'
+                        'source': 'dbpedia',
+                        'idioma': row['label'].get('xml:lang', 'en')  # Idioma del label
                     }
                     
                     if 'releaseDate' in row:

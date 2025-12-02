@@ -238,25 +238,41 @@ class SemanticReasoner:
         return sigla.upper() == iniciales.upper()
     
     def buscar_semanticamente_dbpedia(self, termino, limite=20):
-        """OPTIMIZADO - búsqueda más rápida y eficiente"""
+        """OPTIMIZADO - búsqueda multilingüe que devuelve en idioma original"""
+        # Detectar idioma original del término
+        idioma_original = self.traductor.detectar_idioma(termino)
+        print(f"   ✓ Idioma original: {idioma_original}")
+        
+        # NUEVO: SIEMPRE traducir a inglés para buscar en DBpedia
+        termino_busqueda_en = self.traductor.obtener_nombre_ingles(termino)
+        
+        # Si no se pudo traducir (es decir, retornó el mismo término) y no es inglés,
+        # intentar buscar de todas formas
+        if termino_busqueda_en == termino and idioma_original != 'en':
+            print(f"   ⚠ No se encontró traducción directa para '{termino}'")
+            print(f"   → Se buscará con el término original")
+        else:
+            print(f"   ✓ Término para búsqueda en DBpedia: '{termino_busqueda_en}'")
+        
         # Verificar caché
-        cache_key = f"search_{termino.lower()}_{limite}"
+        cache_key = f"search_{termino.lower()}_{idioma_original}_{limite}"
         if cache_key in self.cache_dbpedia:
             import time
             if time.time() - self.cache_expiracion.get(cache_key, 0) < self.CACHE_TTL:
                 print(f"   ✓ Resultados desde caché")
                 return self.cache_dbpedia[cache_key]
         
-        # Expandir consulta (pero limitado)
-        terminos_expandidos = self.expandir_consulta(termino)
+        # ARREGLADO: Expandir usando el término EN INGLÉS
+        print(f"\n   Expandiendo término: '{termino_busqueda_en}'")
+        terminos_expandidos = self._expandir_simple(termino_busqueda_en)  # Usar expansión simplificada
         
         todos_resultados = []
         
-        # OPTIMIZACIÓN: Solo usar 2 términos principales
+        # Buscar en inglés con los términos expandidos
         for i, termino_exp in enumerate(terminos_expandidos[:2]):
-            print(f"   Buscando: '{termino_exp}'")
+            print(f"   [{i+1}/{len(terminos_expandidos[:2])}] Buscando: '{termino_exp}'")
             
-            # Query SIMPLIFICADA
+            # Query EN INGLÉS
             query = f"""
             PREFIX dbo: <http://dbpedia.org/ontology/>
             PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -276,23 +292,30 @@ class SemanticReasoner:
             
             try:
                 self.sparql.setQuery(query)
-                self.sparql.setTimeout(8)  # Timeout más corto
+                self.sparql.setTimeout(8)
                 results = self.sparql.query().convert()
                 
                 if "results" in results and "bindings" in results["results"]:
                     for row in results["results"]["bindings"]:
                         nombre_juego = row['label']['value']
-                        score = self.calcular_similitud_semantica(termino, nombre_juego)
+                        score = self.calcular_similitud_semantica(termino_busqueda_en, nombre_juego)
                         row['semantic_score'] = score
+                        row['idioma_original'] = idioma_original  # Marcar idioma original
+                        row['termino_original'] = termino  # Guardar término original
                         todos_resultados.append(row)
+                        print(f"       ✓ Encontrado: {nombre_juego} (score: {score:.2f})")
                 
-                # Si ya tenemos suficientes resultados, parar
                 if len(todos_resultados) >= limite:
                     break
                     
             except Exception as e:
-                print(f"      ✗ Timeout (normal)")
-                break  # Salir si hay timeout
+                print(f"      ✗ Error: {str(e)[:100]}")
+                break
+        
+        # Si hay resultados en inglés y el idioma original no es inglés, obtener traducciones
+        if len(todos_resultados) > 0 and idioma_original != 'en':
+            print(f"\n   → Obteniendo labels en {idioma_original}...")
+            todos_resultados = self._agregar_labels_multilingues(todos_resultados, idioma_original)
         
         # Eliminar duplicados por URI
         resultados_unicos = {}
@@ -310,9 +333,11 @@ class SemanticReasoner:
         
         print(f"\n   ✓ Total de resultados únicos: {len(resultados_ordenados)}")
         if resultados_ordenados:
-            print(f"  Top 3 por relevancia:")
+            print(f"   Top 3 por relevancia:")
             for i, res in enumerate(resultados_ordenados[:3], 1):
-                print(f"      {i}. {res['label']['value']} (score: {res['semantic_score']:.2f})")
+                label_mostrar = res.get('label_traducido', {}).get('value', res['label']['value'])
+                idioma_res = res.get('idioma_original', 'en')
+                print(f"      {i}. {label_mostrar} [{idioma_res}] (score: {res['semantic_score']:.2f})")
         
         # Guardar en caché
         import time
@@ -320,3 +345,60 @@ class SemanticReasoner:
         self.cache_expiracion[cache_key] = time.time()
         
         return resultados_ordenados[:limite]
+    
+    def _expandir_simple(self, termino):
+        """Expansión simplificada sin multilingüismo (ya traducido)"""
+        terminos = [termino]
+        
+        # Variaciones básicas
+        if ' ' in termino:
+            terminos.append(termino.replace(' ', ''))
+        
+        # Agregar/quitar "The"
+        if not termino.lower().startswith('the '):
+            terminos.append(f'The {termino}')
+        else:
+            terminos.append(termino[4:])
+        
+        return list(dict.fromkeys(terminos))[:3]
+    
+    def _agregar_labels_multilingues(self, resultados, idioma_destino):
+        """Agrega labels en el idioma solicitado a los resultados"""
+        for resultado in resultados:
+            game_uri = resultado['game']['value']
+            
+            # Query para obtener label en el idioma destino
+            query = f"""
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            
+            SELECT ?label
+            WHERE {{
+                <{game_uri}> rdfs:label ?label .
+                FILTER (lang(?label) = '{idioma_destino}')
+            }}
+            LIMIT 1
+            """
+            
+            try:
+                self.sparql.setQuery(query)
+                self.sparql.setTimeout(3)
+                results = self.sparql.query().convert()
+                
+                if "results" in results and "bindings" in results["results"]:
+                    bindings = results["results"]["bindings"]
+                    if len(bindings) > 0:
+                        # Agregar label traducido
+                        resultado['label_traducido'] = bindings[0]['label']
+                        print(f"      ✓ Label {idioma_destino}: {bindings[0]['label']['value']}")
+                    else:
+                        # Si no hay traducción, usar el inglés
+                        resultado['label_traducido'] = resultado['label']
+                        print(f"      ⊙ Sin traducción a {idioma_destino}, usando inglés")
+                else:
+                    resultado['label_traducido'] = resultado['label']
+            except Exception as e:
+                # En caso de error, usar el inglés
+                resultado['label_traducido'] = resultado['label']
+                print(f"      ✗ Error obteniendo label {idioma_destino}: {str(e)[:50]}")
+        
+        return resultados
