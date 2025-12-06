@@ -411,7 +411,7 @@ class HybridSearch:
     def agregar_juegos_dbpedia_a_ontologia(self, juegos_dbpedia):
         """
         Agrega juegos encontrados en DBpedia a la ontología local
-        CORREGIDO - Usa namespaces correctamente
+        CORREGIDO - Sin language tags, solo xsd:string
         
         Args:
             juegos_dbpedia: Lista de juegos obtenidos de DBpedia
@@ -441,9 +441,9 @@ class HybridSearch:
                     print(f"  ⊙ {idx}. {titulo} (ya existe)")
                     continue
                 
-                # Agregar el juego
+                # Agregar el juego - ARREGLADO: Sin language tag, solo xsd:string
                 self.buscador.graph.add((game_uri, RDF.type, VG.Videojuego))
-                self.buscador.graph.add((game_uri, VG.titulo, Literal(titulo, lang="es")))
+                self.buscador.graph.add((game_uri, VG.titulo, Literal(titulo, datatype=XSD.string)))
                 self.buscador.graph.add((game_uri, VG.dbpediaURI, Literal(juego['game'], datatype=XSD.anyURI)))
                 
                 # Agregar año
@@ -464,7 +464,7 @@ class HybridSearch:
                         dev_uri = URIRef(f"http://dbpedia.org/resource/{dev_uri_safe}")
                         
                         self.buscador.graph.add((dev_uri, RDF.type, VG.Desarrollador))
-                        self.buscador.graph.add((dev_uri, RDFS.label, Literal(dev_name)))
+                        self.buscador.graph.add((dev_uri, RDFS.label, Literal(dev_name, datatype=XSD.string)))
                         self.buscador.graph.add((game_uri, VG.desarrolladoPor, dev_uri))
                     except Exception as e:
                         print(f"      ⚠ Error procesando desarrollador: {e}")
@@ -478,7 +478,7 @@ class HybridSearch:
                             genre_uri = URIRef(f"http://dbpedia.org/resource/{genre_uri_safe}")
                             
                             self.buscador.graph.add((genre_uri, RDF.type, VG.Genero))
-                            self.buscador.graph.add((genre_uri, RDFS.label, Literal(genero)))
+                            self.buscador.graph.add((genre_uri, RDFS.label, Literal(genero, datatype=XSD.string)))
                             self.buscador.graph.add((game_uri, VG.tieneGenero, genre_uri))
                         except Exception as e:
                             print(f"      ⚠ Error procesando género {genero}: {e}")
