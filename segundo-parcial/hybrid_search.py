@@ -65,7 +65,6 @@ class HybridSearch:
         # Verificar caché
         cache_key = f"hybrid_{termino.lower()}"
         if cache_key in self.cache_resultados:
-            import time
             tiempo_cache = self.cache_resultados[cache_key]['timestamp']
             if time.time() - tiempo_cache < self.CACHE_TTL:
                 print("✓ Resultados desde caché (instantáneo)")
@@ -83,6 +82,24 @@ class HybridSearch:
         # Búsqueda local (RÁPIDA)
         print("\n[1/2] Búsqueda local (rápida)...")
         resultados_locales = self._buscar_local_expandido(terminos_expandidos)
+        count_local = len(resultados_locales)
+
+        if count_local > 0:
+            print("✓ Resultados locales encontrados. DBpedia omitida para evitar duplicados.")
+            resultado_final = {
+                'success': True,
+                'source': 'hybrid',
+                'local': {'results': resultados_locales, 'count': count_local},
+                'dbpedia': {'results': [], 'count': 0},
+                'total_count': count_local,
+                'message': f'{count_local} resultado(s) locales. DBpedia no consultada.',
+                'terminos_usados': terminos_expandidos[:2]
+            }
+            self.cache_resultados[cache_key] = {
+                'data': resultado_final,
+                'timestamp': time.time()
+            }
+            return resultado_final
         
         # Búsqueda DBpedia (OPTIMIZADA)
         print("\n[2/2] Búsqueda DBpedia (optimizada)...")
@@ -98,35 +115,21 @@ class HybridSearch:
             print(f"   ⚠ DBpedia timeout (continuando con local)")
         
         resultados_dbpedia = self._formatear_resultados_dbpedia(resultados_dbpedia_raw) if resultados_dbpedia_raw else []
-        
-        count_local = len(resultados_locales)
         count_dbpedia = len(resultados_dbpedia)
-        
-        print(f"\nLocal: {count_local}, DBpedia: {count_dbpedia}\n")
-        
+
         resultado_final = {
             'success': True,
             'source': 'hybrid',
-            'local': {
-                'results': resultados_locales,
-                'count': count_local
-            },
-            'dbpedia': {
-                'results': resultados_dbpedia,
-                'count': count_dbpedia
-            },
-            'total_count': count_local + count_dbpedia,
-            'message': f'{count_local} local(es), {count_dbpedia} de DBpedia',
+            'local': {'results': [], 'count': 0},
+            'dbpedia': {'results': resultados_dbpedia, 'count': count_dbpedia},
+            'total_count': count_dbpedia,
+            'message': 'Sin coincidencias locales. Mostrando resultados de DBpedia.' if count_dbpedia else 'Sin coincidencias locales ni en DBpedia.',
             'terminos_usados': terminos_expandidos[:2]
         }
-        
-        # Guardar en caché
-        import time
         self.cache_resultados[cache_key] = {
             'data': resultado_final,
             'timestamp': time.time()
         }
-        
         return resultado_final
     
     def _buscar_local_expandido(self, terminos):
@@ -200,35 +203,50 @@ class HybridSearch:
         # Buscar en AMBAS fuentes
         print("\n[1/2] Buscando en ontología local...")
         resultados_locales = self.buscador.buscar_por_desarrollador(termino)
+
+        if resultados_locales:
+            print("✓ Resultados locales encontrados. DBpedia omitida.")
+            return {
+                'success': True,
+                'source': 'hybrid',
+                'local': {'results': resultados_locales, 'count': len(resultados_locales)},
+                'dbpedia': {'results': [], 'count': 0},
+                'total_count': len(resultados_locales),
+                'message': 'Coincidencias encontradas en la ontología local. No se consulta DBpedia.'
+            }
         
         print("\n[2/2] Buscando en DBpedia...")
         resultados_dbpedia = self._buscar_en_dbpedia_por_desarrollador(termino)
-        
-        count_local = len(resultados_locales)
         count_dbpedia = len(resultados_dbpedia)
-        
-        print(f"\nLocal: {count_local}, DBpedia: {count_dbpedia}\n")
-        
+
         return {
             'success': True,
             'source': 'hybrid',
-            'local': {
-                'results': resultados_locales,
-                'count': count_local
-            },
-            'dbpedia': {
-                'results': resultados_dbpedia,
-                'count': count_dbpedia
-            },
-            'total_count': count_local + count_dbpedia,
-            'message': f'{count_local} local(es), {count_dbpedia} de DBpedia'
+            'local': {'results': [], 'count': 0},
+            'dbpedia': {'results': resultados_dbpedia, 'count': count_dbpedia},
+            'total_count': count_dbpedia,
+            'message': 'Sin coincidencias locales. Resultados obtenidos desde DBpedia.' if count_dbpedia else 'Sin coincidencias en ninguna fuente.'
         }
-    
+
     def buscar_general_hibrido(self, termino):
         """Búsqueda general híbrida CON búsqueda inteligente"""
         print(f"\n{'='*60}")
         print(f"BÚSQUEDA HÍBRIDA: '{termino}'")
         print(f"{'='*60}")
+        
+        print("→ Explorando ontología local antes de consultar DBpedia...")
+        resultados_locales = self.buscador.buscar_general(termino)
+
+        if resultados_locales:
+            print("✓ Resultados locales encontrados. No se consultará DBpedia.")
+            return {
+                'success': True,
+                'source': 'hybrid',
+                'local': {'results': resultados_locales, 'count': len(resultados_locales)},
+                'dbpedia': {'results': [], 'count': 0},
+                'total_count': len(resultados_locales),
+                'message': 'Coincidencias locales detectadas. Consulta online omitida.'
+            }
         
         if self.intelligent_search is not None:
             try:
@@ -242,41 +260,20 @@ class HybridSearch:
                     print(f"\n✓ Búsqueda inteligente EXITOSA")
                     print(f"  Tipo: {resultado_inteligente['analisis']['tipo']}")
                     print(f"  Confianza: {resultado_inteligente['analisis']['confianza']:.2%}")
-                    print(f"  Resultados únicos: {resultado_inteligente['count']}")
-                    
-                    # Buscar localmente
-                    print("\n[Local] Búsqueda local complementaria...")
-                    resultados_locales = self._buscar_local_expandido([termino])
-                    
-                    # Eliminar duplicados entre local y DBpedia
-                    dbpedia_titulos = {r['titulo'].lower() for r in resultado_inteligente['resultados']}
-                    resultados_locales_unicos = []
-                    
-                    for r in resultados_locales:
-                        titulo_local = str(r.titulo).lower()
-                        if titulo_local not in dbpedia_titulos:
-                            resultados_locales_unicos.append(r)
-                    
-                    print(f"  Locales únicos: {len(resultados_locales_unicos)}")
-                    
                     return {
                         'success': True,
                         'source': 'hybrid_intelligent',
-                        'local': {
-                            'results': resultados_locales_unicos,
-                            'count': len(resultados_locales_unicos)
-                        },
+                        'local': {'results': [], 'count': 0},
                         'dbpedia': {
                             'results': resultado_inteligente['resultados'],
                             'count': resultado_inteligente['count']
                         },
-                        'total_count': len(resultados_locales_unicos) + resultado_inteligente['count'],
-                        'message': f"{len(resultados_locales_unicos)} local(es), {resultado_inteligente['count']} de DBpedia (inteligente)",
+                        'total_count': resultado_inteligente['count'],
+                        'message': f"Sin coincidencias locales. {resultado_inteligente['count']} resultado(s) desde DBpedia (inteligente).",
                         'analisis': resultado_inteligente['analisis']
                     }
                 else:
                     print(f"→ Búsqueda inteligente rechazada (confianza: {resultado_inteligente['analisis']['confianza']:.2%})")
-                    
             except Exception as e:
                 print(f"✗ Error en búsqueda inteligente: {str(e)}")
                 import traceback

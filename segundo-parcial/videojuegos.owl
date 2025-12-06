@@ -1,569 +1,1234 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF
-   xmlns:owl="http://www.w3.org/2002/07/owl#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-   xmlns:vg="http://www.semanticweb.org/videojuegos#"
->
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#idiomasDisponibles">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:label>idiomas disponibles</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#publicadoPor">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Publicador"/>
-    <rdfs:label>publicado por</rdfs:label>
-    <owl:equivalentProperty rdf:resource="http://dbpedia.org/ontology/publisher"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#UnJugador">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#ModoJuego"/>
-    <rdfs:label>Un Jugador</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#esGratuitoParaJugar">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    <rdfs:label>es gratuito para jugar</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#version">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:label>versión</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Third-person_shooter">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label xml:lang="es">Third-person shooter</rdfs:label>
-    <rdfs:label>Third-person shooter</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#dbpediaURI">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
-    <rdfs:label>URI en DBpedia</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#tieneExpansion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Expansion"/>
-    <rdfs:label>tiene expansión</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#tamanoArchivo">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <rdfs:label>tamaño de archivo (GB)</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#EstudioAAA">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Estudio AAA</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#VideojuegoRetro">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:label>Videojuego Retro</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#numeroJugadores">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:label>número de jugadores</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Adventure_Island_IV">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:label xml:lang="es">Adventure Island IV</rdfs:label>
-    <vg:titulo xml:lang="es">Adventure Island IV</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Adventure_Island_IV</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1994</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1994</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Now_Production"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Action_game"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Adventure_game"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Metroidvania"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#numeroEmpleados">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-    <rdfs:label>número de empleados</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#GeneroRPG">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Género RPG</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#compatibleCon">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:label>compatible con</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#requiereInternet">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    <rdfs:label>requiere internet</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#ConsolaPortatil">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Plataforma"/>
-    <rdfs:label>Consola Portátil</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Castle_Crashers">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:label xml:lang="es">Castle Crashers</rdfs:label>
-    <vg:titulo xml:lang="es">Castle Crashers</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Castle_Crashers</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2008</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2010</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2012</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2015</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2019</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2008</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2010</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2012</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2015</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2019</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/The_Behemoth"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Beat_'em_up"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#tiempoJuego">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-    <rdfs:label>tiempo de juego (horas)</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Mewgenics">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <vg:titulo xml:lang="es">Mewgenics</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Mewgenics</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2026</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Tyler_Glaiel"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Life_simulation_game"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#Plataforma">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Plataforma</rdfs:label>
-    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/InformationAppliance"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Bandai_Entertainment_Company">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Bandai Entertainment Company</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Beast_Wars:_Transformers_(video_game)">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:label xml:lang="es">Beast Wars: Transformers (video game)</rdfs:label>
-    <vg:titulo xml:lang="es">Beast Wars: Transformers (video game)</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Beast_Wars:_Transformers_(video_game)</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1997</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1998</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1997</vg:anioLanzamiento>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1998</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Guerrilla_Cambridge"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Third-person_shooter"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#GeneroSimulacion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Género de Simulación</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#titulo">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:label>título</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#ventasGlobales">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-    <rdfs:label>ventas globales (millones)</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/List_of_grand_strategy_video_games">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>List of grand strategy video games</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Danger_Close_Games">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Danger Close Games</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#PC">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Plataforma"/>
-    <rdfs:label>PC</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#Multijugador">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#ModoJuego"/>
-    <rdfs:label>Multijugador</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#Publicador">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Publicador</rdfs:label>
-    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Publisher"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#Desarrollador">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Desarrollador</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Adventure_game">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label xml:lang="es">Adventure game</rdfs:label>
-    <rdfs:label>Adventure game</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Beat_'em_up">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label xml:lang="es">Beat 'em up</rdfs:label>
-    <rdfs:label>Beat 'em up</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Resident_Evil_Requiem">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <vg:titulo xml:lang="es">Resident Evil Requiem</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Resident_Evil_Requiem</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2026</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Capcom"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Survival_horror"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#anioFundacion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-    <rdfs:label>año de fundación</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#utilizaMotor">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#MotorGrafico"/>
-    <rdfs:label>utiliza motor</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/The_Last_of_Us">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <vg:titulo xml:lang="es">The Last of Us</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/The_Last_of_Us</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2013</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Naughty_Dog"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Action-adventure_game"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#Serie">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Serie</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Command_&amp;_Conquer_4:_Tiberian_Twilight">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <vg:titulo xml:lang="es">Command &amp; Conquer 4: Tiberian Twilight</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Command_&amp;_Conquer_4:_Tiberian_Twilight</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2010</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Danger_Close_Games"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Real-time_strategy"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Now_Production">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label xml:lang="es">Now Production</rdfs:label>
-    <rdfs:label>Now Production</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#clasificacionEdad">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:label>clasificación por edad</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Rockstar_Games">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Rockstar Games</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#tieneDLC">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#DLC"/>
-    <rdfs:label>tiene DLC</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Survival_horror">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Survival horror</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Metroidvania">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label xml:lang="es">Metroidvania</rdfs:label>
-    <rdfs:label>Metroidvania</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#Cooperativo">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#ModoJuego"/>
-    <rdfs:label>Cooperativo</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#puntuacionMetacritic">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-    <rdfs:label>puntuación Metacritic</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#VideojuegoIndie">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:label>Videojuego Indie</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#esSecuelaDe">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:label>es secuela de</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Paradox_Development_Studio">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Paradox Development Studio</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Tyler_Glaiel">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Tyler Glaiel</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#esRemasterDe">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:label>es remaster de</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#precio">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <rdfs:label>precio</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Deltarune">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <vg:titulo xml:lang="es">Deltarune</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Deltarune</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2018</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Toby_Fox"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Role-playing_video_game"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/The_Behemoth">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label xml:lang="es">The Behemoth</rdfs:label>
-    <rdfs:label>The Behemoth</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#Videojuego">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Videojuego</rdfs:label>
-    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/VideoGame"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Europa_Universalis_III">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <vg:titulo xml:lang="es">Europa Universalis III</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Europa_Universalis_III</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2007</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Paradox_Development_Studio"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/List_of_grand_strategy_video_games"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#descripcion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:label>descripción</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#tieneModoJuego">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#ModoJuego"/>
-    <rdfs:label>tiene modo de juego</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Eyewire">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <vg:titulo xml:lang="es">Eyewire</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Eyewire</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2012</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Sebastian_Seung"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Citizen_science"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#Expansion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Expansión</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#GeneroEstrategia">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Género de Estrategia</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#VideojuegoAAA">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:label>Videojuego AAA</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Citizen_science">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Citizen science</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#ModoJuego">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Modo de Juego</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Dragon_Ball_Z:_Idainaru_Dragon_Ball_Densetsu">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <vg:titulo xml:lang="es">Dragon Ball Z: Idainaru Dragon Ball Densetsu</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Dragon_Ball_Z:_Idainaru_Dragon_Ball_Densetsu</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1996</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Bandai_Entertainment_Company"/>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Tose_(company)"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Fighting_game"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#MotorGrafico">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Motor Gráfico</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#anioLanzamiento">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-    <rdfs:label>año de lanzamiento</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#inspiradoEn">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:label>inspirado en</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#GeneroAventura">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Género de Aventura</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Action_game">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label xml:lang="es">Action game</rdfs:label>
-    <rdfs:label>Action game</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#Movil">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Plataforma"/>
-    <rdfs:label>Móvil</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#paisOrigen">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:label>país de origen</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#DLC">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>DLC</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Role-playing_video_game">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Role-playing video game</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#desarrolladoPor">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>desarrollado por</rdfs:label>
-    <owl:equivalentProperty rdf:resource="http://dbpedia.org/ontology/developer"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Toby_Fox">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Toby Fox</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Tose_(company)">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Tose (company)</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#perteneceASerie">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Serie"/>
-    <rdfs:label>pertenece a serie</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#Calificacion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Calificación</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#tieneCalificacion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Calificacion"/>
-    <rdfs:label>tiene calificación</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Grand_Theft_Auto_VI">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <vg:titulo xml:lang="es">Grand Theft Auto VI</vg:titulo>
-    <vg:dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Grand_Theft_Auto_VI</vg:dbpediaURI>
-    <vg:anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2026</vg:anioLanzamiento>
-    <vg:desarrolladoPor rdf:resource="http://dbpedia.org/resource/Rockstar_Games"/>
-    <vg:tieneGenero rdf:resource="http://dbpedia.org/resource/Action-adventure_game"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#tieneGenero">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>tiene género</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Action-adventure_game">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Action-adventure game</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Naughty_Dog">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Naughty Dog</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#Genero">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:label>Género</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Real-time_strategy">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Real-time strategy</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#tienePlataforma">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Plataforma"/>
-    <rdfs:label>tiene plataforma</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Guerrilla_Cambridge">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label xml:lang="es">Guerrilla Cambridge</rdfs:label>
-    <rdfs:label>Guerrilla Cambridge</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Life_simulation_game">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Life simulation game</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#ConsolaHogar">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Plataforma"/>
-    <rdfs:label>Consola de Hogar</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#GeneroAccion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Género de Acción</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Sebastian_Seung">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Sebastian Seung</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#VideojuegoMultijugador">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
-    <rdfs:label>Videojuego Multijugador</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Capcom">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Capcom</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos#EstudioIndependiente">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
-    <rdfs:label>Estudio Independiente</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/videojuegos">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://dbpedia.org/resource/Fighting_game">
-    <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
-    <rdfs:label>Fighting game</rdfs:label>
-  </rdf:Description>
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/videojuegos#"
+     xml:base="http://www.semanticweb.org/videojuegos"
+     xmlns:vg="http://www.semanticweb.org/videojuegos#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/videojuegos"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#compatibleCon -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#compatibleCon">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:label>compatible con</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#desarrolladoPor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#desarrolladoPor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>desarrollado por</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#esRemasterDe -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#esRemasterDe">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:label>es remaster de</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#esSecuelaDe -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#esSecuelaDe">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:label>es secuela de</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#inspiradoEn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#inspiradoEn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:label>inspirado en</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#perteneceASerie -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#perteneceASerie">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Serie"/>
+        <rdfs:label>pertenece a serie</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#publicadoPor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#publicadoPor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Publicador"/>
+        <rdfs:label>publicado por</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#tieneCalificacion -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#tieneCalificacion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Calificacion"/>
+        <rdfs:label>tiene calificación</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#tieneDLC -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#tieneDLC">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#DLC"/>
+        <rdfs:label>tiene DLC</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#tieneExpansion -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#tieneExpansion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Expansion"/>
+        <rdfs:label>tiene expansión</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#tieneGenero -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#tieneGenero">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>tiene género</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#tieneModoJuego -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#tieneModoJuego">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#ModoJuego"/>
+        <rdfs:label>tiene modo de juego</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#tienePlataforma -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#tienePlataforma">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#Plataforma"/>
+        <rdfs:label>tiene plataforma</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#utilizaMotor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/videojuegos#utilizaMotor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/videojuegos#MotorGrafico"/>
+        <rdfs:label>utiliza motor</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#anioFundacion -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#anioFundacion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>año de fundación</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#anioLanzamiento -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#anioLanzamiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>año de lanzamiento</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#clasificacionEdad -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#clasificacionEdad">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>clasificación por edad</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#dbpediaURI -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#dbpediaURI">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+        <rdfs:label>URI en DBpedia</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#descripcion -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#descripcion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>descripción</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#esGratuitoParaJugar -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#esGratuitoParaJugar">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:label>es gratuito para jugar</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#idiomasDisponibles -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#idiomasDisponibles">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>idiomas disponibles</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#numeroEmpleados -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#numeroEmpleados">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>número de empleados</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#numeroJugadores -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#numeroJugadores">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>número de jugadores</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#paisOrigen -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#paisOrigen">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>país de origen</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#precio -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#precio">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:label>precio</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#puntuacionMetacritic -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#puntuacionMetacritic">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>puntuación Metacritic</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#requiereInternet -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#requiereInternet">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:label>requiere internet</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#tamanoArchivo -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#tamanoArchivo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:label>tamaño de archivo (GB)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#tiempoJuego -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#tiempoJuego">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>tiempo de juego (horas)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#titulo -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#titulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>título</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#ventasGlobales -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#ventasGlobales">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>ventas globales (millones)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#version -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/videojuegos#version">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>versión</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://dbpedia.org/ontology/InformationAppliance -->
+
+    <owl:Class rdf:about="http://dbpedia.org/ontology/InformationAppliance">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/videojuegos#Plataforma"/>
+    </owl:Class>
+    
+
+
+    <!-- http://dbpedia.org/ontology/Publisher -->
+
+    <owl:Class rdf:about="http://dbpedia.org/ontology/Publisher">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/videojuegos#Publicador"/>
+    </owl:Class>
+    
+
+
+    <!-- http://dbpedia.org/ontology/VideoGame -->
+
+    <owl:Class rdf:about="http://dbpedia.org/ontology/VideoGame">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#Calificacion -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#Calificacion">
+        <rdfs:label>Calificación</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#ConsolaHogar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#ConsolaHogar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Plataforma"/>
+        <rdfs:label>Consola de Hogar</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#ConsolaPortatil -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#ConsolaPortatil">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Plataforma"/>
+        <rdfs:label>Consola Portátil</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#Cooperativo -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#Cooperativo">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#ModoJuego"/>
+        <rdfs:label>Cooperativo</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#DLC -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#DLC">
+        <rdfs:label>DLC</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#Desarrollador -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#Desarrollador">
+        <rdfs:label>Desarrollador</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#EstudioAAA -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#EstudioAAA">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Estudio AAA</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#EstudioIndependiente -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#EstudioIndependiente">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Estudio Independiente</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#Expansion -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#Expansion">
+        <rdfs:label>Expansión</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#Genero -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#Genero">
+        <rdfs:label>Género</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#GeneroAccion -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#GeneroAccion">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Género de Acción</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#GeneroAventura -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#GeneroAventura">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Género de Aventura</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#GeneroEstrategia -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#GeneroEstrategia">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Género de Estrategia</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#GeneroRPG -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#GeneroRPG">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Género RPG</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#GeneroSimulacion -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#GeneroSimulacion">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Género de Simulación</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#ModoJuego -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#ModoJuego">
+        <rdfs:label>Modo de Juego</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#MotorGrafico -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#MotorGrafico">
+        <rdfs:label>Motor Gráfico</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#Movil -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#Movil">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Plataforma"/>
+        <rdfs:label>Móvil</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#Multijugador -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#Multijugador">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#ModoJuego"/>
+        <rdfs:label>Multijugador</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#PC -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#PC">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Plataforma"/>
+        <rdfs:label>PC</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#Plataforma -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#Plataforma">
+        <rdfs:label>Plataforma</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#Publicador -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#Publicador">
+        <rdfs:label>Publicador</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#Serie -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#Serie">
+        <rdfs:label>Serie</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#UnJugador -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#UnJugador">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#ModoJuego"/>
+        <rdfs:label>Un Jugador</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#Videojuego -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#Videojuego">
+        <rdfs:label>Videojuego</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#VideojuegoAAA -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#VideojuegoAAA">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:label>Videojuego AAA</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#VideojuegoIndie -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#VideojuegoIndie">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:label>Videojuego Indie</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#VideojuegoMultijugador -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#VideojuegoMultijugador">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:label>Videojuego Multijugador</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/videojuegos#VideojuegoRetro -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/videojuegos#VideojuegoRetro">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <rdfs:label>Videojuego Retro</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://dbpedia.org/resource/Action-adventure_game -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Action-adventure_game">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Action-adventure game</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Action_game -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Action_game">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Action game</rdfs:label>
+        <rdfs:label xml:lang="es">Action game</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Adventure_Island_IV -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Adventure_Island_IV">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Now_Production"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Action_game"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Adventure_game"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Metroidvania"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1994</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Adventure_Island_IV</dbpediaURI>
+        <titulo>Adventure Island IV</titulo>
+        <rdfs:label xml:lang="es">Adventure Island IV</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Adventure_game -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Adventure_game">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Adventure game</rdfs:label>
+        <rdfs:label xml:lang="es">Adventure game</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Bandai_Entertainment_Company -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Bandai_Entertainment_Company">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Bandai Entertainment Company</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/BioWare -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/BioWare">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>BioWare</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Capcom -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Capcom">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Capcom</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Castle_Crashers -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Castle_Crashers">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/The_Behemoth"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Beat_&apos;em_up"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2008</anioLanzamiento>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2010</anioLanzamiento>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2012</anioLanzamiento>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2015</anioLanzamiento>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2019</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Castle_Crashers</dbpediaURI>
+        <titulo>Castle Crashers</titulo>
+        <rdfs:label xml:lang="es">Castle Crashers</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Citizen_science -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Citizen_science">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Citizen science</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Danger_Close_Games -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Danger_Close_Games">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Danger Close Games</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Deltarune -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Deltarune">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Toby_Fox"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Role-playing_video_game"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2018</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Deltarune</dbpediaURI>
+        <titulo>Deltarune</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Europa_Universalis_III -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Europa_Universalis_III">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Paradox_Development_Studio"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/List_of_grand_strategy_video_games"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2007</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Europa_Universalis_III</dbpediaURI>
+        <titulo>Europa Universalis III</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Eyewire -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Eyewire">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Sebastian_Seung"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Citizen_science"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2012</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Eyewire</dbpediaURI>
+        <titulo>Eyewire</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Fighting_game -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Fighting_game">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Fighting game</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Grand_Theft_Auto_VI -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Grand_Theft_Auto_VI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Rockstar_Games"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Action-adventure_game"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2026</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Grand_Theft_Auto_VI</dbpediaURI>
+        <titulo>Grand Theft Auto VI</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Guerrilla_Cambridge -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Guerrilla_Cambridge">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Guerrilla Cambridge</rdfs:label>
+        <rdfs:label xml:lang="es">Guerrilla Cambridge</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Life_simulation_game -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Life_simulation_game">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Life simulation game</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/List_of_grand_strategy_video_games -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/List_of_grand_strategy_video_games">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>List of grand strategy video games</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Massively_multiplayer_online_role-playing_game -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Massively_multiplayer_online_role-playing_game">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Massively multiplayer online role-playing game</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Metroidvania -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Metroidvania">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Metroidvania</rdfs:label>
+        <rdfs:label xml:lang="es">Metroidvania</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Mewgenics -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Mewgenics">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Tyler_Glaiel"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Life_simulation_game"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2026</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Mewgenics</dbpediaURI>
+        <titulo>Mewgenics</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Naughty_Dog -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Naughty_Dog">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Naughty Dog</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Now_Production -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Now_Production">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Now Production</rdfs:label>
+        <rdfs:label xml:lang="es">Now Production</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Paradox_Development_Studio -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Paradox_Development_Studio">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Paradox Development Studio</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Point_and_click -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Point_and_click">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Point and click</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Real-time_strategy -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Real-time_strategy">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Real-time strategy</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Resident_Evil_Requiem -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Resident_Evil_Requiem">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Capcom"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Survival_horror"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2026</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Resident_Evil_Requiem</dbpediaURI>
+        <titulo>Resident Evil Requiem</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Rockstar_Games -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Rockstar_Games">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Rockstar Games</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Role-playing_video_game -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Role-playing_video_game">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Role-playing video game</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Scott_Cawthon -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Scott_Cawthon">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Scott Cawthon</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Sebastian_Seung -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Sebastian_Seung">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Sebastian Seung</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Survival_horror -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Survival_horror">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Survival horror</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/The_Behemoth -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/The_Behemoth">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>The Behemoth</rdfs:label>
+        <rdfs:label xml:lang="es">The Behemoth</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/The_Last_of_Us -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/The_Last_of_Us">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Naughty_Dog"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Action-adventure_game"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2013</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/The_Last_of_Us</dbpediaURI>
+        <titulo>The Last of Us</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Third-person_shooter -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Third-person_shooter">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Third-person shooter</rdfs:label>
+        <rdfs:label xml:lang="es">Third-person shooter</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Toby_Fox -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Toby_Fox">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Toby Fox</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Tyler_Glaiel -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Tyler_Glaiel">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Tyler Glaiel</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Beast_Wars:_Transformers_(video_game) -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Beast_Wars:_Transformers_(video_game)">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Guerrilla_Cambridge"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Third-person_shooter"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1997</anioLanzamiento>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1998</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Beast_Wars:_Transformers_(video_game)</dbpediaURI>
+        <titulo>Beast Wars: Transformers (video game)</titulo>
+        <rdfs:label xml:lang="es">Beast Wars: Transformers (video game)</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Beat_&apos;em_up -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Beat_&apos;em_up">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Genero"/>
+        <rdfs:label>Beat &apos;em up</rdfs:label>
+        <rdfs:label xml:lang="es">Beat &apos;em up</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Command_&amp;_Conquer_4:_Tiberian_Twilight -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Command_&amp;_Conquer_4:_Tiberian_Twilight">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Danger_Close_Games"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Real-time_strategy"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2010</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Command_&amp;_Conquer_4:_Tiberian_Twilight</dbpediaURI>
+        <titulo>Command &amp; Conquer 4: Tiberian Twilight</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Dragon_Ball_Z:_Idainaru_Dragon_Ball_Densetsu -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Dragon_Ball_Z:_Idainaru_Dragon_Ball_Densetsu">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Bandai_Entertainment_Company"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Tose_(company)"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Fighting_game"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1996</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Dragon_Ball_Z:_Idainaru_Dragon_Ball_Densetsu</dbpediaURI>
+        <titulo>Dragon Ball Z: Idainaru Dragon Ball Densetsu</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_2 -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Scott_Cawthon"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Survival_horror"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2014</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_2</dbpediaURI>
+        <titulo>Five Nights at Freddy&apos;s 2</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_3 -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Scott_Cawthon"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Point_and_click"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2015</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_3</dbpediaURI>
+        <titulo>Five Nights at Freddy&apos;s 3</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_4 -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Scott_Cawthon"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Survival_horror"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2015</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_4</dbpediaURI>
+        <titulo>Five Nights at Freddy&apos;s 4</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Help_Wanted -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Help_Wanted">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Scott_Cawthon"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Survival_horror"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2019</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Help_Wanted</dbpediaURI>
+        <titulo>Five Nights at Freddy&apos;s: Help Wanted</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Into_the_Pit -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Into_the_Pit">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Into_the_Pit</dbpediaURI>
+        <titulo>Five Nights at Freddy&apos;s: Into the Pit</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Secret_of_the_Mimic -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Secret_of_the_Mimic">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Survival_horror"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2025</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Secret_of_the_Mimic</dbpediaURI>
+        <titulo>Five Nights at Freddy&apos;s: Secret of the Mimic</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Security_Breach -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Security_Breach">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Survival_horror"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2021</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Security_Breach</dbpediaURI>
+        <titulo>Five Nights at Freddy&apos;s: Security Breach</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Sister_Location -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Sister_Location">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Scott_Cawthon"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Survival_horror"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2016</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Sister_Location</dbpediaURI>
+        <titulo>Five Nights at Freddy&apos;s: Sister Location</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Special_Delivery -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Special_Delivery">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s:_Special_Delivery</dbpediaURI>
+        <titulo>Five Nights at Freddy&apos;s: Special Delivery</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_(video_game) -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_(video_game)">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/Scott_Cawthon"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Survival_horror"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2014</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Five_Nights_at_Freddy&apos;s_(video_game)</dbpediaURI>
+        <titulo>Five Nights at Freddy&apos;s (video game)</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Star_Wars:_The_Old_Republic -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Star_Wars:_The_Old_Republic">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Videojuego"/>
+        <desarrolladoPor rdf:resource="http://dbpedia.org/resource/BioWare"/>
+        <tieneGenero rdf:resource="http://dbpedia.org/resource/Massively_multiplayer_online_role-playing_game"/>
+        <anioLanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2011</anioLanzamiento>
+        <dbpediaURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://dbpedia.org/resource/Star_Wars:_The_Old_Republic</dbpediaURI>
+        <titulo>Star Wars: The Old Republic</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://dbpedia.org/resource/Tose_(company) -->
+
+    <owl:NamedIndividual rdf:about="http://dbpedia.org/resource/Tose_(company)">
+        <rdf:type rdf:resource="http://www.semanticweb.org/videojuegos#Desarrollador"/>
+        <rdfs:label>Tose (company)</rdfs:label>
+    </owl:NamedIndividual>
 </rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
