@@ -8,12 +8,11 @@ import socket
 
 app = Flask(__name__)
 
-# NUEVO: Habilitar compresión de respuestas
 from flask_compress import Compress
 compress = Compress()
 compress.init_app(app)
 
-# Configuración
+# CAMBIAR RUTA DEL OWL SEGÚN SEA NECESARIO
 OWL_PATH = r"c:\Users\FABIAN\Desktop\GALLETAS\WEB SEMÁNTICAS\videojuegos-ontology\segundo-parcial\videojuegos.owl"
 buscador = BuscadorSemantico(OWL_PATH)
 hybrid_search = HybridSearch(buscador)
@@ -29,7 +28,6 @@ def verificar_dbpedia():
     try:
         disponible = buscador.verificar_conexion_dbpedia()
         
-        # Contar videojuegos locales correctamente
         count = sum(1 for _ in buscador.graph.triples((None, RDF.type, VG.Videojuego)))
         
         return jsonify({
@@ -57,14 +55,11 @@ def poblar():
         print(f"Solicitud de población recibida: {limite} videojuegos")
         print(f"{'='*60}\n")
         
-        # Contar antes de poblar
         count_antes = sum(1 for _ in buscador.graph.triples((None, RDF.type, VG.Videojuego)))
         print(f"Videojuegos antes: {count_antes}")
         
-        # Poblar ontología
         buscador.poblar_ontologia(limite)
         
-        # Contar después de poblar correctamente
         count_despues = sum(1 for _ in buscador.graph.triples((None, RDF.type, VG.Videojuego)))
         print(f"Videojuegos después: {count_despues}")
         
@@ -95,7 +90,6 @@ def buscar_titulo():
         modo_hibrido = request.args.get('hybrid', 'true').lower() == 'true'
         
         if modo_hibrido:
-            # Búsqueda híbrida (local + DBpedia)
             resultado = hybrid_search.buscar_titulo_hibrido(termino)
             
             if resultado['success']:
@@ -103,7 +97,6 @@ def buscar_titulo():
             else:
                 return jsonify({'success': False, 'data': [], 'count': 0, 'message': resultado['message']})
         else:
-            # Solo búsqueda local
             resultados = buscador.buscar_por_titulo(termino)
             return jsonify(_formatear_resultados(resultados))
             
@@ -132,7 +125,6 @@ def buscar_general():
         if not termino:
             return jsonify({'success': False, 'error': 'Término vacío'}), 400
         
-        # OPTIMIZACIÓN: Límite de longitud
         if len(termino) > 100:
             return jsonify({'success': False, 'error': 'Término muy largo'}), 400
         
@@ -141,7 +133,6 @@ def buscar_general():
             
             if resultado['success']:
                 response = jsonify(_formatear_resultados_hibridos(resultado))
-                # NUEVO: Agregar headers de caché
                 response.cache_control.max_age = 180  # 3 minutos
                 return response
             else:
@@ -162,7 +153,6 @@ def buscar_desarrollador():
         modo_hibrido = request.args.get('hybrid', 'true').lower() == 'true'
         
         if modo_hibrido:
-            # Búsqueda híbrida
             resultado = hybrid_search.buscar_desarrollador_hibrido(termino)
             
             if resultado['success']:
@@ -170,7 +160,6 @@ def buscar_desarrollador():
             else:
                 return jsonify({'success': False, 'data': [], 'count': 0, 'message': resultado['message']})
         else:
-            # Solo búsqueda local
             resultados = buscador.buscar_por_desarrollador(termino)
             return jsonify(_formatear_resultados(resultados))
             
@@ -197,7 +186,6 @@ def agregar_desde_dbpedia():
         print(f"{'='*60}")
         print(f"Cantidad de juegos recibidos: {len(juegos)}")
         
-        # Validar estructura de cada juego
         juegos_validos = []
         for idx, juego in enumerate(juegos):
             if isinstance(juego, dict) and ('game' in juego or 'uri' in juego):
@@ -227,10 +215,8 @@ def agregar_desde_dbpedia():
         print(f"\nJuegos válidos a procesar: {len(juegos_validos)}")
         print(f"{'='*60}\n")
         
-        # Intentar agregar los juegos
         count = hybrid_search.agregar_juegos_dbpedia_a_ontologia(juegos_validos)
         
-        # Contar total después de agregar
         total = sum(1 for _ in buscador.graph.triples((None, RDF.type, VG.Videojuego)))
         
         if count > 0:

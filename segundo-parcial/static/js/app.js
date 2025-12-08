@@ -1,14 +1,10 @@
-// Detectar automáticamente el puerto desde la URL actual
 const API_BASE = window.location.origin;
 
-// Variable para el temporizador de debounce
 let searchTimeout = null;
 
-// Verificar conexión al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
     verificarConexion();
     
-    // Configurar event listeners
     const inputGeneral = document.getElementById('buscarGeneral');
     if (inputGeneral) {
         // Búsqueda en tiempo real mientras se escribe
@@ -16,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
             buscarGeneralTiempoReal();
         });
         
-        // También mantener funcionalidad de Enter
         inputGeneral.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 // Cancelar debounce y buscar inmediatamente
@@ -28,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // También para los otros campos de búsqueda
     const inputs = {
         'buscarTitulo': buscarPorTitulo,
         'buscarAnio': buscarPorAnio,
@@ -47,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Verificar conexión con DBpedia
 async function verificarConexion() {
     const statusBadge = document.getElementById('dbpedia-status');
     const connectionInfo = document.getElementById('connection-info');
@@ -129,10 +122,8 @@ async function poblarOntologia() {
     }
 }
 
-// NUEVO: Controlador de aborto para cancelar búsquedas
 let currentSearchController = null;
 
-// Búsqueda general OPTIMIZADA
 async function buscarGeneral() {
     const termino = document.getElementById('buscarGeneral').value.trim();
     
@@ -193,7 +184,6 @@ async function buscarGeneral() {
         toggleLoading(false);
         
         if (data.success) {
-            // Guardar en caché SOLO si NO es búsqueda inteligente
             if (!esConsultaInteligente) {
                 sessionStorage.setItem(`search_${termino}`, JSON.stringify(data));
             }
@@ -201,10 +191,10 @@ async function buscarGeneral() {
             mostrarResultados(data);
             
             if (data.analisis && data.analisis.confianza > 0.5) {
-                console.log(`🤖 Búsqueda inteligente: ${data.analisis.descripcion}`);
+                console.log(`Búsqueda inteligente: ${data.analisis.descripcion}`);
             }
             
-            console.log(`⚡ Búsqueda completada en ${searchTime}s`);
+            console.log(`Búsqueda completada en ${searchTime}s`);
         } else {
             mostrarAlerta('Error: ' + (data.error || 'Error desconocido'), 'danger');
         }
@@ -218,7 +208,6 @@ async function buscarGeneral() {
     }
 }
 
-// Búsqueda en tiempo real OPTIMIZADA
 function buscarGeneralTiempoReal() {
     if (searchTimeout) {
         clearTimeout(searchTimeout);
@@ -226,7 +215,6 @@ function buscarGeneralTiempoReal() {
     
     const termino = document.getElementById('buscarGeneral').value.trim();
     
-    // Mostrar indicador de idioma si hay texto
     if (termino.length >= 3) {
         detectarYMostrarIdioma(termino);
     }
@@ -236,7 +224,6 @@ function buscarGeneralTiempoReal() {
     }, 800);
 }
 
-// NUEVO: Detectar y mostrar idioma
 async function detectarYMostrarIdioma(termino) {
     try {
         const response = await fetch(`${API_BASE}/api/traducir?q=${encodeURIComponent(termino)}`);
@@ -270,16 +257,13 @@ async function detectarYMostrarIdioma(termino) {
             }
         }
     } catch (error) {
-        // Ignorar errores silenciosamente
     }
 }
 
-// Buscar por título OPTIMIZADO
 async function buscarPorTitulo() {
     const termino = document.getElementById('buscarTitulo').value;
     if (!termino) return mostrarAlerta('Ingresa un término', 'warning');
     
-    // Verificar caché
     const cachedResults = sessionStorage.getItem(`titulo_${termino}`);
     if (cachedResults) {
         mostrarResultados(JSON.parse(cachedResults));
@@ -293,7 +277,6 @@ async function buscarPorTitulo() {
         const response = await fetch(`${API_BASE}/api/buscar/titulo?q=${encodeURIComponent(termino)}&hybrid=true`);
         const data = await response.json();
         
-        // Guardar en caché
         if (data.success) {
             sessionStorage.setItem(`titulo_${termino}`, JSON.stringify(data));
         }
@@ -306,13 +289,11 @@ async function buscarPorTitulo() {
     }
 }
 
-// NUEVO: Limpiar caché después de 5 minutos
 setInterval(() => {
     const now = Date.now();
     for (let i = 0; i < sessionStorage.length; i++) {
         const key = sessionStorage.key(i);
         if (key && key.startsWith('search_')) {
-            // Limpiar cachés antiguos
             try {
                 const data = JSON.parse(sessionStorage.getItem(key));
                 if (data.timestamp && (now - data.timestamp > 300000)) { // 5 min
@@ -323,7 +304,6 @@ setInterval(() => {
     }
 }, 60000); // Cada minuto
 
-// Buscar por año
 async function buscarPorAnio() {
     const anio = document.getElementById('buscarAnio').value;
     if (!anio) return mostrarAlerta('Ingresa un año', 'warning');
@@ -336,7 +316,6 @@ async function buscarPorAnio() {
     mostrarResultados(data);
 }
 
-// Buscar por desarrollador
 async function buscarPorDesarrollador() {
     const termino = document.getElementById('buscarDev').value;
     if (!termino) return mostrarAlerta('Ingresa un desarrollador', 'warning');
@@ -378,16 +357,13 @@ function mostrarResultados(data) {
         return;
     }
     
-    // Fallback: mostrar resultados normales (legacy)
     mostrarResultadosSimples(data);
 }
 
-// NUEVA FUNCIÓN: Mostrar resultados híbridos (local + DBpedia)
 function mostrarResultadosHibridos(data) {
     const container = document.getElementById('resultados');
     let html = '';
     
-    // NUEVO: Mostrar análisis de búsqueda inteligente si existe
     if (data.analisis && data.analisis.confianza > 0.3) {
         const confianzaPercent = (data.analisis.confianza * 100).toFixed(0);
         const badgeClass = data.analisis.confianza > 0.7 ? 'success' : 'info';
@@ -417,7 +393,6 @@ function mostrarResultadosHibridos(data) {
     
     html += `<h5 class="mb-3"><i class="bi bi-trophy"></i> ${data.count} resultado(s) total(es)</h5>`;
     
-    // SECCIÓN 1: RESULTADOS LOCALES (arriba)
     if (data.count_local > 0) {
         html += `
             <div class="mb-4">
@@ -436,7 +411,6 @@ function mostrarResultadosHibridos(data) {
         html += '</div></div>';
     }
     
-    // SECCIÓN 2: RESULTADOS DE DBPEDIA (abajo)
     if (data.count_dbpedia > 0) {
         const tituloSeccion = data.source === 'hybrid_intelligent' 
             ? `<i class="bi bi-robot"></i> Resultados Inteligentes de DBpedia (${data.count_dbpedia})`
@@ -474,7 +448,6 @@ function mostrarResultadosHibridos(data) {
     container.innerHTML = html;
 }
 
-// NUEVA FUNCIÓN: Crear card de juego con origen
 function crearCardJuego(item, source) {
     // Formatear años
     let aniosHTML = '';
@@ -487,7 +460,6 @@ function crearCardJuego(item, source) {
         }
     }
     
-    // Formatear géneros
     let generosHTML = '';
     if (item.generos && item.generos.length > 0) {
         generosHTML = item.generos.map(g => 

@@ -9,7 +9,6 @@ from semantic_reasoning import SemanticReasoner
 from multilingual import traductor_global
 import time
 
-# NUEVO: Importar con manejo de errores
 try:
     from intelligent_search import IntelligentSearch
     INTELLIGENT_SEARCH_DISPONIBLE = True
@@ -34,14 +33,11 @@ class HybridSearch:
         
         self.semantic_reasoner = SemanticReasoner(sparql_endpoint)
         
-        # NUEVO: Traductor multilingüe
         self.traductor = traductor_global
         
-        # NUEVO: Caché de resultados
         self.cache_resultados = {}
         self.CACHE_TTL = 180  # 3 minutos
         
-        # NUEVO: Búsqueda inteligente (solo si está disponible)
         if INTELLIGENT_SEARCH_DISPONIBLE:
             try:
                 self.intelligent_search = IntelligentSearch(sparql_endpoint)
@@ -80,11 +76,9 @@ class HybridSearch:
                 self.semantic_reasoner.siglas_conocidas[termino.lower()][:2]
             )
         
-        # Búsqueda local (RÁPIDA)
         print("\n[1/2] Búsqueda local (rápida)...")
         resultados_locales = self._buscar_local_expandido(terminos_expandidos)
         
-        # Búsqueda DBpedia (OPTIMIZADA)
         print("\n[2/2] Búsqueda DBpedia (optimizada)...")
         resultados_dbpedia_raw = []
         
@@ -134,7 +128,6 @@ class HybridSearch:
         resultados = []
         uris_encontradas = set()
         
-        # OPTIMIZACIÓN: Solo buscar con 2 términos máximo
         for termino in terminos[:2]:
             try:
                 res = self.buscador.buscar_por_titulo(termino)
@@ -167,7 +160,6 @@ class HybridSearch:
                 'relevancia': row.get('semantic_score', 0)
             }
             
-            # Procesar año
             if 'releaseDate' in row:
                 try:
                     year = row['releaseDate']['value'][:4]
@@ -233,7 +225,6 @@ class HybridSearch:
         if self.intelligent_search is not None:
             try:
                 print("→ Intentando búsqueda inteligente...")
-                # ARREGLADO: Aumentar límite para búsquedas específicas
                 limite_busqueda = 30 if any(x in termino.lower() for x in ['recientes', 'nintendo', 'jugadores']) else 20
                 
                 resultado_inteligente = self.intelligent_search.buscar_inteligente(termino, limite=limite_busqueda)

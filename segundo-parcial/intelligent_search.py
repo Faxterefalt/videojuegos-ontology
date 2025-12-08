@@ -300,7 +300,6 @@ class IntelligentSearch:
         for resultado in resultados:
             titulo = resultado['titulo'].lower()
             
-            # Eliminar duplicados por título
             if titulo in vistos:
                 print(f"   ⊙ Duplicado omitido: {resultado['titulo']}")
                 continue
@@ -308,16 +307,12 @@ class IntelligentSearch:
             # ARREGLADO: Permitir juegos del año siguiente (2025 si estamos en 2024)
             if resultado.get('anios'):
                 anio_juego = resultado['anios'][0]
-                # Solo filtrar si es más de 1 año en el futuro
                 if anio_juego > anio_actual + 1:
                     print(f"   ✗ Muy futuro omitido: {resultado['titulo']} ({anio_juego})")
                     continue
             
-            # Para "más vendido", excluir versiones futuras como GTA VI
             if 'vendido' in params.get('termino', '').lower():
-                # Excluir juegos que claramente no han salido
                 if any(x in titulo for x in ['vi ', ' 6', 'six']) and not any(x in titulo for x in ['v ', ' 5', 'five']):
-                    # Verificar que realmente sea futuro
                     if resultado.get('anios') and resultado['anios'][0] > anio_actual:
                         print(f"   ✗ Versión futura omitida: {resultado['titulo']} ({resultado['anios'][0]})")
                         continue
