@@ -12,8 +12,9 @@ from flask_compress import Compress
 compress = Compress()
 compress.init_app(app)
 
-# CAMBIAR RUTA DEL OWL SEGÚN SEA NECESARIO
-OWL_PATH = r"c:\Users\FABIAN\Desktop\GALLETAS\WEB SEMÁNTICAS\videojuegos-ontology\segundo-parcial\videojuegos.owl"
+# Configuración
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+OWL_PATH = os.path.join(BASE_DIR, "videojuegos.owl")
 buscador = BuscadorSemantico(OWL_PATH)
 hybrid_search = HybridSearch(buscador)
 

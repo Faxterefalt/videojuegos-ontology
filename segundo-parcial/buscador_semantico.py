@@ -474,12 +474,13 @@ class BuscadorSemantico:
         print(f"\n Búsqueda general: '{termino}'")
         query = f"""
         SELECT DISTINCT ?game ?titulo 
-               (GROUP_CONCAT(DISTINCT ?anio; separator=",") as ?anios)
+               (GROUP_CONCAT(DISTINCT STR(?anio); separator=",") as ?anios)
                (SAMPLE(?desarrollador) as ?dev)
-               (GROUP_CONCAT(DISTINCT ?genero; separator=",") as ?generos)
+               (GROUP_CONCAT(DISTINCT STR(?genero); separator=",") as ?generos)
         WHERE {{
             ?game rdf:type vg:Videojuego .
             ?game vg:titulo ?titulo .
+            
             OPTIONAL {{ ?game vg:anioLanzamiento ?anio }}
             OPTIONAL {{ 
                 ?game vg:desarrolladoPor ?devUri .
@@ -489,11 +490,12 @@ class BuscadorSemantico:
                 ?game vg:tieneGenero ?gen .
                 ?gen rdfs:label ?genero 
             }}
+            
             FILTER (
                 CONTAINS(LCASE(?titulo), LCASE("{termino}")) ||
-                CONTAINS(LCASE(STR(?desarrollador)), LCASE("{termino}")) ||
-                CONTAINS(LCASE(STR(?genero)), LCASE("{termino}")) ||
-                CONTAINS(LCASE(STR(?anio)), LCASE("{termino}"))
+                (BOUND(?desarrollador) && CONTAINS(LCASE(?desarrollador), LCASE("{termino}"))) ||
+                (BOUND(?genero) && CONTAINS(LCASE(STR(?genero)), LCASE("{termino}"))) ||
+                (BOUND(?anio) && CONTAINS(STR(?anio), "{termino}"))
             )
         }}
         GROUP BY ?game ?titulo
