@@ -510,7 +510,7 @@ function mostrarResultadosHibridos(data) {
         `;
         
         data.dbpedia.forEach(item => {
-            html += crearCardJuego(item, 'dbpedia', idiomaPrincipal);
+            html += crearCardJuego(item, 'dbpedia');
         });
         
         html += '</div></div>';
@@ -570,92 +570,9 @@ async function traducirTexto(texto, idiomaOrigen, idiomaDestino) {
     };
 }
 
+// Nueva implementación: delega en GameCardFactory y mantiene compatibilidad
 function crearCardJuego(item, source) {
-    const necesitaTraduccion = item.necesita_traduccion || false;
-    const idiomaContenido = item.idioma_contenido || 'en';
-    const idiomaBusqueda = item.idioma_busqueda || 'en';
-    
-    // Formatear años y géneros...
-    let aniosHTML = '';
-    if (item.anios && item.anios.length > 0) {
-        aniosHTML = `<p class="text-muted mb-2"><i class="bi bi-calendar"></i> ${item.anios.join(', ')}</p>`;
-    }
-    
-    let generosHTML = '';
-    if (item.generos && item.generos.length > 0) {
-        const generosBadges = item.generos.map(g => 
-            `<span class="badge bg-secondary">${g}</span>`
-        ).join(' ');
-        generosHTML = `<p class="mb-2">${generosBadges}</p>`;
-    }
-    
-    // Badge de origen
-    let originBadge = '';
-    let cardClass = '';
-    let addButton = '';
-    
-    if (source === 'local') {
-        originBadge = '<span class="badge bg-success mb-2"><i class="bi bi-hdd"></i> Local</span>';
-        cardClass = 'border-success';
-    } else {
-        originBadge = '<span class="badge bg-warning text-dark mb-2"><i class="bi bi-cloud"></i> DBpedia</span>';
-        cardClass = 'border-warning';
-        
-        // Badge de traducción si es necesario
-        if (necesitaTraduccion) {
-            originBadge += ` <span class="badge bg-info mb-2"><i class="bi bi-translate"></i> Traducido</span>`;
-        }
-        
-        const juegoJSON = JSON.stringify(item).replace(/"/g, '&quot;');
-        addButton = `
-            <button class="btn btn-sm btn-primary w-100 mt-2" onclick='agregarJuegoIndividual(${juegoJSON})'>
-                <i class="bi bi-download"></i> Agregar a local
-            </button>
-        `;
-    }
-    
-    // Generar enlace con traducción automática si es necesario
-    const urlOriginal = item.uri || item.game;
-    let enlaceDBpedia = urlOriginal;
-    let textoEnlace = 'Ver en DBpedia';
-    
-    if (necesitaTraduccion && source === 'dbpedia') {
-        // Generar URL con Google Translate
-        const codigoGoogle = idiomaBusqueda;
-        enlaceDBpedia = `https://translate.google.com/translate?sl=${idiomaContenido}&tl=${codigoGoogle}&u=${encodeURIComponent(urlOriginal)}`;
-        textoEnlace = `Ver en DBpedia (traducido a ${obtenerNombreIdioma(idiomaBusqueda)})`;
-    }
-    
-    return `
-        <div class="col-md-6 col-lg-4 mb-3">
-            <div class="card h-100 shadow-sm ${cardClass}">
-                <div class="card-body">
-                    ${originBadge}
-                    <h5 class="card-title">${item.titulo}</h5>
-                    ${aniosHTML}
-                    ${item.desarrollador ? `<p class="mb-2"><i class="bi bi-building"></i> ${item.desarrollador}</p>` : ''}
-                    ${generosHTML}
-                    ${addButton}
-                </div>
-                <div class="card-footer bg-transparent">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <small class="text-muted">
-                            <a href="${enlaceDBpedia}" target="_blank" class="text-decoration-none">
-                                <i class="bi bi-box-arrow-up-right"></i> ${textoEnlace}
-                            </a>
-                        </small>
-                        ${necesitaTraduccion ? `
-                            <small>
-                                <a href="${urlOriginal}" target="_blank" class="text-muted text-decoration-none" title="Ver original en ${obtenerNombreIdioma(idiomaContenido)}">
-                                    <i class="bi bi-link-45deg"></i> Original
-                                </a>
-                            </small>
-                        ` : ''}
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
+    return GameCardFactory.create(item, source).render();
 }
 
 function obtenerNombreIdioma(codigo) {

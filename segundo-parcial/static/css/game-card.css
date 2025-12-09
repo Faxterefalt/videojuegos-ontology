@@ -1,0 +1,32 @@
+.game-card {
+    transition: all 0.3s ease;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    animation: fadeInCard 0.4s ease-out;
+}
+.game-card:hover { transform: translateY(-6px); box-shadow: 0 10px 18px rgba(0,0,0,0.15) !important; }
+.game-card.card.border-success { border-left: 5px solid #198754 !important; }
+.game-card.card.border-warning { border-left: 5px solid #ffc107 !important; }
+
+.game-card .card-body { padding: 1.25rem; min-height: 200px; }
+.game-card .card-title { color: #0d6efd; font-weight: 600; font-size: 1.1rem; line-height: 1.3; }
+
+.game-card .badge { font-size: 0.7rem; padding: 0.35rem 0.65rem; }
+.game-card .badge.bg-warning { color: #000 !important; }
+.game-card .badge.bg-info { color: #000 !important; }
+.game-card .badge.bg-secondary { margin-right: 0.4rem; margin-bottom: 0.35rem; font-size: 0.75rem; }
+
+.game-card p { margin-bottom: 0.5rem; font-size: 0.9rem; }
+.game-card .btn-sm { font-size: 0.85rem; padding: 0.4rem 0.8rem; }
+
+.game-card .card-footer { background-color: rgba(0,0,0,0.02); border-top: 1px solid rgba(0,0,0,0.1); padding: 0.75rem 1.25rem; }
+.game-card .card-footer small { font-size: 0.8rem; }
+.game-card .card-footer a:hover { color: #0d6efd !important; text-decoration: underline !important; }
+.game-card .card-footer a[href*="translate.google.com"] { color: #0d6efd !important; font-weight: 600; }
+
+@keyframes fadeInCard { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 768px) {
+    .game-card .card-body { padding: 1rem; min-height: 180px; }
+    .game-card .card-title { font-size: 1rem; }
+}
