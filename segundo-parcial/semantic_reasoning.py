@@ -238,41 +238,44 @@ class SemanticReasoner:
         return sigla.upper() == iniciales.upper()
     
     def buscar_semanticamente_dbpedia(self, termino, limite=20):
-        """OPTIMIZADO - búsqueda multilingüe que devuelve en idioma original"""
-        # Detectar idioma original del término
+        """Búsqueda multilingüe MEJORADA con fallback a inglés"""
+        # Detectar idioma original
         idioma_original = self.traductor.detectar_idioma(termino)
-        print(f"   ✓ Idioma original: {idioma_original}")
+        print(f"   ✓ Idioma detectado: {idioma_original}")
         
-        # NUEVO: SIEMPRE traducir a inglés para buscar en DBpedia
-        termino_busqueda_en = self.traductor.obtener_nombre_ingles(termino)
+        # PASO 1: Intentar buscar en el idioma original
+        termino_busqueda = termino
+        resultados = self._buscar_en_idioma(termino_busqueda, idioma_original, limite)
         
-        # Si no se pudo traducir (es decir, retornó el mismo término) y no es inglés,
-        # intentar buscar de todas formas
-        if termino_busqueda_en == termino and idioma_original != 'en':
-            print(f"   ⚠ No se encontró traducción directa para '{termino}'")
-            print(f"   → Se buscará con el término original")
-        else:
-            print(f"   ✓ Término para búsqueda en DBpedia: '{termino_busqueda_en}'")
-        
-        # Verificar caché
-        cache_key = f"search_{termino.lower()}_{idioma_original}_{limite}"
-        if cache_key in self.cache_dbpedia:
-            import time
-            if time.time() - self.cache_expiracion.get(cache_key, 0) < self.CACHE_TTL:
-                print(f"   ✓ Resultados desde caché")
-                return self.cache_dbpedia[cache_key]
-        
-        # ARREGLADO: Expandir usando el término EN INGLÉS
-        print(f"\n   Expandiendo término: '{termino_busqueda_en}'")
-        terminos_expandidos = self._expandir_simple(termino_busqueda_en)  # Usar expansión simplificada
-        
-        todos_resultados = []
-        
-        # Buscar en inglés con los términos expandidos
-        for i, termino_exp in enumerate(terminos_expandidos[:2]):
-            print(f"   [{i+1}/{len(terminos_expandidos[:2])}] Buscando: '{termino_exp}'")
+        # PASO 2: Si no hay resultados Y no es inglés, traducir y buscar en inglés
+        if len(resultados) == 0 and idioma_original != 'en':
+            print(f"\n   ⚠ Sin resultados en {idioma_original}, traduciendo a inglés...")
+            termino_en = self.traductor.obtener_nombre_ingles(termino)
             
-            # Query EN INGLÉS
+            if termino_en != termino:
+                print(f"   → Traducción: '{termino}' → '{termino_en}'")
+                resultados = self._buscar_en_idioma(termino_en, 'en', limite)
+                
+                # Marcar que estos resultados necesitan traducción de vuelta
+                for resultado in resultados:
+                    resultado['idioma_contenido'] = 'en'
+                    resultado['idioma_busqueda'] = idioma_original
+                    resultado['necesita_traduccion'] = True
+        else:
+            # Marcar resultados que ya están en el idioma correcto
+            for resultado in resultados:
+                resultado['idioma_contenido'] = idioma_original
+                resultado['idioma_busqueda'] = idioma_original
+                resultado['necesita_traduccion'] = False
+        
+        return resultados
+    
+    def _buscar_en_idioma(self, termino, idioma, limite):
+        """Busca en DBpedia en un idioma específico"""
+        terminos_expandidos = self._expandir_simple(termino)
+        resultados = []
+        
+        for termino_exp in terminos_expandidos[:2]:
             query = f"""
             PREFIX dbo: <http://dbpedia.org/ontology/>
             PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -281,7 +284,7 @@ class SemanticReasoner:
             WHERE {{
                 ?game a dbo:VideoGame .
                 ?game rdfs:label ?label .
-                FILTER (lang(?label) = 'en')
+                FILTER (lang(?label) = '{idioma}')
                 FILTER (CONTAINS(LCASE(?label), LCASE("{termino_exp}")))
                 OPTIONAL {{ ?game dbo:releaseDate ?releaseDate }}
                 OPTIONAL {{ ?game dbo:developer ?developer }}
@@ -297,59 +300,20 @@ class SemanticReasoner:
                 
                 if "results" in results and "bindings" in results["results"]:
                     for row in results["results"]["bindings"]:
-                        nombre_juego = row['label']['value']
-                        score = self.calcular_similitud_semantica(termino_busqueda_en, nombre_juego)
+                        score = self.calcular_similitud_semantica(termino, row['label']['value'])
                         row['semantic_score'] = score
-                        row['idioma_original'] = idioma_original  # Marcar idioma original
-                        row['termino_original'] = termino  # Guardar término original
-                        todos_resultados.append(row)
-                        print(f"       ✓ Encontrado: {nombre_juego} (score: {score:.2f})")
-                
-                if len(todos_resultados) >= limite:
-                    break
+                        resultados.append(row)
                     
+                    if len(resultados) > 0:
+                        break
             except Exception as e:
                 print(f"      ✗ Error: {str(e)[:100]}")
-                break
         
-        # Si hay resultados en inglés y el idioma original no es inglés, obtener traducciones
-        if len(todos_resultados) > 0 and idioma_original != 'en':
-            print(f"\n   → Obteniendo labels en {idioma_original}...")
-            todos_resultados = self._agregar_labels_multilingues(todos_resultados, idioma_original)
-        
-        # Eliminar duplicados por URI
-        resultados_unicos = {}
-        for resultado in todos_resultados:
-            uri = resultado['game']['value']
-            if uri not in resultados_unicos or resultado['semantic_score'] > resultados_unicos[uri]['semantic_score']:
-                resultados_unicos[uri] = resultado
-        
-        # Ordenar por score semántico
-        resultados_ordenados = sorted(
-            resultados_unicos.values(),
-            key=lambda x: x['semantic_score'],
-            reverse=True
-        )
-        
-        print(f"\n   ✓ Total de resultados únicos: {len(resultados_ordenados)}")
-        if resultados_ordenados:
-            print(f"   Top 3 por relevancia:")
-            for i, res in enumerate(resultados_ordenados[:3], 1):
-                label_mostrar = res.get('label_traducido', {}).get('value', res['label']['value'])
-                idioma_res = res.get('idioma_original', 'en')
-                print(f"      {i}. {label_mostrar} [{idioma_res}] (score: {res['semantic_score']:.2f})")
-        
-        # Guardar en caché
-        import time
-        self.cache_dbpedia[cache_key] = resultados_ordenados[:limite]
-        self.cache_expiracion[cache_key] = time.time()
-        
-        return resultados_ordenados[:limite]
-    
+        return resultados
     def _expandir_simple(self, termino):
         """Expansión simplificada sin multilingüismo (ya traducido)"""
         terminos = [termino]
-        
+    
         # Variaciones básicas
         if ' ' in termino:
             terminos.append(termino.replace(' ', ''))

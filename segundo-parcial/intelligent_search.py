@@ -334,6 +334,8 @@ class IntelligentSearch:
         from multilingual import traductor_global
         idioma = traductor_global.detectar_idioma(termino)
         
+        print(f"   → Búsqueda en idioma: {idioma}")
+        
         filtro_anio = f"FILTER (YEAR(?releaseDate) <= 2024)" if 'anio' not in params else f"FILTER (YEAR(?releaseDate) = {params['anio']})"
         
         query = f"""
@@ -364,8 +366,8 @@ class IntelligentSearch:
         ORDER BY DESC(?releaseDate)
         LIMIT {limite * 3}
         """
-        return self._ejecutar_query(query)
-    
+        return self._ejecutar_query(query, idioma)
+
     def _query_premiados(self, params, limite):
         """Query para juegos GOTY - CORREGIDA para 2024"""
         anio = params.get('anio')
@@ -561,12 +563,12 @@ class IntelligentSearch:
         """
         return self._ejecutar_query(query)
     
-    def _ejecutar_query(self, query):
-        """Ejecuta query y formatea resultados CON SOPORTE MULTILINGÜE MEJORADO"""
+    def _ejecutar_query(self, query, idioma='en'):
+        """Ejecuta query y formatea resultados CON IDIOMA"""
         self.sparql.setQuery(query)
         
         try:
-            print(f"   Ejecutando query inteligente...")
+            print(f"   Ejecutando query inteligente en {idioma}...")
             results = self.sparql.query().convert()
             
             if "results" in results and "bindings" in results["results"]:
@@ -581,7 +583,7 @@ class IntelligentSearch:
                         'desarrollador': None,
                         'generos': [],
                         'source': 'dbpedia',
-                        'idioma': row['label'].get('xml:lang', 'en')  # Idioma del label
+                        'idioma': idioma  # NUEVO: Agregar idioma
                     }
                     
                     if 'releaseDate' in row:
@@ -601,7 +603,7 @@ class IntelligentSearch:
                     
                     resultados.append(resultado)
                 
-                print(f"   ✓ {len(resultados)} resultados")
+                print(f"   ✓ {len(resultados)} resultados en {idioma}")
                 return resultados
             
             return []

@@ -173,3 +173,82 @@ h6 {
 h6 i {
     margin-right: 0.5rem;
 }
+.badge.bg-info.text-dark {
+    background-color: #17a2b8 !important;
+    color: white !important;
+}
+
+.badge.bg-warning.text-dark {
+    background-color: #ffc107 !important;
+    color: #000 !important;
+}
+
+/* NUEVO: Animación para badge de traducción */
+.badge.bg-info, .badge.bg-warning {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* NUEVO: Estilo para card con traducción */
+.card.border-warning {
+    border-left: 4px solid #ffc107 !important;
+    position: relative;
+}
+
+.card.border-warning::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ffc107, transparent);
+}
+
+/* NUEVO: Estilo para enlaces traducidos */
+.card-footer a[href*="translate.google.com"] {
+    color: #0d6efd !important;
+    font-weight: 600;
+}
+
+.card-footer a[href*="translate.google.com"]:hover {
+    text-decoration: underline !important;
+}
+
+/* NUEVO: Indicador visual de traducción automática */
+.alert.border-warning {
+    background-color: #fff3cd;
+}
+
+.alert.border-warning i.bi-translate {
+    color: #ff9800;
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* NUEVO: Mejora para badges de idioma en cards */
+.card-body .badge {
+    display: inline-block;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-body .badge i {
+    margin-right: 0.25rem;
+}
