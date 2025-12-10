@@ -16,7 +16,7 @@ class IntelligentSearch:
         
         # ACTUALIZADO: Ganadores GOTY hasta 2024
         self.ganadores_goty = {
-            2024: "astro bot",  # ✅ NUEVO: Ganador GOTY 2024
+            2024: "astro bot",
             2023: "baldur's gate 3",
             2022: "elden ring",
             2021: "it takes two",
@@ -28,13 +28,13 @@ class IntelligentSearch:
             2015: "the witcher 3"
         }
         
-        # NUEVO: Juegos garantizados por categoría
+        # Juegos garantizados por categoría (SOLO para fallback extremo)
         self.juegos_garantizados = {
-            'mas_vendido': ['minecraft', 'grand theft auto v', 'tetris', 'wii sports', 'playerunknowns battlegrounds'],
-            'mas_jugadores': ['minecraft', 'fortnite', 'league of legends', 'roblox', 'counter-strike', 'valorant'],
-            'mejor_calificado': ["the legend of zelda", "super mario", "the witcher 3", "red dead redemption", "elden ring", "portal 2"],
-            'reciente_2024': ['astro bot', 'metaphor refantazio', 'final fantasy vii rebirth', 'helldivers 2', 'stellar blade', 'black myth wukong'],
-            'reciente_2025': ['grand theft auto vi', 'pokemon legends z-a', 'mafia the old country', 'ghost of yotei', 'death stranding 2']
+            'mas_vendido': ['minecraft', 'grand theft auto v', 'tetris', 'wii sports'],
+            'mas_jugadores': ['minecraft', 'fortnite', 'league of legends', 'roblox'],
+            'mejor_calificado': ["the legend of zelda", "super mario", "the witcher 3", "elden ring"],
+            'reciente_2024': ['astro bot', 'metaphor refantazio', 'final fantasy vii rebirth'],
+            'reciente_2025': ['grand theft auto vi', 'pokemon legends z-a', 'ghost of yotei']
         }
         
         # Traducciones mejoradas
@@ -229,12 +229,13 @@ class IntelligentSearch:
         return resultado
     
     def buscar_inteligente(self, consulta, limite=15):
-        """Ejecuta búsqueda CON GARANTÍA DE RESULTADOS"""
+        """Ejecuta búsqueda CON GARANTÍA DE RESULTADOS - MEJORADO"""
         analisis = self.analizar_consulta(consulta)
         
-        # NUEVO: Reducir umbral
-        if analisis['confianza'] < 0.2:
-            print(f"→ Confianza baja, forzando resultados generales")
+        # CAMBIO CLAVE: Solo forzar si confianza es EXTREMADAMENTE baja
+        # Y solo para patrones específicos (no para búsquedas generales)
+        if analisis['confianza'] < 0.1 and analisis['tipo'] != 'general':
+            print(f"→ Confianza demasiado baja, usando fallback")
             return self._forzar_resultados_generales(consulta, analisis)
         
         tipo = analisis['tipo']
@@ -243,6 +244,7 @@ class IntelligentSearch:
         limite_efectivo = 1 if singular else limite
         
         try:
+            # Ejecutar query según tipo
             if tipo == 'superlativo_ventas':
                 resultados = self._query_mas_vendidos(params, limite_efectivo)
             elif tipo == 'premio':
@@ -256,14 +258,29 @@ class IntelligentSearch:
             elif tipo == 'superlativo_antiguo':
                 resultados = self._query_mas_antiguos(params, limite_efectivo)
             else:
+                # Para búsquedas generales, usar query normal
                 resultados = self._query_general(params, limite_efectivo)
             
+            # Filtrar y deduplicar
             resultados = self._filtrar_y_deduplicar(resultados, params)
             
-            # NUEVO: Si no hay resultados, forzar
+            # CAMBIO CLAVE: Solo forzar para patrones específicos sin resultados
             if len(resultados) == 0:
-                print(f"⚠ Sin resultados de query, forzando juegos garantizados...")
-                resultados = self._forzar_juegos_garantizados(tipo, params)
+                # Solo forzar si es un patrón específico que DEBERÍA tener resultados
+                if tipo in ['superlativo_ventas', 'premio', 'superlativo_jugadores', 
+                           'superlativo_calificacion', 'superlativo_reciente']:
+                    print(f"⚠ Sin resultados para {tipo}, forzando garantizados...")
+                    resultados = self._forzar_juegos_garantizados(tipo, params)
+                else:
+                    # Para búsquedas generales sin resultados, retornar vacío
+                    print(f"→ Sin resultados para '{consulta}' (búsqueda normal)")
+                    return {
+                        'success': False,
+                        'resultados': [],
+                        'analisis': analisis,
+                        'count': 0,
+                        'message': f'No se encontraron resultados para "{consulta}"'
+                    }
             
             return {
                 'success': True,
@@ -273,10 +290,20 @@ class IntelligentSearch:
             }
         except Exception as e:
             print(f"✗ Error: {str(e)}")
-            return self._forzar_resultados_generales(consulta, analisis)
+            # Solo en caso de error crítico
+            if tipo in ['superlativo_ventas', 'premio', 'superlativo_jugadores']:
+                return self._forzar_resultados_generales(consulta, analisis)
+            else:
+                return {
+                    'success': False,
+                    'resultados': [],
+                    'analisis': analisis,
+                    'count': 0,
+                    'message': f'Error en búsqueda: {str(e)[:100]}'
+                }
     
     def _forzar_juegos_garantizados(self, tipo, params):
-        """Fuerza juegos cuando la query falla"""
+        """Fuerza juegos cuando la query falla - SOLO para patrones específicos"""
         juegos_forzados = []
         categoria = None
         
@@ -293,15 +320,14 @@ class IntelligentSearch:
             elif anio == 2025:
                 categoria = 'reciente_2025'
         elif tipo == 'premio':
-            # NUEVO: Forzar GOTY si no hay resultados
             anio = params.get('anio')
             if anio and anio in self.ganadores_goty:
                 juego = self._crear_juego_fallback(self.ganadores_goty[anio], tipo)
-                juego['anios'] = [anio]  # Forzar año correcto
+                juego['anios'] = [anio]
                 return [juego]
         
         if categoria and categoria in self.juegos_garantizados:
-            for titulo in self.juegos_garantizados[categoria][:5]:
+            for titulo in self.juegos_garantizados[categoria][:3]:  # Reducido a 3
                 juegos_forzados.append(self._crear_juego_fallback(titulo, tipo))
         
         print(f"   ✓ {len(juegos_forzados)} juegos garantizados forzados")
@@ -309,7 +335,6 @@ class IntelligentSearch:
     
     def _crear_juego_fallback(self, titulo, tipo):
         """Crea entrada de juego con datos mínimos"""
-        # NUEVO: Año específico para juegos conocidos
         anios_conocidos = {
             'astro bot': [2024],
             'baldurs gate 3': [2023],
@@ -338,30 +363,29 @@ class IntelligentSearch:
         }
     
     def _forzar_resultados_generales(self, consulta, analisis):
-        """FALLBACK FINAL"""
-        print("   → Forzando resultados genéricos...")
+        """FALLBACK FINAL - SOLO en caso extremo"""
+        print("   → Forzando resultados genéricos (fallback extremo)...")
         juegos_comunes = [
             'Minecraft', 'Grand Theft Auto V', 'The Legend of Zelda', 
-            'Super Mario Bros', 'The Witcher 3', 'Elden Ring',
-            'Red Dead Redemption 2', 'God of War', 'The Last of Us', 'Astro Bot'
+            'The Witcher 3', 'Elden Ring', 'Red Dead Redemption 2'
         ]
         return {
             'success': True,
-            'resultados': [self._crear_juego_fallback(j, 'general') for j in juegos_comunes[:10]],
+            'resultados': [self._crear_juego_fallback(j, 'general') for j in juegos_comunes[:5]],
             'analisis': analisis,
-            'count': 10,
-            'forced': True
+            'count': 5,
+            'forced': True,
+            'message': 'No se encontraron resultados específicos. Mostrando juegos populares.'
         }
     
     def _query_premiados(self, params, limite):
-        """Query GOTY con Astro Bot 2024 - MEJORADO con filtro de año exacto"""
+        """Query GOTY con Astro Bot 2024"""
         anio = params.get('anio')
         
         if anio and anio in self.ganadores_goty:
             ganador = self.ganadores_goty[anio]
             print(f"   ✓ GOTY {anio} garantizado: {ganador.title()}")
             
-            # NUEVO: Query más estricta con año exacto
             query = f"""
             PREFIX dbo: <http://dbpedia.org/ontology/>
             PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -551,7 +575,7 @@ class IntelligentSearch:
         return self._ejecutar_query(query)
     
     def _query_general(self, params, limite):
-        """Query general"""
+        """Query general - SIN forzar resultados"""
         termino = params.get('termino', '')
         query = f"""
         PREFIX dbo: <http://dbpedia.org/ontology/>
@@ -573,7 +597,7 @@ class IntelligentSearch:
         return self._ejecutar_query(query)
     
     def _filtrar_y_deduplicar(self, resultados, params):
-        """Filtra duplicados MEJORADO - Prioriza año específico si existe"""
+        """Filtra duplicados - Prioriza año específico si existe"""
         vistos = {}
         filtrados = []
         anio_actual = datetime.datetime.now().year
@@ -590,9 +614,7 @@ class IntelligentSearch:
             
             # Si ya vimos este título
             if titulo in vistos:
-                # Si estamos buscando un año específico y este resultado coincide
                 if anio_buscado and resultado.get('anios') and resultado['anios'][0] == anio_buscado:
-                    # Reemplazar el anterior con este
                     indice_anterior = vistos[titulo]
                     filtrados[indice_anterior] = resultado
                     print(f"   ✓ Reemplazando '{titulo}' con versión del {anio_buscado}")
@@ -601,7 +623,6 @@ class IntelligentSearch:
             vistos[titulo] = len(filtrados)
             filtrados.append(resultado)
         
-        # NUEVO: Si buscamos año específico, priorizar resultados de ese año
         if anio_buscado:
             filtrados.sort(key=lambda x: 0 if (x.get('anios') and x['anios'][0] == anio_buscado) else 1)
         
