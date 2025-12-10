@@ -233,6 +233,9 @@ async function detectarYMostrarIdioma(termino) {
             const input = document.getElementById('buscarGeneral');
             const idioma = data.idioma_detectado;
             
+            // NUEVO: Guardar idioma detectado en el input
+            input.setAttribute('data-idioma-detectado', idioma);
+            
             // Agregar badge de idioma
             let badge = document.getElementById('language-badge');
             if (!badge) {
@@ -244,17 +247,30 @@ async function detectarYMostrarIdioma(termino) {
                 input.parentElement.appendChild(badge);
             }
             
+            const nombreIdioma = obtenerNombreIdioma(idioma);
+            
             if (idioma === 'es') {
                 badge.className = 'badge bg-success position-absolute';
-                badge.innerHTML = '<i class="bi bi-translate"></i> ES';
+                badge.innerHTML = `<i class="bi bi-translate"></i> ${nombreIdioma}`;
                 badge.title = `Español detectado. Traducciones: ${data.traducciones_ingles.join(', ')}`;
             } else if (idioma === 'en') {
                 badge.className = 'badge bg-primary position-absolute';
-                badge.innerHTML = '<i class="bi bi-translate"></i> EN';
+                badge.innerHTML = `<i class="bi bi-translate"></i> ${nombreIdioma}`;
                 badge.title = `English detected. Traducciones: ${data.traducciones_espanol.join(', ')}`;
+            } else if (idioma === 'fr') {
+                badge.className = 'badge bg-info position-absolute';
+                badge.innerHTML = `<i class="bi bi-translate"></i> ${nombreIdioma}`;
+                badge.title = `Français détecté`;
+            } else if (idioma === 'ja') {
+                badge.className = 'badge bg-warning position-absolute';
+                badge.innerHTML = `<i class="bi bi-translate"></i> ${nombreIdioma}`;
+                badge.title = `日本語が検出されました`;
             } else {
-                badge.style.display = 'none';
+                badge.className = 'badge bg-secondary position-absolute';
+                badge.innerHTML = `<i class="bi bi-translate"></i> ${nombreIdioma}`;
             }
+            
+            badge.style.display = 'inline-block';
         }
     } catch (error) {
     }
@@ -360,10 +376,58 @@ function mostrarResultados(data) {
     mostrarResultadosSimples(data);
 }
 
+
 function mostrarResultadosHibridos(data) {
     const container = document.getElementById('resultados');
     let html = '';
     
+    // Detectar idioma de los resultados y de la búsqueda
+    let idiomaPrincipal = 'en';
+    if (data.dbpedia && data.dbpedia.length > 0) {
+        idiomaPrincipal = data.dbpedia[0].idioma || 'en';
+    }
+    
+    const idiomaBusqueda = detectarIdiomaBusqueda();
+    const necesitaTraduccion = idiomaPrincipal !== idiomaBusqueda;
+    
+    const nombreIdioma = obtenerNombreIdioma(idiomaPrincipal);
+    const nombreIdiomaBusqueda = obtenerNombreIdioma(idiomaBusqueda);
+    
+    // MODIFICADO: Badge de idioma con información de traducción
+    if (necesitaTraduccion && data.count_dbpedia > 0) {
+        html += `
+            <div class="alert alert-warning border-start border-warning border-4">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-translate fs-4 me-3"></i>
+                    <div>
+                        <strong>Traducción automática activada</strong>
+                        <br>
+                        <small class="text-muted">
+                            Buscaste en <strong>${nombreIdiomaBusqueda}</strong>, pero DBpedia solo tiene contenido en <strong>${nombreIdioma}</strong>.
+                            Los enlaces se abrirán traducidos por Google Translate.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        html += `
+            <div class="alert alert-info border-start border-primary border-4">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-translate fs-4 me-3"></i>
+                    <div>
+                        <strong>Resultados mostrados en: ${nombreIdioma}</strong>
+                        <br>
+                        <small class="text-muted">
+                            Los resultados de DBpedia se han obtenido en el idioma de tu búsqueda
+                        </small>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // NUEVO: Mostrar análisis de búsqueda inteligente si existe
     if (data.analisis && data.analisis.confianza > 0.3) {
         const confianzaPercent = (data.analisis.confianza * 100).toFixed(0);
         const badgeClass = data.analisis.confianza > 0.7 ? 'success' : 'info';
@@ -378,15 +442,6 @@ function mostrarResultadosHibridos(data) {
                 <p class="mb-0">
                     <i class="bi bi-arrow-right"></i> ${data.analisis.descripcion}
                 </p>
-            </div>
-        `;
-    } else {
-        // Encabezado normal
-        html += `
-            <div class="alert alert-info">
-                <i class="bi bi-search"></i> 
-                <strong>Búsqueda Híbrida</strong> - 
-                Resultados de ontología local y DBpedia
             </div>
         `;
     }
@@ -420,6 +475,9 @@ function mostrarResultadosHibridos(data) {
             <div class="mb-4">
                 <h6 class="text-primary">
                     ${tituloSeccion}
+                    ${necesitaTraduccion ? `<span class="badge bg-warning text-dark ms-2">
+                        <i class="bi bi-translate"></i> Traducción: ${nombreIdioma} → ${nombreIdiomaBusqueda}
+                    </span>` : ''}
                     <button class="btn btn-sm btn-primary ms-3" onclick="agregarTodosDesdeDBpedia(${JSON.stringify(data.dbpedia).replace(/"/g, '&quot;')})">
                         <i class="bi bi-download"></i> Agregar todos a ontología local
                     </button>
@@ -448,76 +506,64 @@ function mostrarResultadosHibridos(data) {
     container.innerHTML = html;
 }
 
-function crearCardJuego(item, source) {
-    // Formatear años
-    let aniosHTML = '';
-    if (item.anios && item.anios.length > 0) {
-        if (item.anios.length === 1) {
-            aniosHTML = `<p class="text-muted mb-2"><i class="bi bi-calendar"></i> ${item.anios[0]}</p>`;
-        } else {
-            const aniosFormatted = item.anios.join(', ');
-            aniosHTML = `<p class="text-muted mb-2"><i class="bi bi-calendar-range"></i> ${aniosFormatted}</p>`;
-        }
+function detectarIdiomaBusqueda() {
+    const input = document.getElementById('buscarGeneral');
+    if (!input || !input.value) {
+        return 'en'; // Default inglés
     }
     
-    let generosHTML = '';
-    if (item.generos && item.generos.length > 0) {
-        generosHTML = item.generos.map(g => 
-            `<span class="badge bg-primary me-1">${g}</span>`
-        ).join('');
-    }
-    
-    // Badge de origen y botón de agregar
-    let originBadge = '';
-    let cardClass = '';
-    let addButton = '';
-    
-    if (source === 'local') {
-        originBadge = '<span class="badge bg-success mb-2"><i class="bi bi-hdd"></i> Local</span>';
-        cardClass = 'border-success';
-    } else {
-        originBadge = '<span class="badge bg-warning text-dark mb-2"><i class="bi bi-cloud"></i> DBpedia</span>';
-        cardClass = 'border-warning';
-        
-        // Botón para agregar individualmente
-        const juegoJSON = JSON.stringify(item).replace(/"/g, '&quot;');
-        addButton = `
-            <button class="btn btn-sm btn-primary w-100 mt-2" onclick='agregarJuegoIndividual(${juegoJSON})'>
-                <i class="bi bi-download"></i> Agregar a local
-            </button>
-        `;
-    }
-    
-    // NUEVO: Agregar título en ambos idiomas si está disponible
-    let tituloHTML = `<h5 class="card-title">${item.titulo}</h5>`;
-    
-    if (item.titulo_alternativo && item.titulo_alternativo !== item.titulo) {
-        tituloHTML += `<p class="text-muted small"><i class="bi bi-translate"></i> ${item.titulo_alternativo}</p>`;
-    }
-    
-    return `
-        <div class="col-md-6 col-lg-4 mb-3">
-            <div class="card h-100 shadow-sm ${cardClass}">
-                <div class="card-body">
-                    ${originBadge}
-                    ${tituloHTML}
-                    ${aniosHTML}
-                    ${item.desarrollador ? `<p class="mb-2"><i class="bi bi-building"></i> ${item.desarrollador}</p>` : ''}
-                    ${generosHTML}
-                    ${addButton}
-                </div>
-                <div class="card-footer bg-transparent">
-                    <small class="text-muted">
-                        <a href="${item.uri || item.game}" target="_blank" class="text-decoration-none">
-                            <i class="bi bi-box-arrow-up-right"></i> Ver en DBpedia
-                        </a>
-                    </small>
-                </div>
-            </div>
-        </div>
-    `;
+    // Obtener del atributo data si existe
+    const idioma = input.getAttribute('data-idioma-detectado');
+    return idioma || 'en';
 }
 
+const GOOGLE_TRANSLATE_CODES = {
+    'es': 'es',
+    'en': 'en',
+    'fr': 'fr',
+    'de': 'de',
+    'it': 'it',
+    'pt': 'pt',
+    'ja': 'ja'
+};
+
+// NUEVO: Función para generar URL de DBpedia traducida por Google
+function generarURLTraducida(urlOriginal, idiomaDestino) {
+    const codigoGoogle = GOOGLE_TRANSLATE_CODES[idiomaDestino] || idiomaDestino;
+    // Google Translate URL format: https://translate.google.com/translate?sl=auto&tl=LANG&u=URL
+    return `https://translate.google.com/translate?sl=auto&tl=${codigoGoogle}&u=${encodeURIComponent(urlOriginal)}`;
+}
+
+// NUEVO: Función para traducir texto usando API local si está disponible, sino marcar para traducción
+async function traducirTexto(texto, idiomaOrigen, idiomaDestino) {
+    // Por ahora, retornamos el texto original ya que la traducción se hará vía Google Translate
+    // En el futuro se podría integrar una API de traducción
+    return {
+        textoOriginal: texto,
+        textoTraducido: texto, // Placeholder
+        necesitaTraduccion: idiomaOrigen !== idiomaDestino,
+        idiomaOrigen: idiomaOrigen,
+        idiomaDestino: idiomaDestino
+    };
+}
+
+// Nueva implementación: delega en GameCardFactory y mantiene compatibilidad
+function crearCardJuego(item, source) {
+    return GameCardFactory.create(item, source).render();
+}
+
+function obtenerNombreIdioma(codigo) {
+    const nombres = {
+        'es': 'español',
+        'en': 'inglés',
+        'fr': 'français',
+        'de': 'Deutsch',
+        'it': 'italiano',
+        'pt': 'português',
+        'ja': '日本語'
+    };
+    return nombres[codigo] || codigo;
+}
 // Función legacy para resultados simples (por si acaso)
 function mostrarResultadosSimples(data) {
     const container = document.getElementById('resultados');

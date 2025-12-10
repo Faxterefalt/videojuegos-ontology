@@ -149,7 +149,7 @@ class HybridSearch:
         return resultados[:20]  # Limitar a 20
     
     def _formatear_resultados_dbpedia(self, resultados_dbpedia):
-        """Formatea resultados de DBpedia"""
+        """Formatea resultados de DBpedia CON información de traducción"""
         resultados_formateados = []
         
         for row in resultados_dbpedia:
@@ -160,9 +160,13 @@ class HybridSearch:
                 'desarrollador': None,
                 'generos': [],
                 'source': 'dbpedia',
-                'relevancia': row.get('semantic_score', 0)
+                'relevancia': row.get('semantic_score', 0),
+                'idioma_contenido': row.get('idioma_contenido', 'en'),
+                'idioma_busqueda': row.get('idioma_busqueda', 'en'),
+                'necesita_traduccion': row.get('necesita_traduccion', False)
             }
             
+            # Procesar año, desarrollador y género...
             if 'releaseDate' in row:
                 try:
                     year = row['releaseDate']['value'][:4]
@@ -170,12 +174,10 @@ class HybridSearch:
                 except:
                     pass
             
-            # Procesar desarrollador
             if 'developer' in row:
                 dev_name = row['developer']['value'].split('/')[-1].replace('_', ' ')
                 resultado['desarrollador'] = dev_name
             
-            # Procesar género
             if 'genre' in row:
                 genre_name = row['genre']['value'].split('/')[-1].replace('_', ' ')
                 resultado['generos'] = [genre_name]
@@ -183,7 +185,7 @@ class HybridSearch:
             resultados_formateados.append(resultado)
         
         return resultados_formateados
-    
+
     def buscar_desarrollador_hibrido(self, termino):
         """Búsqueda híbrida por desarrollador - SIEMPRE ambas fuentes"""
         print(f"\n{'='*60}")
