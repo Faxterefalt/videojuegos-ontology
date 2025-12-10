@@ -5,6 +5,7 @@ from multilingual import traductor_global
 from rdflib import RDF
 import os
 import socket
+from pln import run_nlp, SUPPORTED_INTENTS  
 
 app = Flask(__name__)
 
@@ -46,6 +47,18 @@ def verificar_dbpedia():
             'error': str(e),
             'dbpedia_disponible': False
         }), 500
+
+@app.route('/api/pln/analizar', methods=['GET'])
+def pln_analizar():
+    """Analiza una consulta NL y devuelve intent/slots detectados."""
+    try:
+        termino = request.args.get('q', '').strip()
+        if not termino:
+            return jsonify({'success': False, 'error': 'Término vacío'}), 400
+        spec = run_nlp(termino)
+        return jsonify({'success': True, 'spec': spec, 'supported': list(SUPPORTED_INTENTS.keys())})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/poblar', methods=['POST'])
 def poblar():
@@ -125,7 +138,7 @@ def buscar_anio():
 
 @app.route('/api/buscar/general', methods=['GET'])
 def buscar_general():
-    """Búsqueda general OPTIMIZADA"""
+    """Búsqueda general OPTIMIZADA con PLN ejecutando búsquedas reales"""
     try:
         termino = request.args.get('q', '')
         modo_hibrido = request.args.get('hybrid', 'true').lower() == 'true'
@@ -133,28 +146,85 @@ def buscar_general():
         if not termino:
             return jsonify({'success': False, 'error': 'Término vacío'}), 400
         
-        # OPTIMIZACIÓN: Límite de longitud
         if len(termino) > 100:
             return jsonify({'success': False, 'error': 'Término muy largo'}), 400
+
+        # PASO 1: Análisis PLN
+        spec = run_nlp(termino)
+        print(f"\n🧠 PLN detectó: {spec['intent']} (confianza: {spec['confidence']:.2%})")
         
+        # PASO 2: Ejecutar búsqueda basada en slots del PLN
+        resultados_finales = []
+        
+        # 2.1: Buscar por desarrollador si fue detectado
+        if spec['filters'].get('developer'):
+            dev = spec['filters']['developer']
+            print(f"   → Buscando por desarrollador: {dev}")
+            res_dev = buscador.buscar_por_desarrollador(dev)
+            resultados_finales.extend(res_dev)
+        
+        # 2.2: Buscar por género si fue detectado
+        if spec['filters'].get('genres'):
+            for genero in spec['filters']['genres']:
+                genero_limpio = genero.replace('vg:', '')
+                print(f"   → Buscando por género: {genero_limpio}")
+                # Buscar en toda la ontología que contenga el género
+                res_gen = buscador.buscar_general(genero_limpio)
+                resultados_finales.extend(res_gen)
+        
+        # 2.3: Buscar por año si fue detectado
+        if spec['filters'].get('year_range'):
+            year_min, year_max = spec['filters']['year_range']
+            print(f"   → Buscando por años: {year_min}-{year_max}")
+            for year in range(year_min, year_max + 1):
+                res_year = buscador.buscar_por_anio(year)
+                resultados_finales.extend(res_year)
+        
+        # 2.4: Si no hay slots específicos, búsqueda general
+        if not resultados_finales:
+            print(f"   → Búsqueda general con término original: {termino}")
+            resultados_finales = buscador.buscar_general(termino)
+        
+        # PASO 3: Si hay resultados locales, retornar inmediatamente
+        if resultados_finales:
+            # Eliminar duplicados
+            vistos = set()
+            unicos = []
+            for r in resultados_finales:
+                uri = str(r.game) if hasattr(r, 'game') else str(r)
+                if uri not in vistos:
+                    vistos.add(uri)
+                    unicos.append(r)
+            
+            print(f"✓ {len(unicos)} resultados locales encontrados con PLN")
+            resp = _formatear_resultados(unicos)
+            resp['nlp'] = spec
+            resp['source'] = 'local_pln'
+            return jsonify(resp)
+        
+        # PASO 4: Si no hay locales, usar búsqueda híbrida
+        print("   → Sin resultados locales, consultando DBpedia...")
         if modo_hibrido:
             resultado = hybrid_search.buscar_general_hibrido(termino)
             
             if resultado['success']:
-                response = jsonify(_formatear_resultados_hibridos(resultado))
-                # NUEVO: Agregar headers de caché
-                response.cache_control.max_age = 180  # 3 minutos
+                response = jsonify({**_formatear_resultados_hibridos(resultado), 'nlp': spec})
+                response.cache_control.max_age = 180
                 return response
             else:
-                return jsonify({'success': False, 'data': [], 'count': 0, 'message': resultado['message']})
+                return jsonify({'success': False, 'data': [], 'count': 0, 'message': resultado['message'], 'nlp': spec})
         else:
-            resultados = buscador.buscar_general(termino)
-            return jsonify(_formatear_resultados(resultados))
+            # Fallback sin híbrido
+            resp = _formatear_resultados([])
+            resp['nlp'] = spec
+            return jsonify(resp)
             
     except Exception as e:
         print(f"Error en buscar_general: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return jsonify({'success': False, 'error': 'Error en búsqueda'}), 500
-
+    
 @app.route('/api/buscar/desarrollador', methods=['GET'])
 def buscar_desarrollador():
     """Buscar por desarrollador con modo híbrido"""
