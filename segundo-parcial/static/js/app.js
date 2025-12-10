@@ -381,20 +381,44 @@ function mostrarResultadosHibridos(data) {
     const container = document.getElementById('resultados');
     let html = '';
     
+    // ⭐ CRÍTICO: Detectar idioma de búsqueda PRIMERO
+    const idiomaBusqueda = data.idioma_usuario || detectarIdiomaBusqueda() || 'en';
+    console.log(`🌐 Idioma de búsqueda detectado: ${idiomaBusqueda}`);
+    
+    // ⭐ ENRIQUECER TODOS LOS RESULTADOS CON IDIOMA
+    if (data.local && Array.isArray(data.local)) {
+        data.local = data.local.map(juego => ({
+            ...juego,
+            uri: juego.uri || juego.game || '',
+            idioma_usuario: idiomaBusqueda,
+            idioma_contenido: 'en',
+            necesita_traduccion: (idiomaBusqueda !== 'en')
+        }));
+    }
+    
+    if (data.dbpedia && Array.isArray(data.dbpedia)) {
+        data.dbpedia = data.dbpedia.map(juego => ({
+            ...juego,
+            uri: juego.uri || juego.game || '',
+            idioma_usuario: idiomaBusqueda,
+            idioma_contenido: 'en',
+            necesita_traduccion: (idiomaBusqueda !== 'en')
+        }));
+    }
+    
     // Detectar idioma de los resultados y de la búsqueda
     let idiomaPrincipal = 'en';
     if (data.dbpedia && data.dbpedia.length > 0) {
         idiomaPrincipal = data.dbpedia[0].idioma || 'en';
     }
     
-    const idiomaBusqueda = detectarIdiomaBusqueda();
     const necesitaTraduccion = idiomaPrincipal !== idiomaBusqueda;
     
     const nombreIdioma = obtenerNombreIdioma(idiomaPrincipal);
     const nombreIdiomaBusqueda = obtenerNombreIdioma(idiomaBusqueda);
     
     // MODIFICADO: Badge de idioma con información de traducción
-    if (necesitaTraduccion && data.count_dbpedia > 0) {
+    if (necesitaTraduccion && (data.count_dbpedia > 0 || data.count_local > 0)) {
         html += `
             <div class="alert alert-warning border-start border-warning border-4">
                 <div class="d-flex align-items-center">
@@ -403,8 +427,8 @@ function mostrarResultadosHibridos(data) {
                         <strong>Traducción automática activada</strong>
                         <br>
                         <small class="text-muted">
-                            Buscaste en <strong>${nombreIdiomaBusqueda}</strong>, pero DBpedia solo tiene contenido en <strong>${nombreIdioma}</strong>.
-                            Los enlaces se abrirán traducidos por Google Translate.
+                            Buscaste en <strong>${nombreIdiomaBusqueda}</strong>. 
+                            Los enlaces a DBpedia se abrirán traducidos por Google Translate.
                         </small>
                     </div>
                 </div>
@@ -454,6 +478,9 @@ function mostrarResultadosHibridos(data) {
                 <h6 class="text-success">
                     <i class="bi bi-hdd-fill"></i> 
                     Resultados Locales (${data.count_local})
+                    ${necesitaTraduccion ? `<span class="badge bg-info text-dark ms-2">
+                        <i class="bi bi-translate"></i> Enlaces traducidos a ${nombreIdiomaBusqueda}
+                    </span>` : ''}
                 </h6>
                 <hr class="mb-3">
                 <div class="row">
